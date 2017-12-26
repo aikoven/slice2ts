@@ -1,0 +1,42 @@
+{
+  "name": "slice2ts",
+  "version": "0.1.0",
+  "bin": {
+    "slice2ts": "lib/cli.js"
+  },
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "scripts": {
+    "build": "tsc -P tsconfig.build.json",
+    "prepare": "npm run build"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "repository": "aikoven/slice2ts",
+  "author": "Daniel Lytkin <dan.lytkin@gmail.com>",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "assert-never": "^1.1.0",
+    "babel-core": "^6.26.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+    "commander": "^2.12.2",
+    "commondir": "^1.0.1",
+    "glob": "^7.1.2",
+    "mkdirp": "^0.5.1",
+    "prettier": "^1.9.2",
+    "slice2js": "~3.7.0",
+    "slice2json": "^0.1.0",
+    "uuid": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/babel-core": "^6.25.3",
+    "@types/glob": "^5.0.33",
+    "@types/mkdirp": "^0.5.2",
+    "@types/node": "^8.5.2",
+    "@types/prettier": "^1.9.0",
+    "@types/uuid": "^3.4.3",
+    "typescript": "^2.6.1"
+  }
+}

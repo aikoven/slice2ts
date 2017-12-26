@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "declaration": true,
+    "stripInternal": true,
+    "sourceMap": true,
+    "outDir": "lib",
+    "strict": true,
+    "noUnusedLocals": true,
+    "baseUrl": ".",
+    "paths": {
+      "*": [
+        "*",
+        "custom_typings/*"
+      ]
+    }
+  },
+  "files": [
+    "src/index.ts",
+    "src/cli.ts"
+  ],
+  "include": [
+    "src/**/*.spec.ts"
+  ]
+}
