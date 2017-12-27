@@ -41,7 +41,7 @@ export async function generateTypings(
     ${topLevelModules}
   `;
 
-  const config = await prettier.resolveConfig(process.cwd())
+  const config = await prettier.resolveConfig(process.cwd());
 
   return prettier.format(contents, {
     ...config,
@@ -155,20 +155,34 @@ function generateComplexType(
   const isProxy = match[2] != null;
 
   let tsType;
+  let isClass;
 
   if (typeName === 'Object') {
     tsType = 'Ice.Object';
+    isClass = true;
+  } else if (typeName === 'Value') {
+    tsType = 'Ice.Value';
+    isClass = true;
   } else {
-    if (external) {
-      const member = getTypeByName(scope, typeName);
+    const member = getTypeByName(scope, typeName);
 
+    if (external) {
       typeName = `${member.scope.module}::${member.declaration.name}`;
     }
 
     tsType = typeName.replace(/::/g, '.');
+    isClass = member.declaration.type === 'class';
   }
 
-  return isProxy ? tsType + 'Prx' : tsType;
+  if (isProxy) {
+    return `${tsType}Prx | null`;
+  }
+
+  if (isClass) {
+    return `${tsType} | null`;
+  }
+
+  return tsType;
 }
 
 const complexTypeRegexp = /^(.*?)(\s*\*)?$/;
@@ -196,6 +210,8 @@ function generateDataType(
       return 'number';
     case 'long':
       return 'Ice.Long';
+    case 'LocalObject':
+      return 'object';
     default:
       return generateComplexType(scope, dataType, external);
   }
@@ -206,7 +222,7 @@ function generateClass(
   declaration: slice2json.ClassDeclaration,
 ): string {
   const base = declaration.extends
-    ? generateComplexType(scope, declaration.extends)
+    ? declaration.extends.replace(/::/g, '.')
     : declaration.local ? null : 'Ice.Value';
 
   const fields = declaration.content.filter(
@@ -344,7 +360,7 @@ function generateInterface(
   if (declaration.local) {
     const extendsString =
       parentNames &&
-      ` extends ${parentNames.map(t => generateComplexType(scope, t))}`;
+      ` extends ${parentNames.map(t => t.replace(/::/g, '.'))}`;
 
     return render`
       ${generateDocComment(declaration)}
@@ -357,12 +373,12 @@ function generateInterface(
   } else {
     const implementsString =
       parentNames &&
-      `implements ${parentNames.map(t => generateComplexType(scope, t))}`;
+      `implements ${parentNames.map(t => t.replace(/::/g, '.'))}`;
 
     const proxyImplementsString =
       parentNames &&
       `implements ${parentNames.map(
-        t => `${generateComplexType(scope, t)}Prx`,
+        t => `${t.replace(/::/g, '.')}Prx`,
       )}`;
 
     return render`
@@ -448,9 +464,11 @@ function generateOperation(
   const parameters = generateParameters(scope, operation, external);
   const returnType = generateReturnType(scope, operation, external);
 
+  const resultType = `Ice.OperationResult<${returnType}>`;
+
   return render`
     ${generateDocComment(operation)}
-    abstract ${operation.name}(${parameters}): Ice.NativePromise<${returnType}>;
+    abstract ${operation.name}(${parameters}): ${resultType};
   `;
 }
 
@@ -480,7 +498,13 @@ function generateParameters(
     parameterStrings.push(paramString);
   }
 
-  parameterStrings.push('current: Ice.Current');
+  const currentName = operation.parameters.some(
+    param => param.name === 'current',
+  )
+    ? '_current'
+    : 'current';
+
+  parameterStrings.push(`${currentName}: Ice.Current`);
 
   return parameterStrings.join(', ');
 }
@@ -496,7 +520,7 @@ function generateProxyOperation(
   return render`
     ${generateDocComment(operation)}
     ${operation.name}(${generateProxyParameters(scope, operation, external)}):
-      Ice.OperationResult<${generateReturnType(scope, operation, external)}>;
+      Ice.AsyncResult<${generateReturnType(scope, operation, external)}>;
   `;
 }
 
@@ -512,7 +536,11 @@ function generateProxyParameters(
     .filter(parameter => !parameter.out)
     .reverse();
 
-  const reversedParamStrings = ['ctx?: Ice.Context'];
+  const contextName = operation.parameters.some(param => param.name === 'ctx')
+    ? '_ctx'
+    : 'ctx';
+
+  const reversedParamStrings = [`${contextName}?: Ice.Context`];
   let seenRequired = false;
 
   for (const parameter of reversedParameters) {
@@ -576,7 +604,7 @@ function generateException(
   declaration: slice2json.ExceptionDeclaration,
 ): string {
   const base = declaration.extends
-    ? generateComplexType(scope, declaration.extends)
+    ? declaration.extends.replace(/::/g, '.')
     : declaration.local ? 'Ice.LocalException' : 'Ice.UserException';
 
   return render`
