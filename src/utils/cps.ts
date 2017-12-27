@@ -1,6 +1,8 @@
+/** @internal */
 export function cps(
   executor: (cb: (error: any) => void) => void,
 ): Promise<void>;
+/** @internal */
 export function cps<T>(
   executor: (cb: (error: any, result: T) => void) => void,
 ): Promise<T>;

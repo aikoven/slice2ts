@@ -14,6 +14,7 @@ import {
 } from './typeScope';
 import {render} from './render';
 
+/** @internal */
 export async function generateTypings(
   scope: TypeScope,
   sliceName: string,

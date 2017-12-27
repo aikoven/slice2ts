@@ -16,6 +16,8 @@ const builtInFolders = new Set([
 
 /**
  * Generate ES6 imports for given slice.
+ *
+ * @internal
  */
 export function generateImports(
   sliceName: string,

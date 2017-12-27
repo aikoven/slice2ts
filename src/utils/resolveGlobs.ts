@@ -1,6 +1,7 @@
 import * as glob from 'glob';
 import {cps} from './cps';
 
+/** @internal */
 export async function resolveGlobs(
   globs: string[],
   ignore?: string[],

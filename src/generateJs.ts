@@ -8,6 +8,7 @@ import {cps} from './utils/cps';
 import {LoadedSlices, LoadedSlice} from './load';
 import {generateImports} from './generateImports';
 
+/** @internal */
 export async function generateJs(
   sliceName: string,
   slices: LoadedSlices,

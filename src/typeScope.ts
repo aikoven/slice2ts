@@ -11,6 +11,7 @@ import {
 } from 'slice2json';
 import {LoadedSlices} from './load';
 
+/** @internal */
 export type TypeDeclaration =
   | ClassDeclaration
   | InterfaceDeclaration
@@ -21,11 +22,13 @@ export type TypeDeclaration =
   | DictionaryDeclaration
   | ConstDeclaration;
 
+/** @internal */
 export interface ScopeMember<T extends TypeDeclaration> {
   scope: TypeScope;
   declaration: T;
 }
 
+/** @internal */
 export interface TypeScope {
   /**
    * Fully-qualified module name.
@@ -34,6 +37,7 @@ export interface TypeScope {
   children: {[name: string]: TypeScope | TypeDeclaration};
 }
 
+/** @internal */
 export function createTypeScope(slices: LoadedSlices): TypeScope {
   const children: {[name: string]: TypeScope | TypeDeclaration} = {};
 
@@ -81,6 +85,7 @@ function populateModuleScope(
   return scope;
 }
 
+/** @internal */
 export function getTypeByName<T extends TypeDeclaration>(
   scope: TypeScope,
   typeName: string,
@@ -107,6 +112,7 @@ export function getTypeByName<T extends TypeDeclaration>(
   return {declaration, scope: typeScope};
 }
 
+/** @internal */
 export function getChildScope(scope: TypeScope, module: string): TypeScope {
   const childScope = scope.children[module] as TypeScope;
 

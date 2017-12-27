@@ -3,6 +3,7 @@ import * as fs from 'fs';
 import {parse, SliceSource} from 'slice2json';
 import {cps} from './utils/cps';
 
+/** @internal */
 export interface LoadResult {
   /**
    * Input slice module names which are relative slice paths without `.ice`
@@ -15,16 +16,19 @@ export interface LoadResult {
   slices: LoadedSlices;
 }
 
+/** @internal */
 export interface LoadedSlices {
   [name: string]: LoadedSlice;
 }
 
+/** @internal */
 export interface LoadedSlice {
   rootDir: string;
   contents: string;
   parsed: SliceSource;
 }
 
+/** @internal */
 export async function loadSlices(
   paths: string[],
   absRootDirs: string[],

@@ -2,6 +2,8 @@
  * Automatically flattens arrays in template string.
  * Strips null / undefined / false.
  * Trims result.
+ *
+ * @internal
  */
 export function render(strings: TemplateStringsArray, ...values: any[]) {
   return String.raw(strings, ...values.map(renderValue)).trim();

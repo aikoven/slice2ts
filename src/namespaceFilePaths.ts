@@ -8,11 +8,14 @@ import * as path from 'path';
  *
  * E.g. if slices `A/B/C.ice` and `A/D/E.ice` both declare a top-level
  * module `Foo`, its namespace file path will be `A/Foo.ns.d.ts`.
+ *
+ * @internal
  */
 export interface NamespaceFilePaths {
   [module: string]: string;
 }
 
+/** @internal */
 export function getNamespaceFilePaths(
   sliceNames: string[],
   slices: {[name: string]: LoadedSlice},
@@ -41,6 +44,7 @@ export function getNamespaceFilePaths(
   return namespaceFilePaths;
 }
 
+/** @internal */
 export function generateNamespace(module: string) {
   return `export namespace ${module} {}`;
 }
