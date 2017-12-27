@@ -14,14 +14,14 @@ import {
 } from './typeScope';
 import {render} from './render';
 
-export function generateTypings(
+export async function generateTypings(
   scope: TypeScope,
   sliceName: string,
   slices: LoadedSlices,
   namespaceFilePaths: NamespaceFilePaths,
   ignore: string[],
   iceImports: boolean,
-): string {
+): Promise<string> {
   const imports = generateImports(sliceName, slices, iceImports);
 
   const topLevelModules = slices[sliceName].parsed.modules.map(module =>
@@ -40,7 +40,10 @@ export function generateTypings(
     ${topLevelModules}
   `;
 
+  const config = await prettier.resolveConfig(process.cwd())
+
   return prettier.format(contents, {
+    ...config,
     parser: 'typescript',
   });
 }

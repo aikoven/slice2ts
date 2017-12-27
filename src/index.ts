@@ -75,7 +75,7 @@ export async function slice2ts(options: Slice2TsOptions) {
 
     await writeFile(
       `${basename}.d.ts`,
-      generateTypings(
+      await generateTypings(
         typeScope,
         name,
         slices,
