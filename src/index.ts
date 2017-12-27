@@ -5,7 +5,11 @@ import {sliceDir} from 'slice2js';
 
 import {resolveGlobs} from './utils/resolveGlobs';
 import {loadSlices} from './load';
-import {getNamespaceFilePaths, generateNamespace} from './namespaceFilePaths';
+import {
+  getNamespaceFilePaths,
+  generateNamespace,
+  getTopLevelModules,
+} from './topLevelModules';
 import {generateTypings} from './generateTypings';
 import {generateJs} from './generateJs';
 import {cps} from './utils/cps';
@@ -43,6 +47,10 @@ export interface Slice2TsOptions {
    * Don't generate typings for these types.
    */
   ignore?: string[];
+  /**
+   * If true, generates index file for each top-level slice module.
+   */
+  index?: boolean;
 }
 
 export async function slice2ts(options: Slice2TsOptions) {
@@ -53,7 +61,9 @@ export async function slice2ts(options: Slice2TsOptions) {
 
   const {inputNames, slices} = await loadSlices(paths, absRootDirs);
 
-  const namespaceFilePaths = getNamespaceFilePaths(inputNames, slices);
+  const topLevelModules = getTopLevelModules(inputNames, slices);
+
+  const namespaceFilePaths = getNamespaceFilePaths(topLevelModules);
   const typeScope = createTypeScope(slices);
 
   for (const module of Object.keys(namespaceFilePaths)) {
@@ -61,6 +71,32 @@ export async function slice2ts(options: Slice2TsOptions) {
       path.join(options.outDir, namespaceFilePaths[module]),
       generateNamespace(module),
     );
+
+    if (options.index) {
+      await writeFile(
+        path.join(options.outDir, `${module}.js`),
+        topLevelModules[module]
+          .map(
+            (sliceName, index) =>
+              index === 0
+                ? `exports.${module} = require('./${sliceName}').${module};`
+                : `require('./${sliceName}');`,
+          )
+          .join('\n'),
+      );
+
+      await writeFile(
+        path.join(options.outDir, `${module}.d.ts`),
+        topLevelModules[module]
+          .map(
+            (sliceName, index) =>
+              index === 0
+                ? `export {${module}} from './${sliceName}';`
+                : `import './${sliceName}';`,
+          )
+          .join('\n'),
+      );
+    }
   }
 
   for (const name of inputNames) {

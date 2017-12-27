@@ -34,6 +34,10 @@ const program = commander
     repeatable,
     [],
   )
+  .option(
+    '--index',
+    'If true, generates index file for each top-level slice module.',
+  )
   .parse(process.argv);
 
 slice2ts({
@@ -43,6 +47,7 @@ slice2ts({
   outDir: program.outDir,
   noJs: !program.js,
   ignore: program.ignore,
+  index: program.index,
   iceImports: program.iceImports,
 }).catch(error => {
   console.log(error);

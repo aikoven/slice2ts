@@ -5,7 +5,7 @@ import assertNever from 'assert-never';
 
 import {generateImports} from './generateImports';
 import {LoadedSlices} from './load';
-import {NamespaceFilePaths} from './namespaceFilePaths';
+import {NamespaceFilePaths} from './topLevelModules';
 import {
   TypeScope,
   ScopeMember,
