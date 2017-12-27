@@ -28,7 +28,10 @@ export async function generateJs(
   compiled = babel.transform(compiled, {
     babelrc: false,
     plugins: [
-      ['babel-plugin-transform-es2015-modules-commonjs', {noInterop: true}],
+      [
+        require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
+        {noInterop: true},
+      ],
     ],
   }).code!;
 
