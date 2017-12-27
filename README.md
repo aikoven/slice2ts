@@ -15,12 +15,12 @@ Compiles Slice files to TypeScript.
       -V, --version         output the version number
       --root-dir <dir>      Root dirs.
                             Output files will have the same structure as source files relative to root dirs.
-                            Ice includes are also resolved in these dirs. (default: )
-      -e, --exclude <file>  File paths or globs to exclude. (default: )
+                            Ice includes are also resolved in these dirs.
+      -e, --exclude <file>  File paths or globs to exclude.
       -o, --out-dir <dir>   Directory where to put generated files.
-      --no-js               If true, only the typings are generated. (default: true)
+      --no-js               If true, only the typings are generated.
       --ice-imports         If true, Ice modules are imported from particular files instead of "ice".
-      -i, --ignore <type>   Don't generate typings for these types. (default: )
+      -i, --ignore <type>   Don't generate typings for these types.
       --index               If true, generates index file for each top-level slice module.
       -h, --help            output usage information
 
