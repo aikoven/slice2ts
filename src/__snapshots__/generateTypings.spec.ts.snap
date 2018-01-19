@@ -14007,3 +14007,26 @@ declare module \\"../IceMX.ns\\" {
 export { IceMX } from \\"../IceMX.ns\\";
 "
 `;
+
+exports[`generate typings module shadowing 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./A.ns\\" {
+  namespace A { class SomeClass extends Ice.Value {} }
+}
+export { A } from \\"./A.ns\\";
+"
+`;
+
+exports[`generate typings module shadowing 2`] = `
+"import { Ice } from \\"ice\\";
+import { A } from \\"A\\";
+
+import _A = A;
+
+declare module \\"./B.ns\\" {
+  namespace B { namespace A { class Child extends _A.SomeClass {} } }
+}
+export { B } from \\"./B.ns\\";
+"
+`;

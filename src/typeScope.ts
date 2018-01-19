@@ -25,64 +25,87 @@ export type TypeDeclaration =
 /** @internal */
 export interface ScopeMember<T extends TypeDeclaration> {
   scope: TypeScope;
+  module: string;
+  declaration: T;
+}
+
+export interface QualifiedDeclaration<T extends TypeDeclaration> {
+  /**
+   * Fully-qualified ::-separated module name.
+   */
+  module: string;
   declaration: T;
 }
 
 /** @internal */
 export interface TypeScope {
-  /**
-   * Fully-qualified module name.
-   */
   module: string;
-  children: {[name: string]: TypeScope | TypeDeclaration};
+  names: {
+    [name: string]: TypeScope | QualifiedDeclaration<TypeDeclaration>;
+  };
 }
 
 /** @internal */
 export function createTypeScope(slices: LoadedSlices): TypeScope {
-  const children: {[name: string]: TypeScope | TypeDeclaration} = {};
+  const rootScope: TypeScope = {
+    module: '',
+    names: {},
+  };
 
-  const scope = {module: '', children};
+  const moduleScopes: Array<{
+    moduleDeclaration: ModuleDeclaration;
+    parentScope: TypeScope;
+  }> = [];
 
   for (const name of Object.keys(slices)) {
     for (const moduleDeclaration of slices[name].parsed.modules) {
-      const {name} = moduleDeclaration;
-
-      if (children[name] == null) {
-        children[name] = {
-          module: name,
-          children: Object.create(children),
-        };
-      }
-
-      populateModuleScope(children[name] as TypeScope, moduleDeclaration);
+      moduleScopes.push({moduleDeclaration, parentScope: rootScope});
     }
   }
 
-  return scope;
-}
+  for (const {moduleDeclaration, parentScope} of moduleScopes) {
+    const {name} = moduleDeclaration;
+    const module = parentScope.module ? `${parentScope.module}::${name}` : name;
 
-function populateModuleScope(
-  scope: TypeScope,
-  declaration: ModuleDeclaration,
-) {
-  for (const child of declaration.content) {
-    if (child.type === 'module') {
-      if (scope.children[child.name] == null) {
-        scope.children[child.name] = {
-          module: `${scope.module}::${child.name}`,
-          children: Object.create(scope.children),
+    let scope: TypeScope;
+
+    const existingModuleScope = parentScope.names[name] as
+      | TypeScope
+      | undefined;
+
+    if (existingModuleScope == null) {
+      scope = parentScope.names[name] = {
+        module,
+        names: Object.create(parentScope.names),
+      };
+    } else if (existingModuleScope.module === module) {
+      scope = existingModuleScope;
+    } else {
+      scope = parentScope.names[name] = {
+        module,
+        names: Object.create(existingModuleScope.names),
+      };
+    }
+
+    for (const child of moduleDeclaration.content) {
+      if (child.type === 'module') {
+        moduleScopes.push({
+          moduleDeclaration: child,
+          parentScope: scope,
+        });
+      } else if (
+        child.type !== 'classForward' &&
+        child.type !== 'interfaceForward'
+      ) {
+        scope.names[child.name] = {
+          module,
+          declaration: child,
         };
       }
-      populateModuleScope(scope.children[child.name] as TypeScope, child);
-    } else if (
-      child.type !== 'classForward' &&
-      child.type !== 'interfaceForward'
-    ) {
-      scope.children[child.name] = child;
     }
   }
 
-  return scope;
+  return rootScope;
 }
 
 /** @internal */
@@ -95,7 +118,7 @@ export function getTypeByName<T extends TypeDeclaration>(
   const name = parts[parts.length - 1];
 
   const typeScope = path.reduce(
-    (currentScope, name) => currentScope.children[name] as TypeScope,
+    (currentScope, name) => currentScope.names[name] as TypeScope,
     scope,
   );
 
@@ -103,18 +126,20 @@ export function getTypeByName<T extends TypeDeclaration>(
     throw new Error(`Module not found: ${path.join('::')}`);
   }
 
-  const declaration = typeScope.children[name] as T;
+  const qualDeclaration = typeScope.names[name] as QualifiedDeclaration<T>;
 
-  if (declaration == null) {
+  if (qualDeclaration == null) {
+    // console.log(flatten(scope));
+    // console.log(flatten(typeScope));
     throw new Error(`Type not found: ${typeName}`);
   }
 
-  return {declaration, scope: typeScope};
+  return {scope: typeScope, ...qualDeclaration};
 }
 
 /** @internal */
 export function getChildScope(scope: TypeScope, module: string): TypeScope {
-  const childScope = scope.children[module] as TypeScope;
+  const childScope = scope.names[module] as TypeScope;
 
   if (childScope == null) {
     throw new Error(`Child module not found: ${module}`);
