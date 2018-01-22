@@ -1,4 +1,4 @@
-# slice2ts [![npm version][npm-image]][npm-url] [![Build Status][travis-image]]
+# slice2ts [![npm version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
 
 Compiles Slice files to TypeScript.
 
