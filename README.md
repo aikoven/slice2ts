@@ -1,4 +1,4 @@
-# slice2ts [![npm version][npm-image]][npm-url]
+# slice2ts [![npm version][npm-image]][npm-url] [![Build Status][travis-image]]
 
 Compiles Slice files to TypeScript.
 
@@ -76,3 +76,5 @@ Options interface:
 
 [npm-image]: https://badge.fury.io/js/slice2ts.svg
 [npm-url]: https://badge.fury.io/js/slice2ts
+[travis-image]: https://travis-ci.org/aikoven/slice2ts.svg?branch=master
+[travis-url]: https://travis-ci.org/aikoven/slice2ts
