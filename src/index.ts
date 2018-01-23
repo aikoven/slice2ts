@@ -2,6 +2,7 @@ import * as path from 'path';
 import * as fs from 'fs';
 import * as mkdirp from 'mkdirp';
 import {sliceDir} from 'slice2js';
+import * as unixify from 'unixify';
 
 import {resolveGlobs} from './utils/resolveGlobs';
 import {loadSlices} from './load';
@@ -76,6 +77,7 @@ export async function slice2ts(options: Slice2TsOptions) {
       await writeFile(
         path.join(options.outDir, `${module}.js`),
         topLevelModules[module]
+          .map(sliceName => unixify(sliceName))
           .map(
             (sliceName, index) =>
               index === 0
@@ -88,6 +90,7 @@ export async function slice2ts(options: Slice2TsOptions) {
       await writeFile(
         path.join(options.outDir, `${module}.d.ts`),
         topLevelModules[module]
+          .map(sliceName => unixify(sliceName))
           .map(
             (sliceName, index) =>
               index === 0
