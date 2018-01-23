@@ -1,6 +1,7 @@
 import * as slice2json from 'slice2json';
 import * as path from 'path';
 import * as prettier from 'prettier';
+import * as unixify from 'unixify';
 import assertNever from 'assert-never';
 
 import {generateImports} from './generateImports';
@@ -91,6 +92,7 @@ class Generator {
         path.basename(namespaceFilePath, '.d.ts'),
       ),
     );
+    namespaceRelativePath = unixify(namespaceRelativePath);
     if (!namespaceRelativePath.startsWith('.')) {
       namespaceRelativePath = `./${namespaceRelativePath}`;
     }

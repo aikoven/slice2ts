@@ -30,6 +30,7 @@
     "prettier": "^1.9.2",
     "slice2js": "~3.7.0",
     "slice2json": "^0.1.4",
+    "unixify": "^1.0.0",
     "uuid": "^3.1.0"
   },
   "devDependencies": {

@@ -38,7 +38,7 @@ export async function generateJs(
   return compiled;
 }
 
-const importRegex = /(^import.*\n)+/gm;
+const importRegex = /(^import.*\r?\n)+/gm;
 
 const es6Meta = `[["js:es6-module"]]\n`;
 

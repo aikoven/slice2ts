@@ -1,4 +1,5 @@
 import {LoadedSlices} from './load';
+import * as unixify from 'unixify';
 
 const builtInFolders = new Set([
   'Ice',
@@ -33,7 +34,7 @@ export function generateImports(
   // import strings
   const imports: string[] = [];
 
-  const depth = sliceName.split('/').length;
+  const depth = unixify(sliceName).split('/').length;
   let prefix = '';
 
   for (let i = 0; i < depth - 1; i += 1) {

@@ -1,4 +1,5 @@
 import * as commondir from 'commondir';
+import * as unixify from 'unixify';
 import {LoadedSlices} from './load';
 import * as path from 'path';
 
@@ -44,12 +45,12 @@ export function getNamespaceFilePaths(namespaceUsages: {
   const namespaceFilePaths: NamespaceFilePaths = {};
 
   for (const module of Object.keys(namespaceUsages)) {
-    const namespaceFileDir = commondir(
+    const namespaceFileDir = unixify(commondir(
       '/',
       namespaceUsages[module].map(sliceName => path.dirname(sliceName)),
-    ).substr(1);
+    )).substr(1);
 
-    namespaceFilePaths[module] = path.join(
+    namespaceFilePaths[module] = path.posix.join(
       namespaceFileDir,
       `${module}.ns.d.ts`,
     );
