@@ -5,7 +5,7 @@ import {getNamespaceFilePaths, getTopLevelModules} from './topLevelModules';
 import {createTypeScope} from './typeScope';
 import {generateTypings} from './generateTypings';
 
-jest.setTimeout(20000);
+jest.setTimeout(30000);
 
 describe('generate typings', () => {
   test('built-in slices', async () => {
