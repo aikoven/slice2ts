@@ -204,10 +204,13 @@ class Generator {
 
       // we need to alias a root namespace where this type belongs
       // in case when generated definition is put to a different namespace with
-      // the same name
+      // the same name or containing a child namespace with that name
       const typeTopLevelModule = member.module.split('::')[0];
 
-      if (scope.module.includes(`::${typeTopLevelModule}`)) {
+      if (
+        scope.module.includes(`::${typeTopLevelModule}`) ||
+        scope.names.hasOwnProperty(typeTopLevelModule)
+      ) {
         this.namespacesToAlias.add(typeTopLevelModule);
         tsType = `_${tsType}`;
       }
