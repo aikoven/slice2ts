@@ -313,7 +313,9 @@ class Generator {
         break;
       }
 
-      chain.unshift(getTypeByName<slice2json.ClassDeclaration>(scope, parent));
+      chain.unshift(
+        getTypeByName<slice2json.ClassDeclaration>(chain[0].scope, parent),
+      );
     }
 
     const parameters: string[] = [];
