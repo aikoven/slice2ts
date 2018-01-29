@@ -23,6 +23,7 @@ export async function generateTypings(
   namespaceFilePaths: NamespaceFilePaths,
   ignore: string[],
   iceImports: boolean,
+  noNullableValues: boolean,
 ): Promise<string> {
   return new Generator(
     scope,
@@ -31,6 +32,7 @@ export async function generateTypings(
     namespaceFilePaths,
     ignore,
     iceImports,
+    noNullableValues,
   ).generate();
 }
 
@@ -42,6 +44,7 @@ class Generator {
     private namespaceFilePaths: NamespaceFilePaths,
     ignore: string[],
     private iceImports: boolean,
+    private noNullableValues: boolean,
   ) {
     this.ignore = new Set(ignore);
   }
@@ -220,7 +223,7 @@ class Generator {
       tsType = `${tsType}Prx`;
     }
 
-    if (!noNull && (isProxy || isClass)) {
+    if (!noNull && (isProxy || (isClass && !this.noNullableValues))) {
       tsType = `${tsType} | null`;
     }
 

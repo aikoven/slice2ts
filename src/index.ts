@@ -52,6 +52,11 @@ export interface Slice2TsOptions {
    * If true, generates index file for each top-level slice module.
    */
   index?: boolean;
+  /**
+   * If true, don't generate `| null` for fields and parameters whose type is
+   * Value.
+   */
+  noNullableValues?: boolean;
 }
 
 export async function slice2ts(options: Slice2TsOptions) {
@@ -121,6 +126,7 @@ export async function slice2ts(options: Slice2TsOptions) {
         namespaceFilePaths,
         options.ignore || [],
         options.iceImports || false,
+        options.noNullableValues || false,
       ),
     );
   }

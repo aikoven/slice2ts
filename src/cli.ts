@@ -38,6 +38,11 @@ const program = commander
     '--index',
     'If true, generates index file for each top-level slice module.',
   )
+  .option(
+    '--no-nullable-values',
+    "If true, don't generate `| null` for fields and parameters whose type " +
+      'is Value',
+  )
   .parse(process.argv);
 
 slice2ts({
@@ -49,6 +54,7 @@ slice2ts({
   ignore: program.ignore,
   index: program.index,
   iceImports: program.iceImports,
+  noNullableValues: !program.nullableValues,
 }).catch(error => {
   console.log(error);
   process.exit(1);

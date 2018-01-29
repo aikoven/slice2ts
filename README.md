@@ -22,6 +22,7 @@ Compiles Slice files to TypeScript.
       --ice-imports         If true, Ice modules are imported from particular files instead of "ice".
       -i, --ignore <type>   Don't generate typings for these types.
       --index               If true, generates index file for each top-level slice module.
+      --no-nullable-values  If true, don't generate `| null` for fields and parameters whose type is Value.
       -h, --help            output usage information
 
 ## API
@@ -71,6 +72,11 @@ Options interface:
    * If true, generates index file for each top-level slice module.
    */
   index?: boolean;
+  /**
+   * If true, don't generate `| null` for fields and parameters whose type is
+   * Value.
+   */
+  noNullableValues?: boolean;
 }
 ```
 
