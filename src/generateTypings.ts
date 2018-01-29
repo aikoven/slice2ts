@@ -186,7 +186,7 @@ class Generator {
     let isClass;
 
     if (typeName === 'Object') {
-      tsType = isProxy ? 'Ice.Object' : 'Ice.Value';
+      tsType = 'Ice.Object';
       isClass = true;
     } else if (typeName === 'Value') {
       tsType = 'Ice.Value';
