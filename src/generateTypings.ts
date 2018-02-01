@@ -767,6 +767,13 @@ class Generator {
     scope: TypeScope,
     declaration: slice2json.SequenceDeclaration,
   ): string {
+    if (declaration.dataType === 'byte') {
+      return render`
+        ${this.generateDocComment(declaration)}
+        type ${declaration.name} = Uint8Array;
+      `;
+    }
+
     const dataType = this.generateDataType(scope, declaration.dataType);
 
     return render`

@@ -1031,7 +1031,7 @@ exports[`generate typings built-in slices 8`] = `
 declare module \\"./Ice.ns\\" {
   namespace Ice {
     type BoolSeq = Array<boolean>;
-    type ByteSeq = Array<number>;
+    type ByteSeq = Uint8Array;
     type ShortSeq = Array<number>;
     type IntSeq = Array<number>;
     type LongSeq = Array<Ice.Long>;
