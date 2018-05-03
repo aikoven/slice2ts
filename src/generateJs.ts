@@ -4,6 +4,7 @@ import * as path from 'path';
 import * as uuid from 'uuid';
 import * as babel from 'babel-core';
 import {compile as slice2js} from 'slice2js';
+import * as escapeRegexp from 'escape-string-regexp';
 import {cps} from './utils/cps';
 import {LoadedSlices, LoadedSlice} from './load';
 import {generateImports} from './generateImports';
@@ -58,6 +59,15 @@ async function compileSliceWithEs6(
   try {
     const source = await compileSliceRaw(tempSlicePath, absRootDirs);
     return source.replace(path.basename(tempSlicePath), `${sliceName}.ice`);
+  } catch (e) {
+    if (typeof e === 'string') {
+      throw e.replace(
+        new RegExp(`^.*${escapeRegexp(tempSlicePath)}:(\\d+)`, 'gm'),
+        (match, lineNumber) => `${sliceName}.ice:${+lineNumber - 1}`,
+      );
+    }
+
+    throw e;
   } finally {
     await cps(cb => fs.unlink(tempSlicePath, cb));
   }

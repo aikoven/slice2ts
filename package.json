@@ -25,6 +25,7 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
     "commander": "^2.12.2",
     "commondir": "^1.0.1",
+    "escape-string-regexp": "^1.0.5",
     "glob": "^7.1.2",
     "mkdirp": "^0.5.1",
     "prettier": "^1.9.2",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@types/babel-core": "^6.25.3",
+    "@types/escape-string-regexp": "^0.0.32",
     "@types/glob": "^5.0.33",
     "@types/jest": "^22.0.1",
     "@types/mkdirp": "^0.5.2",
