@@ -2035,6 +2035,9 @@ declare module \\"./Ice.ns\\" {
     }
 
     type HeaderDict = Map<string, string>;
+    const HeaderDict: {
+      new (entries?: ReadonlyArray<[string, string]>): HeaderDict;
+    };
 
     /**
      * Provides access to the connection details of a WebSocket connection
@@ -2082,6 +2085,15 @@ declare module \\"./Ice.ns\\" {
      * its implicit final parameter.
      */
     type Context = Map<string, string>;
+    const Context: {
+      /**
+       * A request context. <tt>Context</tt> is used to transmit metadata about a
+       * request from the server to the client, such as Quality-of-Service
+       * (QoS) parameters. Each operation on the client has a <tt>Context</tt> as
+       * its implicit final parameter.
+       */
+      new (entries?: ReadonlyArray<[string, string]>): Context;
+    };
 
     type OperationModeName = \\"Normal\\" | \\"Nonmutating\\" | \\"Idempotent\\";
 
@@ -2442,6 +2454,12 @@ declare module \\"./Ice.ns\\" {
      * A mapping from facet name to servant.
      */
     type FacetMap = Map<string, Ice.Object | null>;
+    const FacetMap: {
+      /**
+       * A mapping from facet name to servant.
+       */
+      new (entries?: ReadonlyArray<[string, Ice.Object | null]>): FacetMap;
+    };
   }
 }
 export { Ice } from \\"./Ice.ns\\";
@@ -2480,6 +2498,9 @@ declare module \\"./Ice.ns\\" {
     }
 
     type ObjectDict = Ice.HashMap<Identity, Ice.Object | null>;
+    const ObjectDict: {
+      new (): ObjectDict;
+    };
 
     /**
      * A sequence of identities.
@@ -4331,6 +4352,12 @@ declare module \\"../IceMX.ns\\" {
      * A dictionnary of strings to integers.
      */
     type StringIntDict = Map<string, number>;
+    const StringIntDict: {
+      /**
+       * A dictionnary of strings to integers.
+       */
+      new (entries?: ReadonlyArray<[string, number]>): StringIntDict;
+    };
 
     /**
      * The base class for metrics. A metrics object represents a
@@ -4413,6 +4440,13 @@ declare module \\"../IceMX.ns\\" {
      * dictionary is the name of the metrics map.
      */
     type MetricsView = Map<string, MetricsMap>;
+    const MetricsView: {
+      /**
+       * A metrics view is a dictionary of metrics map. The key of the
+       * dictionary is the name of the metrics map.
+       */
+      new (entries?: ReadonlyArray<[string, MetricsMap]>): MetricsView;
+    };
 
     /**
      * Raised if a metrics view cannot be found.
@@ -5864,6 +5898,15 @@ declare module \\"./Ice.ns\\" {
      * @see Properties#getPropertiesForPrefix
      */
     type PropertyDict = Map<string, string>;
+    const PropertyDict: {
+      /**
+       * A simple collection of properties, represented as a dictionary of
+       * key/value pairs. Both key and value are strings.
+       *
+       * @see Properties#getPropertiesForPrefix
+       */
+      new (entries?: ReadonlyArray<[string, string]>): PropertyDict;
+    };
 
     /**
      * The PropertiesAdmin interface provides remote access to the properties
@@ -6556,6 +6599,14 @@ declare module \\"./Ice.ns\\" {
      * use matching Slice definitions.
      */
     type SliceChecksumDict = Map<string, string>;
+    const SliceChecksumDict: {
+      /**
+       * A mapping from type IDs to Slice checksums. The dictionary
+       * allows verification at run time that client and server
+       * use matching Slice definitions.
+       */
+      new (entries?: ReadonlyArray<[string, string]>): SliceChecksumDict;
+    };
   }
 }
 export { Ice } from \\"./Ice.ns\\";
@@ -7173,6 +7224,14 @@ declare module \\"./IceGrid.ns\\" {
      * A dictionary of proxies.
      */
     type StringObjectProxyDict = Map<string, Ice.ObjectPrx | null>;
+    const StringObjectProxyDict: {
+      /**
+       * A dictionary of proxies.
+       */
+      new (
+        entries?: ReadonlyArray<[string, Ice.ObjectPrx | null]>
+      ): StringObjectProxyDict;
+    };
 
     /**
      * Information about an Ice object.
@@ -10412,6 +10471,12 @@ declare module \\"./IceGrid.ns\\" {
      * A mapping of string to string.
      */
     type StringStringDict = Map<string, string>;
+    const StringStringDict: {
+      /**
+       * A mapping of string to string.
+       */
+      new (entries?: ReadonlyArray<[string, string]>): StringStringDict;
+    };
 
     /**
      * Property descriptor.
@@ -10467,6 +10532,14 @@ declare module \\"./IceGrid.ns\\" {
      * A mapping of property set name to property set descriptor.
      */
     type PropertySetDescriptorDict = Map<string, PropertySetDescriptor>;
+    const PropertySetDescriptorDict: {
+      /**
+       * A mapping of property set name to property set descriptor.
+       */
+      new (
+        entries?: ReadonlyArray<[string, PropertySetDescriptor]>
+      ): PropertySetDescriptorDict;
+    };
 
     /**
      * An Ice object descriptor.
@@ -10884,6 +10957,14 @@ declare module \\"./IceGrid.ns\\" {
      * A mapping of template identifier to template descriptor.
      */
     type TemplateDescriptorDict = Map<string, TemplateDescriptor>;
+    const TemplateDescriptorDict: {
+      /**
+       * A mapping of template identifier to template descriptor.
+       */
+      new (
+        entries?: ReadonlyArray<[string, TemplateDescriptor]>
+      ): TemplateDescriptorDict;
+    };
 
     /**
      * A service template instance descriptor.
@@ -11011,6 +11092,14 @@ declare module \\"./IceGrid.ns\\" {
      * Mapping of node name to node descriptor.
      */
     type NodeDescriptorDict = Map<string, NodeDescriptor>;
+    const NodeDescriptorDict: {
+      /**
+       * Mapping of node name to node descriptor.
+       */
+      new (
+        entries?: ReadonlyArray<[string, NodeDescriptor]>
+      ): NodeDescriptorDict;
+    };
 
     /**
      * A base class for load balancing policies.
@@ -13460,6 +13549,9 @@ declare module \\"./IceStorm.ns\\" {
     type LinkInfoSeq = Array<LinkInfo>;
 
     type QoS = Map<string, string>;
+    const QoS: {
+      new (entries?: ReadonlyArray<[string, string]>): QoS;
+    };
 
     /**
      * This exception indicates that an attempt was made to create a link
@@ -13774,6 +13866,12 @@ declare module \\"./IceStorm.ns\\" {
      * Mapping of topic name to topic proxy.
      */
     type TopicDict = Map<string, TopicPrx | null>;
+    const TopicDict: {
+      /**
+       * Mapping of topic name to topic proxy.
+       */
+      new (entries?: ReadonlyArray<[string, TopicPrx | null]>): TopicDict;
+    };
 
     /**
      * This exception indicates that an attempt was made to create a topic
@@ -14080,6 +14178,9 @@ declare module \\"./Default.ns\\" {
     }
 
     type _Catch = Ice.HashMap<S, number>;
+    const _Catch: {
+      new (): _Catch;
+    };
   }
 }
 export { _Default } from \\"./Default.ns\\";

@@ -795,14 +795,26 @@ class Generator {
     const keyType = this.generateDataType(scope, declaration.keyType);
     const valueType = this.generateDataType(scope, declaration.valueType);
 
+    const typeName = escape(declaration.name);
+
     const isBuiltIn =
       keyType === 'boolean' || keyType === 'string' || keyType === 'number';
 
     const container = isBuiltIn ? 'Map' : 'Ice.HashMap';
 
+    const constructorArg = isBuiltIn
+      ? `entries?: ReadonlyArray<[${keyType}, ${valueType}]>`
+      : '';
+
+    const docComment = this.generateDocComment(declaration);
+
     return render`
-      ${this.generateDocComment(declaration)}
-      type ${escape(declaration.name)} = ${container}<${keyType}, ${valueType}>;
+      ${docComment}
+      type ${typeName} = ${container}<${keyType}, ${valueType}>;
+      const ${typeName}: {
+        ${docComment}
+        new (${constructorArg}): ${typeName};
+      };
     `;
   }
 
