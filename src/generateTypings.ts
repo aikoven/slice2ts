@@ -14,6 +14,7 @@ import {
   getChildScope,
 } from './typeScope';
 import {render} from './render';
+import {escape} from './escape';
 
 /** @internal */
 export async function generateTypings(
@@ -62,7 +63,7 @@ class Generator {
 
     // aliases are populated during contents generation
     const aliases = [...this.namespacesToAlias].map(
-      namespace => `import _${namespace} = ${namespace};`,
+      namespace => `import $${escape(namespace)} = ${escape(namespace)};`,
     );
 
     const contents = render`
@@ -104,7 +105,7 @@ class Generator {
       declare module "${namespaceRelativePath}" {
         ${this.generateModule(scope, declaration)}
       }
-      export { ${declaration.name} } from "${namespaceRelativePath}";
+      export { ${escape(declaration.name)} } from "${namespaceRelativePath}";
     `;
   }
 
@@ -127,7 +128,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      namespace ${declaration.name} {
+      namespace ${escape(declaration.name)} {
         ${declaration.content.map(child =>
           this.generateModuleChild(childScope, child),
         )}
@@ -203,7 +204,10 @@ class Generator {
         typeName = `${member.module}::${member.declaration.name}`;
       }
 
-      tsType = typeName.replace(/::/g, '.');
+      tsType = typeName
+        .split('::')
+        .map(escape)
+        .join('.');
 
       // we need to alias a root namespace where this type belongs
       // in case when generated definition is put to a different namespace with
@@ -215,7 +219,7 @@ class Generator {
         scope.names.hasOwnProperty(typeTopLevelModule)
       ) {
         this.namespacesToAlias.add(typeTopLevelModule);
-        tsType = `_${tsType}`;
+        tsType = `$${tsType}`;
       }
     }
 
@@ -285,7 +289,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      class ${declaration.name}${base && ` extends ${base}`} {
+      class ${escape(declaration.name)}${base && ` extends ${base}`} {
         ${this.generateClassConstructor(scope, declaration)}
 
         ${fields.map(field => this.generateClassField(scope, field))}
@@ -337,7 +341,7 @@ class Generator {
             external,
           );
           parameters.push(render`
-            ${child.name}?: ${dataType}${child.optional != null &&
+            ${escape(child.name)}?: ${dataType}${child.optional != null &&
             ' | undefined'}
           `);
         }
@@ -354,7 +358,7 @@ class Generator {
     const dataType = this.generateDataType(scope, child.dataType);
     return render`
       ${this.generateDocComment(child)}
-      ${child.name}${child.optional != null && '?'}: ${dataType};
+      ${escape(child.name)}${child.optional != null && '?'}: ${dataType};
     `;
   }
 
@@ -422,7 +426,7 @@ class Generator {
 
       return render`
         ${this.generateDocComment(declaration)}
-        interface ${declaration.name}${extendsString} {
+        interface ${escape(declaration.name)}${extendsString} {
           ${allOperations.map(({scope, operation, external}) =>
             this.generateLocalOperation(scope, operation, external),
           )}
@@ -443,7 +447,7 @@ class Generator {
 
       return render`
         ${this.generateDocComment(declaration)}
-        abstract class ${declaration.name}
+        abstract class ${escape(declaration.name)}
         extends Ice.Object
         ${implementsString} {
           ${allOperations.map(({scope, operation, external}) =>
@@ -452,7 +456,7 @@ class Generator {
         }
 
         ${this.generateDocComment(declaration)}
-        class ${declaration.name}Prx
+        class ${escape(declaration.name)}Prx
         extends Ice.ObjectPrx
         ${proxyImplementsString} {
           ${allOperations.map(({scope, operation, external}) =>
@@ -476,7 +480,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(operation)}
-      ${operation.name}(${parameters}): ${returnType};
+      ${escape(operation.name)}(${parameters}): ${returnType};
     `;
   }
 
@@ -505,13 +509,13 @@ class Generator {
       if (parameter.optional != null) {
         if (seenRequired) {
           reversedParamStrings.push(
-            `${parameter.name}: ${dataType} | undefined`,
+            `${escape(parameter.name)}: ${dataType} | undefined`,
           );
         } else {
-          reversedParamStrings.push(`${parameter.name}?: ${dataType}`);
+          reversedParamStrings.push(`${escape(parameter.name)}?: ${dataType}`);
         }
       } else {
-        reversedParamStrings.push(`${parameter.name}: ${dataType}`);
+        reversedParamStrings.push(`${escape(parameter.name)}: ${dataType}`);
         seenRequired = true;
       }
     }
@@ -534,7 +538,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(operation)}
-      abstract ${operation.name}(${parameters}): ${resultType};
+      abstract ${escape(operation.name)}(${parameters}): ${resultType};
     `;
   }
 
@@ -559,7 +563,7 @@ class Generator {
         external,
       );
 
-      let paramString = `${parameter.name}: ${dataType}`;
+      let paramString = `${escape(parameter.name)}: ${dataType}`;
 
       if (parameter.optional != null) {
         paramString += ' | undefined';
@@ -589,7 +593,7 @@ class Generator {
   ): string {
     return render`
       ${this.generateDocComment(operation)}
-      ${operation.name}(${this.generateProxyParameters(
+      ${escape(operation.name)}(${this.generateProxyParameters(
       scope,
       operation,
       external,
@@ -627,13 +631,13 @@ class Generator {
       if (parameter.optional != null) {
         if (seenRequired) {
           reversedParamStrings.push(
-            `${parameter.name}: ${dataType} | undefined`,
+            `${escape(parameter.name)}: ${dataType} | undefined`,
           );
         } else {
-          reversedParamStrings.push(`${parameter.name}?: ${dataType}`);
+          reversedParamStrings.push(`${escape(parameter.name)}?: ${dataType}`);
         }
       } else {
-        reversedParamStrings.push(`${parameter.name}: ${dataType}`);
+        reversedParamStrings.push(`${escape(parameter.name)}: ${dataType}`);
         seenRequired = true;
       }
     }
@@ -699,7 +703,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      class ${declaration.name} extends ${base} {
+      class ${escape(declaration.name)} extends ${base} {
         ${this.generateClassConstructor(scope, declaration)}
 
         ${declaration.content.map(field =>
@@ -719,16 +723,16 @@ class Generator {
     for (const field of declaration.fields) {
       const dataType = this.generateDataType(scope, field.dataType);
 
-      parameters.push(`${field.name}?: ${dataType}`);
+      parameters.push(`${escape(field.name)}?: ${dataType}`);
       fields.push(render`
         ${this.generateDocComment(field)}
-        ${field.name}: ${dataType};
+        ${escape(field.name)}: ${dataType};
       `);
     }
 
     return render`
       ${this.generateDocComment(declaration)}
-      class ${declaration.name} implements Ice.Struct {
+      class ${escape(declaration.name)} implements Ice.Struct {
         constructor(${parameters.join(', ')});
 
         ${fields}
@@ -744,21 +748,23 @@ class Generator {
     scope: TypeScope,
     declaration: slice2json.EnumDeclaration,
   ): string {
-    const names = declaration.enums.map(element => `'${element.name}'`);
-    const namesType = `${declaration.name}Name`;
+    const className = escape(declaration.name);
+    const names = declaration.enums.map(element => `'${escape(element.name)}'`);
+    const namesType = `${className}Name`;
 
     return render`
       type ${namesType} = ${names.join(' | ')};
 
       ${this.generateDocComment(declaration)}
-      class ${declaration.name}<Name extends ${namesType} = ${namesType}>
+      class ${className}<Name extends ${namesType} = ${namesType}>
       extends Ice.EnumBase<Name> {
-        ${declaration.enums.map(
-          element => render`
+        ${declaration.enums.map(element => {
+          const name = escape(element.name);
+          return render`
             ${this.generateDocComment(element)}
-            static ${element.name}: ${declaration.name}<'${element.name}'>;
-          `,
-        )}
+            static ${name}: ${className}<'${name}'>;
+          `;
+        })}
       }
     `;
   }
@@ -770,7 +776,7 @@ class Generator {
     if (declaration.dataType === 'byte') {
       return render`
         ${this.generateDocComment(declaration)}
-        type ${declaration.name} = Uint8Array;
+        type ${escape(declaration.name)} = Uint8Array;
       `;
     }
 
@@ -778,7 +784,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      type ${declaration.name} = Array<${dataType}>;
+      type ${escape(declaration.name)} = Array<${dataType}>;
     `;
   }
 
@@ -796,7 +802,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      type ${declaration.name} = ${container}<${keyType}, ${valueType}>;
+      type ${escape(declaration.name)} = ${container}<${keyType}, ${valueType}>;
     `;
   }
 
@@ -808,7 +814,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      const ${declaration.name}: ${dataType};
+      const ${escape(declaration.name)}: ${dataType};
     `;
   }
 }

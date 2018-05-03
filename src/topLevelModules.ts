@@ -1,7 +1,8 @@
 import * as commondir from 'commondir';
 import * as unixify from 'unixify';
-import {LoadedSlices} from './load';
 import * as path from 'path';
+import {LoadedSlices} from './load';
+import {escape} from './escape';
 
 /**
  * Slice names for each top-level Ice module.
@@ -61,5 +62,5 @@ export function getNamespaceFilePaths(namespaceUsages: {
 
 /** @internal */
 export function generateNamespace(module: string) {
-  return `export namespace ${module} {}`;
+  return `export namespace ${escape(module)} {}`;
 }

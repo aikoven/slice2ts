@@ -30,6 +30,7 @@ describe('generate typings', () => {
         namespaceFilePaths,
         [],
         true,
+        false,
       );
       expect(typings).toMatchSnapshot();
     }
@@ -57,8 +58,37 @@ describe('generate typings', () => {
         namespaceFilePaths,
         [],
         false,
+        false,
       );
       expect(typings).toMatchSnapshot();
     }
   });
+});
+
+test('keywords shadowing', async () => {
+  const sliceDir = 'fixtures';
+
+  const paths = await resolveGlobs([`${sliceDir}/Keywords.ice`]);
+
+  const {inputNames, slices} = await loadSlices(paths, [
+    path.resolve(sliceDir),
+  ]);
+
+  const topLevelModules = getTopLevelModules(inputNames, slices);
+
+  const namespaceFilePaths = getNamespaceFilePaths(topLevelModules);
+  const typeScope = createTypeScope(slices);
+
+  for (const name of inputNames) {
+    const typings = await generateTypings(
+      typeScope,
+      name,
+      slices,
+      namespaceFilePaths,
+      [],
+      false,
+      false,
+    );
+    expect(typings).toMatchSnapshot();
+  }
 });

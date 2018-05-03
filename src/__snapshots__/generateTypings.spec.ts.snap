@@ -14022,10 +14022,10 @@ exports[`generate typings module shadowing 2`] = `
 "import { Ice } from \\"ice\\";
 import { A } from \\"A\\";
 
-import _A = A;
+import $A = A;
 
 declare module \\"./B.ns\\" {
-  namespace B { namespace A { class Child extends _A.SomeClass {} } }
+  namespace B { namespace A { class Child extends $A.SomeClass {} } }
 }
 export { B } from \\"./B.ns\\";
 "
@@ -14035,11 +14035,53 @@ exports[`generate typings module shadowing 3`] = `
 "import { Ice } from \\"ice\\";
 import { A } from \\"A\\";
 
-import _A = A;
+import $A = A;
 
 declare module \\"./B.ns\\" {
-  namespace B { class Child extends _A.SomeClass {} }
+  namespace B { class Child extends $A.SomeClass {} }
 }
 export { B } from \\"./B.ns\\";
+"
+`;
+
+exports[`keywords shadowing 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./Default.ns\\" {
+  namespace _Default {
+    class S implements Ice.Struct {
+      constructor(_import?: number);
+
+      _import: number;
+
+      clone(): this;
+      equals(other: this): boolean;
+      hashCode(): number;
+    }
+
+    class C extends Ice.Value {
+      constructor(_import?: number);
+
+      _import: number;
+    }
+
+    abstract class I extends Ice.Object {
+      abstract _import(current: Ice.Current): Ice.OperationResult<void>;
+    }
+
+    class IPrx extends Ice.ObjectPrx {
+      _import(ctx?: Ice.Context): Ice.AsyncResult<void>;
+    }
+
+    type EName = \\"_TRY\\";
+
+    class E<Name extends EName = EName> extends Ice.EnumBase<Name> {
+      static _TRY: E<\\"_TRY\\">;
+    }
+
+    type _Catch = Ice.HashMap<S, number>;
+  }
+}
+export { _Default } from \\"./Default.ns\\";
 "
 `;

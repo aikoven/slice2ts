@@ -1,5 +1,6 @@
-import {LoadedSlices} from './load';
 import * as unixify from 'unixify';
+import {LoadedSlices} from './load';
+import {escape} from './escape';
 
 const builtInFolders = new Set([
   'Ice',
@@ -58,9 +59,11 @@ export function generateImports(
     } else {
       const importPath = prefix + name;
 
+      const escapedNamespaces = namespaces.map(escape);
+
       const importString =
         namespaces.length > 0
-          ? `import { ${namespaces.join(', ')} } from "${importPath}";`
+          ? `import { ${escapedNamespaces.join(', ')} } from "${importPath}";`
           : `import "${importPath}";`;
 
       imports.push(importString);
