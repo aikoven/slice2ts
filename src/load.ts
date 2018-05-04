@@ -43,8 +43,11 @@ export async function loadSlices(
 
     for (const rootDir of absRootDirs) {
       if (absPath.startsWith(rootDir + path.sep)) {
-        slicePath = absPath.substring(rootDir.length + 1);
-        break;
+        const sliceRelativePath = absPath.substring(rootDir.length + 1);
+
+        if (slicePath == null || slicePath.length > sliceRelativePath.length) {
+          slicePath = sliceRelativePath;
+        }
       }
     }
 
