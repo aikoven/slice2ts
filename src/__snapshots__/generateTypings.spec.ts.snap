@@ -14186,3 +14186,35 @@ declare module \\"./B.ns\\" {
 export { B } from \\"./B.ns\\";
 "
 `;
+
+exports[`generate typings types override 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./Overrides.ns\\" {
+  namespace Overrides {
+    class Base extends Ice.Value {}
+
+    class A extends Base {}
+
+    class B extends Base {}
+
+    abstract class I extends Ice.Object {
+      abstract operation(
+        arg: A | B,
+        arg: A | B | undefined,
+        current: Ice.Current
+      ): Ice.OperationResult<A | B>;
+    }
+
+    class IPrx extends Ice.ObjectPrx {
+      operation(
+        arg: A | B,
+        arg?: A | B,
+        ctx?: Ice.Context
+      ): Ice.AsyncResult<A | B>;
+    }
+  }
+}
+export { Overrides } from \\"./Overrides.ns\\";
+"
+`;

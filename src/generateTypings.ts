@@ -557,11 +557,9 @@ class Generator {
         continue;
       }
 
-      const dataType = this.generateDataType(
-        scope,
-        parameter.dataType,
-        external,
-      );
+      const dataType =
+        getTypeOverride(parameter.metadata) ||
+        this.generateDataType(scope, parameter.dataType, external);
 
       let paramString = `${escape(parameter.name)}: ${dataType}`;
 
@@ -622,11 +620,9 @@ class Generator {
     let seenRequired = false;
 
     for (const parameter of reversedParameters) {
-      const dataType = this.generateDataType(
-        scope,
-        parameter.dataType,
-        external,
-      );
+      const dataType =
+        getTypeOverride(parameter.metadata) ||
+        this.generateDataType(scope, parameter.dataType, external);
 
       if (parameter.optional != null) {
         if (seenRequired) {
@@ -657,20 +653,13 @@ class Generator {
       parameter => parameter.out,
     );
 
+    const returnType =
+      getTypeOverride(operation.metadata) ||
+      this.generateDataType(scope, operation.returnType, external);
+
     if (outParameters.length === 0) {
-      const returnType = this.generateDataType(
-        scope,
-        operation.returnType,
-        external,
-      );
       return operation.returnOptional ? `${returnType} | void` : returnType;
     } else {
-      const returnType = this.generateDataType(
-        scope,
-        operation.returnType,
-        external,
-      );
-
       const returnTypes: string[] = [
         operation.returnOptional ? `${returnType} | undefined` : returnType,
       ];
@@ -829,4 +818,20 @@ class Generator {
       const ${escape(declaration.name)}: ${dataType};
     `;
   }
+}
+
+function getTypeOverride(metadata: string[] | undefined): string | null {
+  if (metadata == null) {
+    return null;
+  }
+
+  for (const meta of metadata) {
+    const match = meta.match(/^ts:type:(.+)$/);
+
+    if (match) {
+      return match[1];
+    }
+  }
+
+  return null;
 }

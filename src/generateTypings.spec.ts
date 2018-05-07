@@ -48,4 +48,9 @@ describe('generate typings', () => {
     const sliceDir = 'fixtures';
     return testOutput(sliceDir, [`${sliceDir}/Keywords.ice`]);
   });
+
+  test.only('types override', () => {
+    const sliceDir = 'fixtures';
+    return testOutput(sliceDir, [`${sliceDir}/override.ice`]);
+  });
 });

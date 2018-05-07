@@ -80,6 +80,43 @@ Options interface:
 }
 ```
 
+## Metadata Directives
+
+* `ts:type:<type>`
+
+  Overrides parameter or return type for operations:
+
+  ```slice
+  class AbstractBase {};
+  class A extends AbstractBase {};
+  class B extends AbstractBase {};
+
+  interface Test {
+    ["ts:type:A | B"]
+    AbstractBase op1();
+
+    void op2(["ts:type:A | B"] AbstractBase arg);
+  }
+  ```
+
+  Outputs:
+
+  ```ts
+  class AbstractBase extends Ice.Value {}
+  class A extends AbstractBase {}
+  class B extends AbstractBase {}
+
+  abstract class Test extends Ice.Object {
+    abstract op1(current: Ice.Current): Ice.OperationResult<A | B>;
+    abstract op2(arg: A | B, current: Ice.Current): Ice.OperationResult<void>;
+  }
+
+  abstract class TestPrx extends Ice.ObjectPrx {
+    op1(ctx?: Ice.Context): Ice.AsyncResult<A | B>;
+    op2(arg: A | B, ctx?: Ice.Context): Ice.AsyncResult<void>;
+  }
+  ```
+
 [npm-image]: https://badge.fury.io/js/slice2ts.svg
 [npm-url]: https://badge.fury.io/js/slice2ts
 [travis-image]: https://travis-ci.org/aikoven/slice2ts.svg?branch=master
