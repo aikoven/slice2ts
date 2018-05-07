@@ -14106,43 +14106,7 @@ export { IceMX } from \\"../IceMX.ns\\";
 "
 `;
 
-exports[`generate typings module shadowing 1`] = `
-"import { Ice } from \\"ice\\";
-
-declare module \\"./A.ns\\" {
-  namespace A { class SomeClass extends Ice.Value {} }
-}
-export { A } from \\"./A.ns\\";
-"
-`;
-
-exports[`generate typings module shadowing 2`] = `
-"import { Ice } from \\"ice\\";
-import { A } from \\"A\\";
-
-import $A = A;
-
-declare module \\"./B.ns\\" {
-  namespace B { namespace A { class Child extends $A.SomeClass {} } }
-}
-export { B } from \\"./B.ns\\";
-"
-`;
-
-exports[`generate typings module shadowing 3`] = `
-"import { Ice } from \\"ice\\";
-import { A } from \\"A\\";
-
-import $A = A;
-
-declare module \\"./B.ns\\" {
-  namespace B { class Child extends $A.SomeClass {} }
-}
-export { B } from \\"./B.ns\\";
-"
-`;
-
-exports[`keywords shadowing 1`] = `
+exports[`generate typings keywords shadowing 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Default.ns\\" {
@@ -14184,5 +14148,41 @@ declare module \\"./Default.ns\\" {
   }
 }
 export { _Default } from \\"./Default.ns\\";
+"
+`;
+
+exports[`generate typings module shadowing 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./A.ns\\" {
+  namespace A { class SomeClass extends Ice.Value {} }
+}
+export { A } from \\"./A.ns\\";
+"
+`;
+
+exports[`generate typings module shadowing 2`] = `
+"import { Ice } from \\"ice\\";
+import { A } from \\"A\\";
+
+import $A = A;
+
+declare module \\"./B.ns\\" {
+  namespace B { namespace A { class Child extends $A.SomeClass {} } }
+}
+export { B } from \\"./B.ns\\";
+"
+`;
+
+exports[`generate typings module shadowing 3`] = `
+"import { Ice } from \\"ice\\";
+import { A } from \\"A\\";
+
+import $A = A;
+
+declare module \\"./B.ns\\" {
+  namespace B { class Child extends $A.SomeClass {} }
+}
+export { B } from \\"./B.ns\\";
 "
 `;

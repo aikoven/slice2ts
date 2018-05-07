@@ -7,68 +7,8 @@ import {generateTypings} from './generateTypings';
 
 jest.setTimeout(30000);
 
-describe('generate typings', () => {
-  test('built-in slices', async () => {
-    const sliceDir = 'node_modules/slice2js/ice/slice';
-
-    const paths = await resolveGlobs([`${sliceDir}/**/*.ice`]);
-
-    const {inputNames, slices} = await loadSlices(paths, [
-      path.resolve(sliceDir),
-    ]);
-
-    const topLevelModules = getTopLevelModules(inputNames, slices);
-
-    const namespaceFilePaths = getNamespaceFilePaths(topLevelModules);
-    const typeScope = createTypeScope(slices);
-
-    for (const name of inputNames) {
-      const typings = await generateTypings(
-        typeScope,
-        name,
-        slices,
-        namespaceFilePaths,
-        [],
-        true,
-        false,
-      );
-      expect(typings).toMatchSnapshot();
-    }
-  });
-
-  test('module shadowing', async () => {
-    const sliceDir = 'fixtures/module-shadowing';
-
-    const paths = await resolveGlobs([`${sliceDir}/*.ice`]);
-
-    const {inputNames, slices} = await loadSlices(paths, [
-      path.resolve(sliceDir),
-    ]);
-
-    const topLevelModules = getTopLevelModules(inputNames, slices);
-
-    const namespaceFilePaths = getNamespaceFilePaths(topLevelModules);
-    const typeScope = createTypeScope(slices);
-
-    for (const name of inputNames) {
-      const typings = await generateTypings(
-        typeScope,
-        name,
-        slices,
-        namespaceFilePaths,
-        [],
-        false,
-        false,
-      );
-      expect(typings).toMatchSnapshot();
-    }
-  });
-});
-
-test('keywords shadowing', async () => {
-  const sliceDir = 'fixtures';
-
-  const paths = await resolveGlobs([`${sliceDir}/Keywords.ice`]);
+async function testOutput(sliceDir: string, globs: string[]) {
+  const paths = await resolveGlobs(globs);
 
   const {inputNames, slices} = await loadSlices(paths, [
     path.resolve(sliceDir),
@@ -86,9 +26,26 @@ test('keywords shadowing', async () => {
       slices,
       namespaceFilePaths,
       [],
-      false,
+      true,
       false,
     );
     expect(typings).toMatchSnapshot();
   }
+}
+
+describe('generate typings', () => {
+  test('built-in slices', () => {
+    const sliceDir = 'node_modules/slice2js/ice/slice';
+    return testOutput(sliceDir, [`${sliceDir}/**/*.ice`]);
+  });
+
+  test('module shadowing', () => {
+    const sliceDir = 'fixtures/module-shadowing';
+    return testOutput(sliceDir, [`${sliceDir}/*.ice`]);
+  });
+
+  test('keywords shadowing', () => {
+    const sliceDir = 'fixtures';
+    return testOutput(sliceDir, [`${sliceDir}/Keywords.ice`]);
+  });
 });
