@@ -111,7 +111,7 @@ Options interface:
     abstract op2(arg: A | B, current: Ice.Current): Ice.OperationResult<void>;
   }
 
-  abstract class TestPrx extends Ice.ObjectPrx {
+  class TestPrx extends Ice.ObjectPrx {
     op1(ctx?: Ice.Context): Ice.AsyncResult<A | B>;
     op2(arg: A | B, ctx?: Ice.Context): Ice.AsyncResult<void>;
   }
