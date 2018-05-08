@@ -84,19 +84,33 @@ Options interface:
 
 * `ts:type:<type>`
 
-  Overrides parameter or return type for operations:
+  Overrides generated type for fields, operation parameters or operation return
+  values:
 
   ```slice
   class AbstractBase {};
   class A extends AbstractBase {};
   class B extends AbstractBase {};
 
-  interface Test {
-    ["ts:type:A | B"]
-    AbstractBase op1();
+  struct S {
+    ["ts:type:A|B"]
+    AbstractBase field;
+  };
 
-    void op2(["ts:type:A | B"] AbstractBase arg);
-  }
+  class C {
+    ["ts:type:A|B"]
+    AbstractBase field1;
+
+    ["ts:type:A|B"]
+    optional(1) AbstractBase field2;
+  };
+
+  interface I {
+    ["ts:type:A|B"] AbstractBase operation(
+      ["ts:type:A|B"] AbstractBase arg1,
+      ["ts:type:A|B"] optional(1) AbstractBase arg2
+    );
+  };
   ```
 
   Outputs:
@@ -106,14 +120,35 @@ Options interface:
   class A extends AbstractBase {}
   class B extends AbstractBase {}
 
-  abstract class Test extends Ice.Object {
-    abstract op1(current: Ice.Current): Ice.OperationResult<A | B>;
-    abstract op2(arg: A | B, current: Ice.Current): Ice.OperationResult<void>;
+  class S implements Ice.Struct {
+    constructor(field?: A | B);
+
+    field: A | B;
+
+    clone(): this;
+    equals(other: this): boolean;
+    hashCode(): number;
   }
 
-  class TestPrx extends Ice.ObjectPrx {
-    op1(ctx?: Ice.Context): Ice.AsyncResult<A | B>;
-    op2(arg: A | B, ctx?: Ice.Context): Ice.AsyncResult<void>;
+  class C extends Ice.Value {
+    constructor(field1?: A | B, field2?: A | B | undefined);
+
+    field1: A | B;
+    field2?: A | B;
+  }
+
+  abstract class I extends Ice.Object {
+    abstract operation(
+      arg1: A | B, arg2: A | B | undefined,
+      current: Ice.Current,
+    ): Ice.OperationResult<A | B>;
+  }
+
+  class IPrx extends Ice.ObjectPrx {
+    operation(
+      arg1: A | B, arg2?: A | B,
+      ctx?: Ice.Context,
+    ): Ice.AsyncResult<A | B>;
   }
   ```
 

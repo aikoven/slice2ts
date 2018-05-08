@@ -335,11 +335,9 @@ class Generator {
 
       for (const child of chainMember.declaration.content) {
         if (child.type === 'field') {
-          const dataType = this.generateDataType(
-            chainMember.scope,
-            child.dataType,
-            external,
-          );
+          const dataType =
+            getTypeOverride(child.metadata) ||
+            this.generateDataType(chainMember.scope, child.dataType, external);
           parameters.push(render`
             ${escape(child.name)}?: ${dataType}${child.optional != null &&
             ' | undefined'}
@@ -355,7 +353,9 @@ class Generator {
     scope: TypeScope,
     child: slice2json.ClassFieldDeclaration,
   ): string {
-    const dataType = this.generateDataType(scope, child.dataType);
+    const dataType =
+      getTypeOverride(child.metadata) ||
+      this.generateDataType(scope, child.dataType);
     return render`
       ${this.generateDocComment(child)}
       ${escape(child.name)}${child.optional != null && '?'}: ${dataType};
@@ -710,7 +710,9 @@ class Generator {
     const fields: string[] = [];
 
     for (const field of declaration.fields) {
-      const dataType = this.generateDataType(scope, field.dataType);
+      const dataType =
+        getTypeOverride(field.metadata) ||
+        this.generateDataType(scope, field.dataType);
 
       parameters.push(`${escape(field.name)}?: ${dataType}`);
       fields.push(render`

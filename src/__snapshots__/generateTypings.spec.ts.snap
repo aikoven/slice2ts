@@ -14192,24 +14192,41 @@ exports[`generate typings types override 1`] = `
 
 declare module \\"./Overrides.ns\\" {
   namespace Overrides {
-    class Base extends Ice.Value {}
+    class AbstractBase extends Ice.Value {}
 
-    class A extends Base {}
+    class A extends AbstractBase {}
 
-    class B extends Base {}
+    class B extends AbstractBase {}
+
+    class S implements Ice.Struct {
+      constructor(field?: A | B);
+
+      field: A | B;
+
+      clone(): this;
+      equals(other: this): boolean;
+      hashCode(): number;
+    }
+
+    class C extends Ice.Value {
+      constructor(field1?: A | B, field2?: A | B | undefined);
+
+      field1: A | B;
+      field2?: A | B;
+    }
 
     abstract class I extends Ice.Object {
       abstract operation(
-        arg: A | B,
-        arg: A | B | undefined,
+        arg1: A | B,
+        arg2: A | B | undefined,
         current: Ice.Current
       ): Ice.OperationResult<A | B>;
     }
 
     class IPrx extends Ice.ObjectPrx {
       operation(
-        arg: A | B,
-        arg?: A | B,
+        arg1: A | B,
+        arg2?: A | B,
         ctx?: Ice.Context
       ): Ice.AsyncResult<A | B>;
     }
