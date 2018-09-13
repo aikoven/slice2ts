@@ -1072,7 +1072,6 @@ declare module \\"./Ice.ns\\" {
      * @see Logger
      * @see ObjectAdapter
      * @see Properties
-     * @see ObjectFactory
      * @see ValueFactory
      */
     interface Communicator {
@@ -1088,15 +1087,14 @@ declare module \\"./Ice.ns\\" {
       destroy(): void;
 
       /**
-       * <p>Shuts down this communicator's server functionality, which
-       * includes the deactivation of all object adapters. (Attempts to use
-       * a deactivated object adapter raise {@link ObjectAdapterDeactivatedException}.)
-       * Subsequent calls to {@link #shutdown} are ignored.</p>
+       * Shuts down this communicator's server functionality, which
+       * includes the deactivation of all object adapters. Attempts to use a
+       * deactivated object adapter raise ObjectAdapterDeactivatedException.
+       * Subsequent calls to shutdown are ignored.
        *
-       * <p class=\\"Note\\"> After {@link #shutdown} returns, no new requests are
-       * processed. However, requests that have been started before
-       * {@link #shutdown} was called might still be active. You can use
-       * {@link #waitForShutdown} to wait for the completion of all
+       * After shutdown returns, no new requests are processed. However, requests
+       * that have been started before shutdown was called might still be active.
+       * You can use {@link #waitForShutdown} to wait for the completion of all
        * requests.
        *
        * @see #destroy
@@ -1109,15 +1107,14 @@ declare module \\"./Ice.ns\\" {
        * Wait until the application has called {@link #shutdown} (or {@link #destroy}).
        * On the server side, this operation blocks the calling thread
        * until all currently-executing operations have completed.
-       * On the client side, the operation simply block until another
+       * On the client side, the operation simply blocks until another
        * thread has called {@link #shutdown} or {@link #destroy}.
        *
-       * <p>A typical use of this operation is to call it
-       * from the main thread, which then waits until some other thread
-       * calls {@link #shutdown}. After shut-down is complete, the main thread
-       * returns and can do some cleanup work before it finally calls
-       * {@link #destroy} to shut down the client functionality, and then
-       * exits the application.
+       * A typical use of this operation is to call it from the main thread,
+       * which then waits until some other thread calls {@link #shutdown}.
+       * After shut-down is complete, the main thread returns and can do some
+       * cleanup work before it finally calls {@link #destroy} to shut down
+       * the client functionality, and then exits the application.
        *
        * @see #shutdown
        * @see #destroy
@@ -1141,10 +1138,9 @@ declare module \\"./Ice.ns\\" {
        * having an identity with a name \\"MyObject\\" and a category
        * \\"MyCategory\\", with the server running on host \\"some_host\\", port
        * 10000. If the stringified proxy does not parse correctly, the
-       * operation throws one of {@link ProxyParseException},
-       * {@link EndpointParseException}, or {@link IdentityParseException}.
-       * An appendix in the Ice manual provides a detailed description
-       * of the syntax supported by stringified proxies.
+       * operation throws one of ProxyParseException, EndpointParseException,
+       * or IdentityParseException. Refer to the Ice manual for a detailed
+       * description of the syntax supported by stringified proxies.
        *
        * @param str The stringified proxy to convert into a proxy.
        *
@@ -1198,7 +1194,7 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * Convert a string into an identity. If the string does not parse
-       * correctly, the operation throws {@link IdentityParseException}.
+       * correctly, the operation throws IdentityParseException.
        *
        * @param str The string to convert into an identity.
        *
@@ -1220,16 +1216,16 @@ declare module \\"./Ice.ns\\" {
       identityToString(ident: Identity): string;
 
       /**
-       * <p>Create a new object adapter. The endpoints for the object
-       * adapter are taken from the property <tt><em>name</em>.Endpoints</tt>.</p>
+       * Create a new object adapter. The endpoints for the object
+       * adapter are taken from the property <tt><em>name</em>.Endpoints</tt>.
        *
-       * <p>It is legal to create an object adapter with the empty string as
+       * It is legal to create an object adapter with the empty string as
        * its name. Such an object adapter is accessible via bidirectional
        * connections or by collocated invocations that originate from the
-       * same communicator as is used by the adapter.</p>
+       * same communicator as is used by the adapter.
        *
-       * <p>Attempts to create a named object adapter for which no configuration
-       * can be found raise {@link InitializationException}.
+       * Attempts to create a named object adapter for which no configuration
+       * can be found raise InitializationException.
        *
        * @param name The object adapter name.
        *
@@ -1242,12 +1238,12 @@ declare module \\"./Ice.ns\\" {
       createObjectAdapter(name: string): ObjectAdapter;
 
       /**
-       * <p>Create a new object adapter with endpoints. This operation sets
-       * the property <tt><em>name</em>.Endpoints</tt>,
-       * and then calls {@link #createObjectAdapter}. It is provided as a
-       * convenience function.</p>
+       * Create a new object adapter with endpoints. This operation sets
+       * the property <tt><em>name</em>.Endpoints</tt>, and then calls
+       * {@link #createObjectAdapter}. It is provided as a convenience
+       * function.
        *
-       * <p>Calling this operation with an empty name will result in a
+       * Calling this operation with an empty name will result in a
        * UUID being generated for the name.
        *
        * @param name The object adapter name.
@@ -1266,10 +1262,10 @@ declare module \\"./Ice.ns\\" {
       ): ObjectAdapter;
 
       /**
-       * <p>Create a new object adapter with a router. This operation
-       * creates a routed object adapter.</p>
+       * Create a new object adapter with a router. This operation
+       * creates a routed object adapter.
        *
-       * <p>Calling this operation with an empty name will result in a
+       * Calling this operation with an empty name will result in a
        * UUID being generated for the name.
        *
        * @param name The object adapter name.
@@ -1288,27 +1284,26 @@ declare module \\"./Ice.ns\\" {
       ): ObjectAdapter;
 
       /**
-       * <p>Add an object factory to this communicator. Installing a
+       * Add an object factory to this communicator. Installing a
        * factory with an id for which a factory is already registered
-       * throws {@link AlreadyRegisteredException}.</p>
+       * throws AlreadyRegisteredException.
        *
-       * <p>When unmarshaling an Ice object, the Ice run time reads the
+       * When unmarshaling an Ice object, the Ice run time reads the
        * most-derived type id off the wire and attempts to create an
        * instance of the type using a factory. If no instance is created,
        * either because no factory was found, or because all factories
        * returned nil, the behavior of the Ice run time depends on the
-       * format with which the object was marshaled:</p>
+       * format with which the object was marshaled:
        *
-       * <p>If the object uses the \\"sliced\\" format, Ice ascends the class
+       * If the object uses the \\"sliced\\" format, Ice ascends the class
        * hierarchy until it finds a type that is recognized by a factory,
        * or it reaches the least-derived type. If no factory is found that
-       * can create an instance, the run time throws
-       * {@link NoValueFactoryException}.</p>
+       * can create an instance, the run time throws NoValueFactoryException.
        *
-       * <p>If the object uses the \\"compact\\" format, Ice immediately raises
-       * {@link NoValueFactoryException}.</p>
+       * If the object uses the \\"compact\\" format, Ice immediately raises
+       * NoValueFactoryException.
        *
-       * <p>The following order is used to locate a factory for a type:</p>
+       * The following order is used to locate a factory for a type:
        *
        * <ol>
        *
@@ -1384,7 +1379,7 @@ declare module \\"./Ice.ns\\" {
        *
        * @return This communicator's observer resolver object.
        */
-      getObserver(): Ice.Instrumentation.CommunicatorObserver;
+      getObserver(): Instrumentation.CommunicatorObserver;
 
       /**
        * Get the default router this communicator.
@@ -1397,12 +1392,12 @@ declare module \\"./Ice.ns\\" {
       getDefaultRouter(): RouterPrx | null;
 
       /**
-       * <p>Set a default router for this communicator. All newly
+       * Set a default router for this communicator. All newly
        * created proxies will use this default router. To disable the
        * default router, null can be used. Note that this
-       * operation has no effect on existing proxies.</p>
+       * operation has no effect on existing proxies.
        *
-       * <p class=\\"Note\\">You can also set a router for an individual proxy
+       * You can also set a router for an individual proxy
        * by calling the operation <tt>ice_router</tt> on the proxy.
        *
        * @param rtr The default router to use for this communicator.
@@ -1424,16 +1419,15 @@ declare module \\"./Ice.ns\\" {
       getDefaultLocator(): LocatorPrx | null;
 
       /**
-       * <p>Set a default Ice locator for this communicator. All newly
+       * Set a default Ice locator for this communicator. All newly
        * created proxy and object adapters will use this default
        * locator. To disable the default locator, null can be used.
        * Note that this operation has no effect on existing proxies or
-       * object adapters.</p>
+       * object adapters.
        *
-       * <p class=\\"Note\\"> You can also set a locator for an individual proxy
-       * by calling the operation <tt>ice_locator</tt> on the proxy, or for an
-       * object adapter by calling the operation {@link ObjectAdapter#setLocator}
-       * on the object adapter.
+       * You can also set a locator for an individual proxy by calling the
+       * operation <tt>ice_locator</tt> on the proxy, or for an object adapter
+       * by calling {@link ObjectAdapter#setLocator} on the object adapter.
        *
        * @param loc The default locator to use for this communicator.
        *
@@ -1477,7 +1471,7 @@ declare module \\"./Ice.ns\\" {
        * If Ice.Admin.ServerId is set and the provided object adapter has a {@link Locator},
        * createAdmin registers the Admin's Process facet with the {@link Locator}'s {@link LocatorRegistry}.
        *
-       * <p>createAdmin call only be called once; subsequent calls raise {@link InitializationException}.</p>
+       * createAdmin call only be called once; subsequent calls raise InitializationException.
        *
        * @param adminAdapter The object adapter used to host the Admin object; if null and
        * Ice.Admin.Endpoints is set, create, activate and use the Ice.Admin object adapter.
@@ -1502,8 +1496,8 @@ declare module \\"./Ice.ns\\" {
        * * object created by getAdmin is {value of Ice.Admin.InstanceName}/admin, or {UUID}/admin
        * * when Ice.Admin.InstanceName is not set.
        * *
-       * * <p>If Ice.Admin.DelayCreation is 0 or not set, getAdmin is called by the communicator
-       * * initialization, after initialization of all plugins.</p>
+       * * If Ice.Admin.DelayCreation is 0 or not set, getAdmin is called by the communicator
+       * * initialization, after initialization of all plugins.
        *
        * * @return A proxy to the main (\\"\\") facet of the Admin object, or a null proxy if no
        * * Admin object is configured.
@@ -1515,7 +1509,7 @@ declare module \\"./Ice.ns\\" {
       /**
        * Add a new facet to the Admin object.
        * Adding a servant with a facet that is already registered
-       * throws {@link AlreadyRegisteredException}.
+       * throws AlreadyRegisteredException.
        *
        * @param servant The servant that implements the new Admin facet.
        * @param facet The name of the new Admin facet.
@@ -1525,7 +1519,7 @@ declare module \\"./Ice.ns\\" {
       /**
        * Remove the following facet to the Admin object.
        * Removing a facet that was not previously registered throws
-       * {@link NotRegisteredException}.
+       * NotRegisteredException.
        *
        * @param facet The name of the Admin facet.
        * @return The servant associated with this Admin facet.
@@ -1815,7 +1809,8 @@ declare module \\"./Ice.ns\\" {
        * @param adapter The object adapter that should be used by this
        * connection to dispatch requests. The object adapter must be
        * activated. When the object adapter is deactivated, it is
-       * automatically removed from the connection.
+       * automatically removed from the connection. Attempts to use a
+       * deactivated object adapter raise {@link ObjectAdapterDeactivatedException}
        *
        * @see #createProxy
        * @see #getAdapter
@@ -1877,7 +1872,8 @@ declare module \\"./Ice.ns\\" {
       /**
        * Set the active connection management parameters.
        *
-       * @param timeout The timeout value in milliseconds.
+       * @param timeout The timeout value in seconds. It must be positive or 0, if a negative
+       * value is given, an invalid argument exception will be raised.
        *
        * @param close The close condition
        *
@@ -2121,7 +2117,7 @@ declare module \\"./Ice.ns\\" {
         mode?: OperationMode,
         ctx?: Context,
         requestId?: number,
-        encoding?: Ice.EncodingVersion
+        encoding?: EncodingVersion
       );
 
       /**
@@ -2166,7 +2162,7 @@ declare module \\"./Ice.ns\\" {
       /**
        * The encoding version used to encode the input and output parameters.
        */
-      encoding: Ice.EncodingVersion;
+      encoding: EncodingVersion;
 
       clone(): this;
       equals(other: this): boolean;
@@ -2386,20 +2382,20 @@ declare module \\"./Ice.ns\\" {
         underlying?: EndpointInfo | null,
         timeout?: number,
         compress?: boolean,
-        rawEncoding?: Ice.EncodingVersion,
-        rawBytes?: Ice.ByteSeq
+        rawEncoding?: EncodingVersion,
+        rawBytes?: ByteSeq
       );
 
       /**
        * The encoding version of the opaque endpoint (to decode or
        * encode the rawBytes).
        */
-      rawEncoding: Ice.EncodingVersion;
+      rawEncoding: EncodingVersion;
 
       /**
        * The raw encoding of the opaque endpoint.
        */
-      rawBytes: Ice.ByteSeq;
+      rawBytes: ByteSeq;
     }
   }
 }
@@ -2522,11 +2518,11 @@ declare module \\"./Ice.ns\\" {
     /**
      * An interface to associate implict contexts with communicators.
      *
-     * <p>When you make a remote invocation without an explicit context parameter,
+     * When you make a remote invocation without an explicit context parameter,
      * Ice uses the per-proxy context (if any) combined with the <tt>ImplicitContext</tt>
-     * associated with the communicator.</p>
+     * associated with the communicator.
      *
-     * <p>Ice provides several implementations of <tt>ImplicitContext</tt>. The implementation
+     * Ice provides several implementations of <tt>ImplicitContext</tt>. The implementation
      * used depends on the value of the <tt>Ice.ImplicitContext</tt> property.
      * <dl>
      * <dt><tt>None</tt> (default)</dt>
@@ -2535,7 +2531,7 @@ declare module \\"./Ice.ns\\" {
      * <dd>The implementation maintains a context per thread.</dd>
      * <dt><tt>Shared</tt></dt>
      * <dd>The implementation maintains a single context shared by all threads.</dd>
-     * </dl><p>
+     * </dl>
      *
      * <tt>ImplicitContext</tt> also provides a number of operations to create, update or retrieve
      * an entry in the underlying context without first retrieving a copy of the entire
@@ -3977,7 +3973,7 @@ declare module \\"./Ice.ns\\" {
        * be found.
        */
       abstract findObjectById(
-        id: Ice.Identity,
+        id: Identity,
         current: Ice.Current
       ): Ice.OperationResult<Ice.ObjectPrx | null>;
 
@@ -4031,7 +4027,7 @@ declare module \\"./Ice.ns\\" {
        * be found.
        */
       findObjectById(
-        id: Ice.Identity,
+        id: Identity,
         ctx?: Ice.Context
       ): Ice.AsyncResult<Ice.ObjectPrx | null>;
 
@@ -5490,7 +5486,7 @@ declare module \\"./Ice.ns\\" {
        * absolute Slice type id, i.e., the id relative to the
        * unnamed top-level Slice module. For example, the absolute
        * Slice type id for interfaces of type <tt>Bar</tt> in the module
-       * <tt>Foo</tt> is <tt>::Foo::Bar</tt>.
+       * <tt>Foo</tt> is <tt>\\"::Foo::Bar\\"</tt>.
        *
        * <p class=\\"Note\\">The leading \\"<tt>::</tt>\\" is required.
        *
@@ -6106,14 +6102,11 @@ declare module \\"./Ice.ns\\" {
      */
     abstract class RemoteLogger extends Ice.Object {
       /**
-       * init is called by {@link LoggerAdmin#attachRemoteLogger} when a
-       * RemoteLogger proxy is attached.
+       * init is called by attachRemoteLogger when a RemoteLogger proxy is attached.
        *
-       * @param prefix The prefix of the associated local {@link Logger}
+       * @param prefix The prefix of the associated local Logger.
        *
        * @param logMessages Old log messages generated before \\"now\\".
-       *
-       * @see LoggerAdmin#attachRemoteLogger
        */
       abstract init(
         prefix: string,
@@ -6122,12 +6115,9 @@ declare module \\"./Ice.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * Log a {@link LogMessage}. Note that log may be called by {@link LoggerAdmin}
-       * before {@link RemoteLogger#init}.
+       * Log a LogMessage. Note that log may be called by LoggerAdmin before init.
        *
        * @param message The message to log.
-       *
-       * @see Logger
        */
       abstract log(
         message: LogMessage,
@@ -6142,14 +6132,11 @@ declare module \\"./Ice.ns\\" {
      */
     class RemoteLoggerPrx extends Ice.ObjectPrx {
       /**
-       * init is called by {@link LoggerAdmin#attachRemoteLogger} when a
-       * RemoteLogger proxy is attached.
+       * init is called by attachRemoteLogger when a RemoteLogger proxy is attached.
        *
-       * @param prefix The prefix of the associated local {@link Logger}
+       * @param prefix The prefix of the associated local Logger.
        *
        * @param logMessages Old log messages generated before \\"now\\".
-       *
-       * @see LoggerAdmin#attachRemoteLogger
        */
       init(
         prefix: string,
@@ -6158,20 +6145,15 @@ declare module \\"./Ice.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * Log a {@link LogMessage}. Note that log may be called by {@link LoggerAdmin}
-       * before {@link RemoteLogger#init}.
+       * Log a LogMessage. Note that log may be called by LoggerAdmin before init.
        *
        * @param message The message to log.
-       *
-       * @see Logger
        */
       log(message: LogMessage, ctx?: Ice.Context): Ice.AsyncResult<void>;
     }
 
     /**
-     * An exception thrown by {@link LoggerAdmin#attachRemoteLogger} to report
-     * that the provided {@link RemoteLogger} was previously attached to this
-     * {@link LoggerAdmin}.
+     * Thrown when the provided RemoteLogger was previously attached to a LoggerAdmin.
      */
     class RemoteLoggerAlreadyAttachedException extends Ice.UserException {}
 
@@ -6181,9 +6163,8 @@ declare module \\"./Ice.ns\\" {
      */
     abstract class LoggerAdmin extends Ice.Object {
       /**
-       * attachRemoteLogger is called to attach a {@link RemoteLogger} object to
-       * the local {@link Logger}.
-       * attachRemoteLogger calls init on the provided {@link RemoteLogger} proxy.
+       * Attaches a RemoteLogger object to the local logger.
+       * attachRemoteLogger calls init on the provided RemoteLogger proxy.
        *
        * @param prx A proxy to the remote logger.
        *
@@ -6195,7 +6176,7 @@ declare module \\"./Ice.ns\\" {
        * An empty list means no filtering (send all trace categories).
        *
        * @param messageMax The maximum number of log messages (of all types) to be provided
-       * to {@link RemoteLogger#init}. A negative value requests all messages available.
+       * to init. A negative value requests all messages available.
        *
        * @throws RemoteLoggerAlreadyAttachedException Raised if this remote logger is already
        * attached to this admin object.
@@ -6209,8 +6190,7 @@ declare module \\"./Ice.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * detachRemoteLogger is called to detach a {@link RemoteLogger} object from
-       * the local {@link Logger}.
+       * Detaches a RemoteLogger object from the local logger.
        *
        * @param prx A proxy to the remote logger.
        *
@@ -6222,7 +6202,7 @@ declare module \\"./Ice.ns\\" {
       ): Ice.OperationResult<boolean>;
 
       /**
-       * getLog retrieves log messages recently logged.
+       * Retrieves log messages recently logged.
        *
        * @param messageTypes The list of message types that the caller wishes to receive.
        * An empty list means no filtering (send all message types).
@@ -6234,7 +6214,7 @@ declare module \\"./Ice.ns\\" {
        * @param messageMax The maximum number of log messages (of all types) to be returned.
        * A negative value requests all messages available.
        *
-       * @param prefix The prefix of the associated local {@link Logger}.
+       * @param prefix The prefix of the associated local logger.
        *
        * @return The Log messages.
        */
@@ -6252,9 +6232,8 @@ declare module \\"./Ice.ns\\" {
      */
     class LoggerAdminPrx extends Ice.ObjectPrx {
       /**
-       * attachRemoteLogger is called to attach a {@link RemoteLogger} object to
-       * the local {@link Logger}.
-       * attachRemoteLogger calls init on the provided {@link RemoteLogger} proxy.
+       * Attaches a RemoteLogger object to the local logger.
+       * attachRemoteLogger calls init on the provided RemoteLogger proxy.
        *
        * @param prx A proxy to the remote logger.
        *
@@ -6266,7 +6245,7 @@ declare module \\"./Ice.ns\\" {
        * An empty list means no filtering (send all trace categories).
        *
        * @param messageMax The maximum number of log messages (of all types) to be provided
-       * to {@link RemoteLogger#init}. A negative value requests all messages available.
+       * to init. A negative value requests all messages available.
        *
        * @throws RemoteLoggerAlreadyAttachedException Raised if this remote logger is already
        * attached to this admin object.
@@ -6280,8 +6259,7 @@ declare module \\"./Ice.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * detachRemoteLogger is called to detach a {@link RemoteLogger} object from
-       * the local {@link Logger}.
+       * Detaches a RemoteLogger object from the local logger.
        *
        * @param prx A proxy to the remote logger.
        *
@@ -6293,7 +6271,7 @@ declare module \\"./Ice.ns\\" {
       ): Ice.AsyncResult<boolean>;
 
       /**
-       * getLog retrieves log messages recently logged.
+       * Retrieves log messages recently logged.
        *
        * @param messageTypes The list of message types that the caller wishes to receive.
        * An empty list means no filtering (send all message types).
@@ -6305,7 +6283,7 @@ declare module \\"./Ice.ns\\" {
        * @param messageMax The maximum number of log messages (of all types) to be returned.
        * A negative value requests all messages available.
        *
-       * @param prefix The prefix of the associated local {@link Logger}.
+       * @param prefix The prefix of the associated local logger.
        *
        * @return The Log messages.
        */
@@ -6631,9 +6609,9 @@ declare module \\"./Ice.ns\\" {
        * absolute Slice type id, i.e., the id relative to the
        * unnamed top-level Slice module. For example, the absolute
        * Slice type id for an interface <tt>Bar</tt> in the module
-       * <tt>Foo</tt> is <tt>::Foo::Bar</tt>.
+       * <tt>Foo</tt> is <tt>\\"::Foo::Bar\\"</tt>.
        *
-       * <p class=\\"Note\\">The leading \\"<tt>::</tt>\\" is required.
+       * Note that the leading \\"<tt>::</tt>\\" is required.
        *
        * @param type The value type.
        *
@@ -6652,27 +6630,25 @@ declare module \\"./Ice.ns\\" {
      */
     interface ValueFactoryManager {
       /**
-       * <p>Add a value factory. Attempting to add a
-       * factory with an id for which a factory is already registered
-       * throws {@link AlreadyRegisteredException}.</p>
+       * Add a value factory. Attempting to add a factory with an id for
+       * which a factory is already registered throws AlreadyRegisteredException.
        *
-       * <p>When unmarshaling an Ice value, the Ice run time reads the
+       * When unmarshaling an Ice value, the Ice run time reads the
        * most-derived type id off the wire and attempts to create an
        * instance of the type using a factory. If no instance is created,
        * either because no factory was found, or because all factories
        * returned nil, the behavior of the Ice run time depends on the
-       * format with which the value was marshaled:</p>
+       * format with which the value was marshaled:
        *
-       * <p>If the value uses the \\"sliced\\" format, Ice ascends the class
+       * If the value uses the \\"sliced\\" format, Ice ascends the class
        * hierarchy until it finds a type that is recognized by a factory,
        * or it reaches the least-derived type. If no factory is found that
-       * can create an instance, the run time throws
-       * {@link NoValueFactoryException}.</p>
+       * can create an instance, the run time throws NoValueFactoryException.
        *
-       * <p>If the value uses the \\"compact\\" format, Ice immediately raises
-       * {@link NoValueFactoryException}.</p>
+       * If the value uses the \\"compact\\" format, Ice immediately raises
+       * NoValueFactoryException.
        *
-       * <p>The following order is used to locate a factory for a type:</p>
+       * The following order is used to locate a factory for a type:
        *
        * <ol>
        *
@@ -6922,8 +6898,7 @@ declare module \\"./IceBox.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * Shut down all services. This causes {@link Service#stop} to be
-       * invoked on all configured services.
+       * Shut down all services. This causes stop to be invoked on all configured services.
        */
       abstract shutdown(current: Ice.Current): Ice.OperationResult<void>;
     }
@@ -6974,8 +6949,7 @@ declare module \\"./IceBox.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * Shut down all services. This causes {@link Service#stop} to be
-       * invoked on all configured services.
+       * Shut down all services. This causes stop to be invoked on all configured services.
        */
       shutdown(ctx?: Ice.Context): Ice.AsyncResult<void>;
     }
@@ -13623,7 +13597,7 @@ declare module \\"./IceStorm.ns\\" {
 
       /**
        * Get a proxy to a publisher object for this topic. To publish
-       * data to a topic, the publisher calls {@link Topic#getPublisher} and then
+       * data to a topic, the publisher calls getPublisher and then
        * casts to the topic type. An unchecked cast must be used on this
        * proxy. If a replicated IceStorm deployment is used this call
        * may return a replicated proxy.
@@ -13637,7 +13611,7 @@ declare module \\"./IceStorm.ns\\" {
       /**
        * Get a non-replicated proxy to a publisher object for this
        * topic. To publish data to a topic, the publisher calls
-       * {@link Topic#getPublisher} and then casts to the topic type. An unchecked
+       * getPublisher and then casts to the topic type. An unchecked
        * cast must be used on this proxy.
        *
        * @return A proxy to publish data on this topic.
@@ -13756,7 +13730,7 @@ declare module \\"./IceStorm.ns\\" {
 
       /**
        * Get a proxy to a publisher object for this topic. To publish
-       * data to a topic, the publisher calls {@link Topic#getPublisher} and then
+       * data to a topic, the publisher calls getPublisher and then
        * casts to the topic type. An unchecked cast must be used on this
        * proxy. If a replicated IceStorm deployment is used this call
        * may return a replicated proxy.
@@ -13768,7 +13742,7 @@ declare module \\"./IceStorm.ns\\" {
       /**
        * Get a non-replicated proxy to a publisher object for this
        * topic. To publish data to a topic, the publisher calls
-       * {@link Topic#getPublisher} and then casts to the topic type. An unchecked
+       * getPublisher and then casts to the topic type. An unchecked
        * cast must be used on this proxy.
        *
        * @return A proxy to publish data on this topic.
@@ -13900,8 +13874,7 @@ declare module \\"./IceStorm.ns\\" {
      */
     abstract class TopicManager extends Ice.Object {
       /**
-       * Create a new topic. The topic name must be unique, otherwise
-       * {@link TopicExists} is raised.
+       * Create a new topic. The topic name must be unique.
        *
        * @param name The name of the topic.
        *
@@ -13955,8 +13928,7 @@ declare module \\"./IceStorm.ns\\" {
      */
     class TopicManagerPrx extends Ice.ObjectPrx {
       /**
-       * Create a new topic. The topic name must be unique, otherwise
-       * {@link TopicExists} is raised.
+       * Create a new topic. The topic name must be unique.
        *
        * @param name The name of the topic.
        *

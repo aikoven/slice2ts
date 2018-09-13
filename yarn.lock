@@ -2548,9 +2548,9 @@ slash@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/slash/-/slash-1.0.0.tgz#c41f2f6c39fc16d1cd17ad4b5d896114ae470d55"
 
-slice2js@~3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/slice2js/-/slice2js-3.7.0.tgz#5887402d6ddc5c76715ed0527cfd588f2e3f6465"
+slice2js@~3.7.1:
+  version "3.7.1"
+  resolved "https://registry.yarnpkg.com/slice2js/-/slice2js-3.7.1.tgz#902067c74da1bcbed160e8a2ca097df65e06bc57"
 
 slice2json@^0.1.4:
   version "0.1.4"
