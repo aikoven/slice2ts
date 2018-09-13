@@ -2064,7 +2064,7 @@ declare module \\"./Ice.ns\\" {
 
     type HeaderDict = Map<string, string>;
     const HeaderDict: {
-      new (entries?: ReadonlyArray<[string, string]>): HeaderDict;
+      new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
     };
 
     /**
@@ -2120,7 +2120,7 @@ declare module \\"./Ice.ns\\" {
        * (QoS) parameters. Each operation on the client has a <tt>Context</tt> as
        * its implicit final parameter.
        */
-      new (entries?: ReadonlyArray<[string, string]>): Context;
+      new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
     };
 
     type OperationModeName = \\"Normal\\" | \\"Nonmutating\\" | \\"Idempotent\\";
@@ -2486,7 +2486,10 @@ declare module \\"./Ice.ns\\" {
       /**
        * A mapping from facet name to servant.
        */
-      new (entries?: ReadonlyArray<[string, Ice.Value | null]>): FacetMap;
+      new (entries?: ReadonlyArray<[string, Ice.Value | null]>): Map<
+        string,
+        Ice.Value | null
+      >;
     };
   }
 }
@@ -2527,7 +2530,7 @@ declare module \\"./Ice.ns\\" {
 
     type ObjectDict = Ice.HashMap<Identity, Ice.Value | null>;
     const ObjectDict: {
-      new (): ObjectDict;
+      new (): Ice.HashMap<Identity, Ice.Value | null>;
     };
 
     /**
@@ -4384,7 +4387,7 @@ declare module \\"../IceMX.ns\\" {
       /**
        * A dictionnary of strings to integers.
        */
-      new (entries?: ReadonlyArray<[string, number]>): StringIntDict;
+      new (entries?: ReadonlyArray<[string, number]>): Map<string, number>;
     };
 
     /**
@@ -4473,7 +4476,10 @@ declare module \\"../IceMX.ns\\" {
        * A metrics view is a dictionary of metrics map. The key of the
        * dictionary is the name of the metrics map.
        */
-      new (entries?: ReadonlyArray<[string, MetricsMap]>): MetricsView;
+      new (entries?: ReadonlyArray<[string, MetricsMap]>): Map<
+        string,
+        MetricsMap
+      >;
     };
 
     /**
@@ -5933,7 +5939,7 @@ declare module \\"./Ice.ns\\" {
        *
        * @see Properties#getPropertiesForPrefix
        */
-      new (entries?: ReadonlyArray<[string, string]>): PropertyDict;
+      new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
     };
 
     /**
@@ -6615,7 +6621,7 @@ declare module \\"./Ice.ns\\" {
        * allows verification at run time that client and server
        * use matching Slice definitions.
        */
-      new (entries?: ReadonlyArray<[string, string]>): SliceChecksumDict;
+      new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
     };
   }
 }
@@ -7234,9 +7240,10 @@ declare module \\"./IceGrid.ns\\" {
       /**
        * A dictionary of proxies.
        */
-      new (
-        entries?: ReadonlyArray<[string, Ice.ObjectPrx | null]>
-      ): StringObjectProxyDict;
+      new (entries?: ReadonlyArray<[string, Ice.ObjectPrx | null]>): Map<
+        string,
+        Ice.ObjectPrx | null
+      >;
     };
 
     /**
@@ -10481,7 +10488,7 @@ declare module \\"./IceGrid.ns\\" {
       /**
        * A mapping of string to string.
        */
-      new (entries?: ReadonlyArray<[string, string]>): StringStringDict;
+      new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
     };
 
     /**
@@ -10542,9 +10549,10 @@ declare module \\"./IceGrid.ns\\" {
       /**
        * A mapping of property set name to property set descriptor.
        */
-      new (
-        entries?: ReadonlyArray<[string, PropertySetDescriptor]>
-      ): PropertySetDescriptorDict;
+      new (entries?: ReadonlyArray<[string, PropertySetDescriptor]>): Map<
+        string,
+        PropertySetDescriptor
+      >;
     };
 
     /**
@@ -10967,9 +10975,10 @@ declare module \\"./IceGrid.ns\\" {
       /**
        * A mapping of template identifier to template descriptor.
        */
-      new (
-        entries?: ReadonlyArray<[string, TemplateDescriptor]>
-      ): TemplateDescriptorDict;
+      new (entries?: ReadonlyArray<[string, TemplateDescriptor]>): Map<
+        string,
+        TemplateDescriptor
+      >;
     };
 
     /**
@@ -11102,9 +11111,10 @@ declare module \\"./IceGrid.ns\\" {
       /**
        * Mapping of node name to node descriptor.
        */
-      new (
-        entries?: ReadonlyArray<[string, NodeDescriptor]>
-      ): NodeDescriptorDict;
+      new (entries?: ReadonlyArray<[string, NodeDescriptor]>): Map<
+        string,
+        NodeDescriptor
+      >;
     };
 
     /**
@@ -13556,7 +13566,7 @@ declare module \\"./IceStorm.ns\\" {
 
     type QoS = Map<string, string>;
     const QoS: {
-      new (entries?: ReadonlyArray<[string, string]>): QoS;
+      new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
     };
 
     /**
@@ -13876,7 +13886,10 @@ declare module \\"./IceStorm.ns\\" {
       /**
        * Mapping of topic name to topic proxy.
        */
-      new (entries?: ReadonlyArray<[string, TopicPrx | null]>): TopicDict;
+      new (entries?: ReadonlyArray<[string, TopicPrx | null]>): Map<
+        string,
+        TopicPrx | null
+      >;
     };
 
     /**
@@ -14110,6 +14123,69 @@ export { IceMX } from \\"../IceMX.ns\\";
 "
 `;
 
+exports[`generate typings generics: Generics 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./Generics.ns\\" {
+  namespace Generics {
+    type GenericSeq<T extends Ice.Value> = Array<T>;
+
+    type GenericDict<T extends Ice.Value> = Map<string, T>;
+    const GenericDict: {
+      new <T extends Ice.Value>(entries?: ReadonlyArray<[string, T]>): Map<
+        string,
+        T
+      >;
+    };
+
+    class Key implements Ice.Struct {
+      constructor(key?: string);
+
+      key: string;
+
+      clone(): this;
+      equals(other: this): boolean;
+      hashCode(): number;
+    }
+
+    type GenericComplexDict<T extends Ice.Value> = Ice.HashMap<Key, T>;
+    const GenericComplexDict: {
+      new <T extends Ice.Value>(): Ice.HashMap<Key, T>;
+    };
+
+    class GenericClass<T extends Ice.Value> extends Ice.Value {
+      constructor(
+        field?: T,
+        seq?: GenericSeq<T>,
+        dict?: GenericDict<T>,
+        complexDict?: GenericComplexDict<T>
+      );
+
+      field: T;
+      seq: GenericSeq<T>;
+      dict: GenericDict<T>;
+      complexDict: GenericComplexDict<T>;
+    }
+
+    abstract class GenericInterface<T extends Ice.Value> extends Ice.Object {
+      abstract operation(
+        arg: GenericClass<T>,
+        current: Ice.Current
+      ): Ice.OperationResult<GenericClass<T>>;
+    }
+
+    class GenericInterfacePrx<T extends Ice.Value> extends Ice.ObjectPrx {
+      operation(
+        arg: GenericClass<T>,
+        ctx?: Ice.Context
+      ): Ice.AsyncResult<GenericClass<T>>;
+    }
+  }
+}
+export { Generics } from \\"./Generics.ns\\";
+"
+`;
+
 exports[`generate typings keywords shadowing: Keywords 1`] = `
 "import { Ice } from \\"ice\\";
 
@@ -14147,7 +14223,7 @@ declare module \\"./Default.ns\\" {
 
     type _Catch = Ice.HashMap<S, number>;
     const _Catch: {
-      new (): _Catch;
+      new (): Ice.HashMap<S, number>;
     };
   }
 }
@@ -14239,12 +14315,12 @@ declare module \\"./Overrides.ns\\" {
 
     type Dict = Map<string, A | B>;
     const Dict: {
-      new (entries?: ReadonlyArray<[string, A | B]>): Dict;
+      new (entries?: ReadonlyArray<[string, A | B]>): Map<string, A | B>;
     };
 
     type ComplexDict = Ice.HashMap<S, A | B>;
     const ComplexDict: {
-      new (): ComplexDict;
+      new (): Ice.HashMap<S, A | B>;
     };
   }
 }

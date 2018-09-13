@@ -30,7 +30,7 @@ Compiles Slice files to TypeScript.
 ```ts
 import {slice2ts} from 'slice2ts';
 
-slice2ts(options)  // Promise<void>;
+slice2ts(options); // Promise<void>;
 ```
 
 Options interface:
@@ -139,16 +139,78 @@ Options interface:
 
   abstract class I extends Ice.Object {
     abstract operation(
-      arg1: A | B, arg2: A | B | undefined,
+      arg1: A | B,
+      arg2: A | B | undefined,
       current: Ice.Current,
     ): Ice.OperationResult<A | B>;
   }
 
   class IPrx extends Ice.ObjectPrx {
     operation(
-      arg1: A | B, arg2?: A | B,
+      arg1: A | B,
+      arg2?: A | B,
       ctx?: Ice.Context,
     ): Ice.AsyncResult<A | B>;
+  }
+  ```
+
+* `ts:generic:<type parameters>`
+
+  Adds generic parameters for types generated from sequences, dictionaries,
+  classes and interfaces:
+
+  ```slice
+  ["ts:generic:T extends Ice.Value"]
+  sequence<["ts:type:T"] Object> GenericSeq;
+
+  ["ts:generic:T extends Ice.Value"]
+  dictionary<string, ["ts:type:T"] Object> GenericDict;
+
+  ["ts:generic:T extends Ice.Value"]
+  class GenericClass {
+    ["ts:type:T"]
+    Object field;
+  };
+
+  ["ts:generic:T extends Ice.Value"]
+  interface GenericInterface {
+    ["ts:type:GenericClass<T>"] GenericClass operation(
+      ["ts:type:GenericSeq<T>"] GenericSeq arg
+    );
+  };
+  ```
+
+  Outputs:
+
+  ```ts
+  type GenericSeq<T extends Ice.Value> = Array<T>;
+
+  type GenericDict<T extends Ice.Value> = Map<string, T>;
+  const GenericDict: {
+    new <T extends Ice.Value>(entries?: ReadonlyArray<[string, T]>): Map<
+      string,
+      T
+    >;
+  };
+
+  class GenericClass<T extends Ice.Value> extends Ice.Value {
+    constructor(field?: T);
+
+    field: T;
+  }
+
+  abstract class GenericInterface<T extends Ice.Value> extends Ice.Object {
+    abstract operation(
+      arg: GenericSeq<T>,
+      current: Ice.Current,
+    ): Ice.OperationResult<GenericClass<T>>;
+  }
+
+  class GenericInterfacePrx<T extends Ice.Value> extends Ice.ObjectPrx {
+    operation(
+      arg: GenericSeq<T>,
+      ctx?: Ice.Context,
+    ): Ice.AsyncResult<GenericClass<T>>;
   }
   ```
 

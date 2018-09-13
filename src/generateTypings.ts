@@ -270,6 +270,8 @@ class Generator {
     scope: TypeScope,
     declaration: slice2json.ClassDeclaration,
   ): string {
+    const params = getGenericParameters(declaration.metadata);
+
     const base = declaration.extends
       ? this.generateComplexType(scope, declaration.extends, false, true)
       : declaration.local ? null : 'Ice.Value';
@@ -289,7 +291,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      class ${escape(declaration.name)}${base && ` extends ${base}`} {
+      class ${escape(declaration.name)}${params}${base && ` extends ${base}`} {
         ${this.generateClassConstructor(scope, declaration)}
 
         ${fields.map(field => this.generateClassField(scope, field))}
@@ -433,6 +435,8 @@ class Generator {
         }
       `;
     } else {
+      const params = getGenericParameters(declaration.metadata);
+
       const implementsString =
         parentNames &&
         `implements ${parentNames.map(t =>
@@ -447,7 +451,7 @@ class Generator {
 
       return render`
         ${this.generateDocComment(declaration)}
-        abstract class ${escape(declaration.name)}
+        abstract class ${escape(declaration.name)}${params}
         extends Ice.Object
         ${implementsString} {
           ${allOperations.map(({scope, operation, external}) =>
@@ -456,7 +460,7 @@ class Generator {
         }
 
         ${this.generateDocComment(declaration)}
-        class ${escape(declaration.name)}Prx
+        class ${escape(declaration.name)}Prx${params}
         extends Ice.ObjectPrx
         ${proxyImplementsString} {
           ${allOperations.map(({scope, operation, external}) =>
@@ -764,13 +768,15 @@ class Generator {
     scope: TypeScope,
     declaration: slice2json.SequenceDeclaration,
   ): string {
+    const params = getGenericParameters(declaration.metadata);
+
     if (
       declaration.dataType === 'byte' &&
       getTypeOverride(declaration.dataTypeMetadata) == null
     ) {
       return render`
         ${this.generateDocComment(declaration)}
-        type ${escape(declaration.name)} = Uint8Array;
+        type ${escape(declaration.name)}${params} = Uint8Array;
       `;
     }
 
@@ -780,7 +786,7 @@ class Generator {
 
     return render`
       ${this.generateDocComment(declaration)}
-      type ${escape(declaration.name)} = Array<${dataType}>;
+      type ${escape(declaration.name)}${params} = Array<${dataType}>;
     `;
   }
 
@@ -788,6 +794,8 @@ class Generator {
     scope: TypeScope,
     declaration: slice2json.DictionaryDeclaration,
   ): string {
+    const params = getGenericParameters(declaration.metadata);
+
     const keyType =
       getTypeOverride(declaration.keyTypeMetadata) ||
       this.generateDataType(scope, declaration.keyType);
@@ -809,10 +817,10 @@ class Generator {
 
     return render`
       ${docComment}
-      type ${typeName} = ${container}<${keyType}, ${valueType}>;
+      type ${typeName}${params} = ${container}<${keyType}, ${valueType}>;
       const ${typeName}: {
         ${docComment}
-        new (${constructorArg}): ${typeName};
+        new ${params}(${constructorArg}): ${container}<${keyType}, ${valueType}>;
       };
     `;
   }
@@ -840,6 +848,22 @@ function getTypeOverride(metadata: string[] | undefined): string | null {
 
     if (match) {
       return match[1];
+    }
+  }
+
+  return null;
+}
+
+function getGenericParameters(metadata: string[] | undefined): string | null {
+  if (metadata == null) {
+    return null;
+  }
+
+  for (const meta of metadata) {
+    const match = meta.match(/^ts:generic:(.+)$/);
+
+    if (match) {
+      return `<${match[1]}>`;
     }
   }
 

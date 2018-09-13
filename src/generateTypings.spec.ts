@@ -58,4 +58,9 @@ describe('generate typings', () => {
     const sliceDir = 'fixtures';
     return testOutput(sliceDir, [`${sliceDir}/Value.ice`]);
   });
+
+  test('generics', () => {
+    const sliceDir = 'fixtures';
+    return testOutput(sliceDir, [`${sliceDir}/Generics.ice`]);
+  });
 });
