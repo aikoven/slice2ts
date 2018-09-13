@@ -24,4 +24,8 @@ module Overrides {
       ["ts:type:A|B"] optional(1) AbstractBase arg2
     );
   };
+
+  sequence<["ts:type:A|B"] AbstractBase> Seq;
+  dictionary<string, ["ts:type:A|B"] AbstractBase> Dict;
+  dictionary<S, ["ts:type:A|B"] AbstractBase> ComplexDict;
 };

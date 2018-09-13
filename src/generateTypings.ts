@@ -764,14 +764,19 @@ class Generator {
     scope: TypeScope,
     declaration: slice2json.SequenceDeclaration,
   ): string {
-    if (declaration.dataType === 'byte') {
+    if (
+      declaration.dataType === 'byte' &&
+      getTypeOverride(declaration.dataTypeMetadata) == null
+    ) {
       return render`
         ${this.generateDocComment(declaration)}
         type ${escape(declaration.name)} = Uint8Array;
       `;
     }
 
-    const dataType = this.generateDataType(scope, declaration.dataType);
+    const dataType =
+      getTypeOverride(declaration.dataTypeMetadata) ||
+      this.generateDataType(scope, declaration.dataType);
 
     return render`
       ${this.generateDocComment(declaration)}
@@ -783,17 +788,20 @@ class Generator {
     scope: TypeScope,
     declaration: slice2json.DictionaryDeclaration,
   ): string {
-    const keyType = this.generateDataType(scope, declaration.keyType);
-    const valueType = this.generateDataType(scope, declaration.valueType);
+    const keyType =
+      getTypeOverride(declaration.keyTypeMetadata) ||
+      this.generateDataType(scope, declaration.keyType);
+    const valueType =
+      getTypeOverride(declaration.valueTypeMetadata) ||
+      this.generateDataType(scope, declaration.valueType);
 
     const typeName = escape(declaration.name);
 
-    const isBuiltIn =
-      keyType === 'boolean' || keyType === 'string' || keyType === 'number';
+    const isPrimitiveKeyType = primitiveTypes.has(declaration.keyType);
 
-    const container = isBuiltIn ? 'Map' : 'Ice.HashMap';
+    const container = isPrimitiveKeyType ? 'Map' : 'Ice.HashMap';
 
-    const constructorArg = isBuiltIn
+    const constructorArg = isPrimitiveKeyType
       ? `entries?: ReadonlyArray<[${keyType}, ${valueType}]>`
       : '';
 
@@ -837,3 +845,13 @@ function getTypeOverride(metadata: string[] | undefined): string | null {
 
   return null;
 }
+
+const primitiveTypes = new Set([
+  'bool',
+  'byte',
+  'short',
+  'int',
+  'float',
+  'double',
+  'string',
+]);

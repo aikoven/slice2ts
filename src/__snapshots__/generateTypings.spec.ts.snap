@@ -14234,6 +14234,18 @@ declare module \\"./Overrides.ns\\" {
         ctx?: Ice.Context
       ): Ice.AsyncResult<A | B>;
     }
+
+    type Seq = Array<A | B>;
+
+    type Dict = Map<string, A | B>;
+    const Dict: {
+      new (entries?: ReadonlyArray<[string, A | B]>): Dict;
+    };
+
+    type ComplexDict = Ice.HashMap<S, A | B>;
+    const ComplexDict: {
+      new (): ComplexDict;
+    };
   }
 }
 export { Overrides } from \\"./Overrides.ns\\";

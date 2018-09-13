@@ -2552,9 +2552,9 @@ slice2js@~3.7.1:
   version "3.7.1"
   resolved "https://registry.yarnpkg.com/slice2js/-/slice2js-3.7.1.tgz#902067c74da1bcbed160e8a2ca097df65e06bc57"
 
-slice2json@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/slice2json/-/slice2json-0.1.4.tgz#42039c7aa0191ff503a03bcbf1fc686443562ac2"
+slice2json@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/slice2json/-/slice2json-0.1.5.tgz#6087592c06f8048e8cf875be675ac87d3b9393af"
   dependencies:
     ohm-js "^0.14.0"
 

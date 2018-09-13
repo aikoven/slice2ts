@@ -30,7 +30,7 @@
     "mkdirp": "^0.5.1",
     "prettier": "^1.9.2",
     "slice2js": "~3.7.1",
-    "slice2json": "^0.1.4",
+    "slice2json": "^0.1.5",
     "unixify": "^1.0.0",
     "uuid": "^3.1.0"
   },
