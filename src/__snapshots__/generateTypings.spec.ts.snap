@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`generate typings built-in slices 1`] = `
+exports[`generate typings built-in slices: Glacier2/Metrics 1`] = `
 "import { Ice } from \\"ice\\";
 import { IceMX } from \\"../Ice/Metrics\\";
 
@@ -66,7 +66,7 @@ export { IceMX } from \\"../IceMX.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 2`] = `
+exports[`generate typings built-in slices: Glacier2/PermissionsVerifier 1`] = `
 "import { Ice } from \\"ice\\";
 import { Glacier2 } from \\"../Glacier2/SSLInfo\\";
 
@@ -204,7 +204,7 @@ export { Glacier2 } from \\"./Glacier2.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 3`] = `
+exports[`generate typings built-in slices: Glacier2/PermissionsVerifierF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Glacier2.ns\\" {
@@ -214,7 +214,7 @@ export { Glacier2 } from \\"./Glacier2.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 4`] = `
+exports[`generate typings built-in slices: Glacier2/Router 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Router\\";
 import { Glacier2 } from \\"../Glacier2/Session\\";
@@ -563,7 +563,7 @@ export { Glacier2 } from \\"./Glacier2.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 5`] = `
+exports[`generate typings built-in slices: Glacier2/RouterF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Glacier2.ns\\" {
@@ -573,7 +573,40 @@ export { Glacier2 } from \\"./Glacier2.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 6`] = `
+exports[`generate typings built-in slices: Glacier2/SSLInfo 1`] = `
+"import { Ice } from \\"ice\\";
+import \\"../Ice/BuiltinSequences\\";
+
+declare module \\"./Glacier2.ns\\" {
+  namespace Glacier2 {
+    class SSLInfo implements Ice.Struct {
+      constructor(
+        remoteHost?: string,
+        remotePort?: number,
+        localHost?: string,
+        localPort?: number,
+        cipher?: string,
+        certs?: Ice.StringSeq
+      );
+
+      remoteHost: string;
+      remotePort: number;
+      localHost: string;
+      localPort: number;
+      cipher: string;
+      certs: Ice.StringSeq;
+
+      clone(): this;
+      equals(other: this): boolean;
+      hashCode(): number;
+    }
+  }
+}
+export { Glacier2 } from \\"./Glacier2.ns\\";
+"
+`;
+
+exports[`generate typings built-in slices: Glacier2/Session 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 import \\"../Ice/Identity\\";
@@ -992,40 +1025,7 @@ export { Glacier2 } from \\"./Glacier2.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 7`] = `
-"import { Ice } from \\"ice\\";
-import \\"../Ice/BuiltinSequences\\";
-
-declare module \\"./Glacier2.ns\\" {
-  namespace Glacier2 {
-    class SSLInfo implements Ice.Struct {
-      constructor(
-        remoteHost?: string,
-        remotePort?: number,
-        localHost?: string,
-        localPort?: number,
-        cipher?: string,
-        certs?: Ice.StringSeq
-      );
-
-      remoteHost: string;
-      remotePort: number;
-      localHost: string;
-      localPort: number;
-      cipher: string;
-      certs: Ice.StringSeq;
-
-      clone(): this;
-      equals(other: this): boolean;
-      hashCode(): number;
-    }
-  }
-}
-export { Glacier2 } from \\"./Glacier2.ns\\";
-"
-`;
-
-exports[`generate typings built-in slices 8`] = `
+exports[`generate typings built-in slices: Ice/BuiltinSequences 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -1046,7 +1046,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 9`] = `
+exports[`generate typings built-in slices: Ice/Communicator 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/LoggerF\\";
 import \\"../Ice/InstrumentationF\\";
@@ -1584,7 +1584,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 10`] = `
+exports[`generate typings built-in slices: Ice/CommunicatorF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -1594,7 +1594,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 11`] = `
+exports[`generate typings built-in slices: Ice/Connection 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/ObjectAdapterF\\";
 import \\"../Ice/Identity\\";
@@ -2055,7 +2055,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 12`] = `
+exports[`generate typings built-in slices: Ice/ConnectionF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -2065,7 +2065,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 13`] = `
+exports[`generate typings built-in slices: Ice/Current 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/ObjectAdapterF\\";
 import \\"../Ice/ConnectionF\\";
@@ -2174,7 +2174,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 14`] = `
+exports[`generate typings built-in slices: Ice/Endpoint 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Version\\";
 import \\"../Ice/BuiltinSequences\\";
@@ -2403,7 +2403,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 15`] = `
+exports[`generate typings built-in slices: Ice/EndpointF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -2418,7 +2418,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 16`] = `
+exports[`generate typings built-in slices: Ice/EndpointTypes 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -2441,7 +2441,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 17`] = `
+exports[`generate typings built-in slices: Ice/FacetMap 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -2462,7 +2462,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 18`] = `
+exports[`generate typings built-in slices: Ice/Identity 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -2508,7 +2508,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 19`] = `
+exports[`generate typings built-in slices: Ice/ImplicitContext 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/LocalException\\";
 import \\"../Ice/Current\\";
@@ -2599,7 +2599,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 20`] = `
+exports[`generate typings built-in slices: Ice/ImplicitContextF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -2609,7 +2609,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 21`] = `
+exports[`generate typings built-in slices: Ice/Instrumentation 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/EndpointF\\";
 import \\"../Ice/ConnectionF\\";
@@ -3190,7 +3190,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 22`] = `
+exports[`generate typings built-in slices: Ice/InstrumentationF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -3200,7 +3200,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 23`] = `
+exports[`generate typings built-in slices: Ice/LocalException 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Identity\\";
 import \\"../Ice/Version\\";
@@ -3915,7 +3915,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 24`] = `
+exports[`generate typings built-in slices: Ice/Locator 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Identity\\";
 import \\"../Ice/Process\\";
@@ -4258,7 +4258,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 25`] = `
+exports[`generate typings built-in slices: Ice/LocatorF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -4268,7 +4268,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 26`] = `
+exports[`generate typings built-in slices: Ice/Logger 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -4328,7 +4328,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 27`] = `
+exports[`generate typings built-in slices: Ice/LoggerF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -4338,7 +4338,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 28`] = `
+exports[`generate typings built-in slices: Ice/Metrics 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 
@@ -4845,7 +4845,7 @@ export { IceMX } from \\"../IceMX.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 29`] = `
+exports[`generate typings built-in slices: Ice/ObjectAdapter 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/CommunicatorF\\";
 import \\"../Ice/ServantLocatorF\\";
@@ -5460,7 +5460,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 30`] = `
+exports[`generate typings built-in slices: Ice/ObjectAdapterF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -5470,7 +5470,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 31`] = `
+exports[`generate typings built-in slices: Ice/ObjectFactory 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -5511,7 +5511,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 32`] = `
+exports[`generate typings built-in slices: Ice/Plugin 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/LoggerF\\";
 import \\"../Ice/BuiltinSequences\\";
@@ -5598,7 +5598,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 33`] = `
+exports[`generate typings built-in slices: Ice/PluginF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -5608,7 +5608,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 34`] = `
+exports[`generate typings built-in slices: Ice/Process 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -5682,7 +5682,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 35`] = `
+exports[`generate typings built-in slices: Ice/ProcessF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -5692,7 +5692,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 36`] = `
+exports[`generate typings built-in slices: Ice/Properties 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/PropertiesAdmin\\";
 
@@ -5881,7 +5881,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 37`] = `
+exports[`generate typings built-in slices: Ice/PropertiesAdmin 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 
@@ -5998,7 +5998,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 38`] = `
+exports[`generate typings built-in slices: Ice/PropertiesF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -6008,7 +6008,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 39`] = `
+exports[`generate typings built-in slices: Ice/RemoteLogger 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 
@@ -6300,7 +6300,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 40`] = `
+exports[`generate typings built-in slices: Ice/Router 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 
@@ -6441,7 +6441,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 41`] = `
+exports[`generate typings built-in slices: Ice/RouterF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -6451,7 +6451,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 42`] = `
+exports[`generate typings built-in slices: Ice/ServantLocator 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/ObjectAdapterF\\";
 import \\"../Ice/Current\\";
@@ -6556,7 +6556,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 43`] = `
+exports[`generate typings built-in slices: Ice/ServantLocatorF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -6566,7 +6566,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 44`] = `
+exports[`generate typings built-in slices: Ice/SliceChecksumDict 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -6591,7 +6591,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 45`] = `
+exports[`generate typings built-in slices: Ice/ValueFactory 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -6690,7 +6690,7 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 46`] = `
+exports[`generate typings built-in slices: Ice/Version 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
@@ -6728,7 +6728,104 @@ export { Ice } from \\"./Ice.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 47`] = `
+exports[`generate typings built-in slices: IceBT/ConnectionInfo 1`] = `
+"import { Ice } from \\"ice\\";
+import \\"../Ice/Connection\\";
+
+declare module \\"./IceBT.ns\\" {
+  namespace IceBT {
+    /**
+     * Provides access to the details of a Bluetooth connection.
+     */
+    class ConnectionInfo extends Ice.ConnectionInfo {
+      constructor(
+        underlying?: Ice.ConnectionInfo | null,
+        incoming?: boolean,
+        adapterName?: string,
+        connectionId?: string,
+        localAddress?: string,
+        localChannel?: number,
+        remoteAddress?: string,
+        remoteChannel?: number,
+        uuid?: string,
+        rcvSize?: number,
+        sndSize?: number
+      );
+
+      localAddress: string;
+      localChannel: number;
+      remoteAddress: string;
+      remoteChannel: number;
+      uuid: string;
+      rcvSize: number;
+      sndSize: number;
+    }
+  }
+}
+export { IceBT } from \\"./IceBT.ns\\";
+"
+`;
+
+exports[`generate typings built-in slices: IceBT/EndpointInfo 1`] = `
+"import { Ice } from \\"ice\\";
+import \\"../Ice/Endpoint\\";
+
+declare module \\"./IceBT.ns\\" {
+  /**
+   * IceBT provides a Bluetooth transport for Ice.
+   */
+  namespace IceBT {
+    /**
+     * Provides access to Bluetooth endpoint information.
+     */
+    class EndpointInfo extends Ice.EndpointInfo {
+      constructor(
+        underlying?: Ice.EndpointInfo | null,
+        timeout?: number,
+        compress?: boolean,
+        addr?: string,
+        uuid?: string
+      );
+
+      /**
+       * The address configured with the endpoint.
+       */
+      addr: string;
+
+      /**
+       * The UUID configured with the endpoint.
+       */
+      uuid: string;
+    }
+  }
+}
+export { IceBT } from \\"./IceBT.ns\\";
+"
+`;
+
+exports[`generate typings built-in slices: IceBT/Types 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./IceBT.ns\\" {
+  /**
+   * IceBT provides a Bluetooth transport for Ice.
+   */
+  namespace IceBT {
+    /**
+     * Indicates a failure in the Bluetooth plug-in.
+     */
+    class BluetoothException extends Ice.LocalException {
+      constructor(reason?: string);
+
+      reason: string;
+    }
+  }
+}
+export { IceBT } from \\"./IceBT.ns\\";
+"
+`;
+
+exports[`generate typings built-in slices: IceBox/IceBox 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 import \\"../Ice/CommunicatorF\\";
@@ -6959,104 +7056,7 @@ export { IceBox } from \\"./IceBox.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 48`] = `
-"import { Ice } from \\"ice\\";
-import \\"../Ice/Connection\\";
-
-declare module \\"./IceBT.ns\\" {
-  namespace IceBT {
-    /**
-     * Provides access to the details of a Bluetooth connection.
-     */
-    class ConnectionInfo extends Ice.ConnectionInfo {
-      constructor(
-        underlying?: Ice.ConnectionInfo | null,
-        incoming?: boolean,
-        adapterName?: string,
-        connectionId?: string,
-        localAddress?: string,
-        localChannel?: number,
-        remoteAddress?: string,
-        remoteChannel?: number,
-        uuid?: string,
-        rcvSize?: number,
-        sndSize?: number
-      );
-
-      localAddress: string;
-      localChannel: number;
-      remoteAddress: string;
-      remoteChannel: number;
-      uuid: string;
-      rcvSize: number;
-      sndSize: number;
-    }
-  }
-}
-export { IceBT } from \\"./IceBT.ns\\";
-"
-`;
-
-exports[`generate typings built-in slices 49`] = `
-"import { Ice } from \\"ice\\";
-import \\"../Ice/Endpoint\\";
-
-declare module \\"./IceBT.ns\\" {
-  /**
-   * IceBT provides a Bluetooth transport for Ice.
-   */
-  namespace IceBT {
-    /**
-     * Provides access to Bluetooth endpoint information.
-     */
-    class EndpointInfo extends Ice.EndpointInfo {
-      constructor(
-        underlying?: Ice.EndpointInfo | null,
-        timeout?: number,
-        compress?: boolean,
-        addr?: string,
-        uuid?: string
-      );
-
-      /**
-       * The address configured with the endpoint.
-       */
-      addr: string;
-
-      /**
-       * The UUID configured with the endpoint.
-       */
-      uuid: string;
-    }
-  }
-}
-export { IceBT } from \\"./IceBT.ns\\";
-"
-`;
-
-exports[`generate typings built-in slices 50`] = `
-"import { Ice } from \\"ice\\";
-
-declare module \\"./IceBT.ns\\" {
-  /**
-   * IceBT provides a Bluetooth transport for Ice.
-   */
-  namespace IceBT {
-    /**
-     * Indicates a failure in the Bluetooth plug-in.
-     */
-    class BluetoothException extends Ice.LocalException {
-      constructor(reason?: string);
-
-      reason: string;
-    }
-  }
-}
-export { IceBT } from \\"./IceBT.ns\\";
-"
-`;
-
-exports[`generate typings built-in slices 51`] = `
+exports[`generate typings built-in slices: IceDiscovery/IceDiscovery 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Identity\\";
 
@@ -7127,7 +7127,7 @@ export { IceDiscovery } from \\"./IceDiscovery.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 52`] = `
+exports[`generate typings built-in slices: IceGrid/Admin 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Identity\\";
 import \\"../Ice/BuiltinSequences\\";
@@ -10434,7 +10434,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 53`] = `
+exports[`generate typings built-in slices: IceGrid/Descriptor 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Identity\\";
 import \\"../Ice/BuiltinSequences\\";
@@ -11449,7 +11449,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 54`] = `
+exports[`generate typings built-in slices: IceGrid/Exception 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Identity\\";
 import \\"../Ice/BuiltinSequences\\";
@@ -11745,7 +11745,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 55`] = `
+exports[`generate typings built-in slices: IceGrid/FileParser 1`] = `
 "import { Ice } from \\"ice\\";
 import { IceGrid } from \\"../IceGrid/Admin\\";
 
@@ -11815,7 +11815,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 56`] = `
+exports[`generate typings built-in slices: IceGrid/PluginFacade 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 import \\"../Ice/Current\\";
@@ -12081,7 +12081,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 57`] = `
+exports[`generate typings built-in slices: IceGrid/Registry 1`] = `
 "import { Ice } from \\"ice\\";
 import { IceGrid } from \\"../IceGrid/Exception\\";
 import \\"../IceGrid/Session\\";
@@ -12609,7 +12609,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 58`] = `
+exports[`generate typings built-in slices: IceGrid/Session 1`] = `
 "import { Ice } from \\"ice\\";
 import { Glacier2 } from \\"../Glacier2/Session\\";
 import { IceGrid } from \\"../IceGrid/Exception\\";
@@ -12810,7 +12810,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 59`] = `
+exports[`generate typings built-in slices: IceGrid/UserAccountMapper 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./IceGrid.ns\\" {
@@ -12875,7 +12875,7 @@ export { IceGrid } from \\"./IceGrid.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 60`] = `
+exports[`generate typings built-in slices: IceIAP/ConnectionInfo 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Connection\\";
 
@@ -12934,7 +12934,7 @@ export { IceIAP } from \\"./IceIAP.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 61`] = `
+exports[`generate typings built-in slices: IceIAP/EndpointInfo 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Endpoint\\";
 
@@ -12986,7 +12986,7 @@ export { IceIAP } from \\"./IceIAP.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 62`] = `
+exports[`generate typings built-in slices: IceLocatorDiscovery/IceLocatorDiscovery 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Locator\\";
 
@@ -13097,7 +13097,7 @@ export { IceLocatorDiscovery } from \\"./IceLocatorDiscovery.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 63`] = `
+exports[`generate typings built-in slices: IcePatch2/FileInfo 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/BuiltinSequences\\";
 
@@ -13160,7 +13160,7 @@ export { IcePatch2 } from \\"./IcePatch2.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 64`] = `
+exports[`generate typings built-in slices: IcePatch2/FileServer 1`] = `
 "import { Ice } from \\"ice\\";
 import { IcePatch2 } from \\"../IcePatch2/FileInfo\\";
 
@@ -13421,7 +13421,7 @@ export { IcePatch2 } from \\"./IcePatch2.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 65`] = `
+exports[`generate typings built-in slices: IceSSL/ConnectionInfo 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Connection\\";
 
@@ -13451,7 +13451,7 @@ export { IceSSL } from \\"./IceSSL.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 66`] = `
+exports[`generate typings built-in slices: IceSSL/ConnectionInfoF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./IceSSL.ns\\" {
@@ -13461,7 +13461,7 @@ export { IceSSL } from \\"./IceSSL.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 67`] = `
+exports[`generate typings built-in slices: IceSSL/EndpointInfo 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Endpoint\\";
 
@@ -13477,7 +13477,7 @@ export { IceSSL } from \\"./IceSSL.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 68`] = `
+exports[`generate typings built-in slices: IceStorm/IceStorm 1`] = `
 "import { Ice } from \\"ice\\";
 import \\"../Ice/Identity\\";
 import \\"../Ice/SliceChecksumDict\\";
@@ -14011,7 +14011,7 @@ export { IceStorm } from \\"./IceStorm.ns\\";
 "
 `;
 
-exports[`generate typings built-in slices 69`] = `
+exports[`generate typings built-in slices: IceStorm/Metrics 1`] = `
 "import { Ice } from \\"ice\\";
 import { IceMX } from \\"../Ice/Metrics\\";
 
@@ -14078,7 +14078,7 @@ export { IceMX } from \\"../IceMX.ns\\";
 "
 `;
 
-exports[`generate typings keywords shadowing 1`] = `
+exports[`generate typings keywords shadowing: Keywords 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Default.ns\\" {
@@ -14123,7 +14123,7 @@ export { _Default } from \\"./Default.ns\\";
 "
 `;
 
-exports[`generate typings module shadowing 1`] = `
+exports[`generate typings module shadowing: A 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./A.ns\\" {
@@ -14133,7 +14133,7 @@ export { A } from \\"./A.ns\\";
 "
 `;
 
-exports[`generate typings module shadowing 2`] = `
+exports[`generate typings module shadowing: B 1`] = `
 "import { Ice } from \\"ice\\";
 import { A } from \\"A\\";
 
@@ -14146,7 +14146,7 @@ export { B } from \\"./B.ns\\";
 "
 `;
 
-exports[`generate typings module shadowing 3`] = `
+exports[`generate typings module shadowing: B2 1`] = `
 "import { Ice } from \\"ice\\";
 import { A } from \\"A\\";
 
@@ -14159,7 +14159,7 @@ export { B } from \\"./B.ns\\";
 "
 `;
 
-exports[`generate typings types override 1`] = `
+exports[`generate typings types override: override 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Overrides.ns\\" {

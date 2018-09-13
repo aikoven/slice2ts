@@ -29,7 +29,7 @@ async function testOutput(sliceDir: string, globs: string[]) {
       true,
       false,
     );
-    expect(typings).toMatchSnapshot();
+    expect(typings).toMatchSnapshot(name);
   }
 }
 
