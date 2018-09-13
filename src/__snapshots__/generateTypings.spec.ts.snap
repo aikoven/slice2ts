@@ -1,5 +1,37 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`generate typings Object fields must have Ice.Value type: Value 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./Test.ns\\" {
+  namespace Test {
+    class TestClass extends Ice.Value {
+      constructor(objectField?: Ice.Value | null);
+
+      objectField: Ice.Value | null;
+    }
+
+    abstract class TestInterface extends Ice.Object {
+      abstract method(
+        valueArg: Ice.Value | null,
+        objectArg: Ice.Value | null,
+        current: Ice.Current
+      ): Ice.OperationResult<void>;
+    }
+
+    class TestInterfacePrx extends Ice.ObjectPrx {
+      method(
+        valueArg: Ice.Value | null,
+        objectArg: Ice.Value | null,
+        ctx?: Ice.Context
+      ): Ice.AsyncResult<void>;
+    }
+  }
+}
+export { Test } from \\"./Test.ns\\";
+"
+`;
+
 exports[`generate typings built-in slices: Glacier2/Metrics 1`] = `
 "import { Ice } from \\"ice\\";
 import { IceMX } from \\"../Ice/Metrics\\";
@@ -1038,7 +1070,7 @@ declare module \\"./Ice.ns\\" {
     type FloatSeq = Array<number>;
     type DoubleSeq = Array<number>;
     type StringSeq = Array<string>;
-    type ObjectSeq = Array<Ice.Object | null>;
+    type ObjectSeq = Array<Ice.Value | null>;
     type ObjectProxySeq = Array<Ice.ObjectPrx | null>;
   }
 }
@@ -1514,7 +1546,7 @@ declare module \\"./Ice.ns\\" {
        * @param servant The servant that implements the new Admin facet.
        * @param facet The name of the new Admin facet.
        */
-      addAdminFacet(servant: Ice.Object | null, facet: string): void;
+      addAdminFacet(servant: Ice.Value | null, facet: string): void;
 
       /**
        * Remove the following facet to the Admin object.
@@ -1524,7 +1556,7 @@ declare module \\"./Ice.ns\\" {
        * @param facet The name of the Admin facet.
        * @return The servant associated with this Admin facet.
        */
-      removeAdminFacet(facet: string): Ice.Object | null;
+      removeAdminFacet(facet: string): Ice.Value | null;
 
       /**
        * Returns a facet of the Admin object.
@@ -1533,7 +1565,7 @@ declare module \\"./Ice.ns\\" {
        * @return The servant associated with this Admin facet, or
        * null if no facet is registered with the given name.
        */
-      findAdminFacet(facet: string): Ice.Object | null;
+      findAdminFacet(facet: string): Ice.Value | null;
 
       /**
        * Returns a map of all facets of the Admin object.
@@ -2449,12 +2481,12 @@ declare module \\"./Ice.ns\\" {
     /**
      * A mapping from facet name to servant.
      */
-    type FacetMap = Map<string, Ice.Object | null>;
+    type FacetMap = Map<string, Ice.Value | null>;
     const FacetMap: {
       /**
        * A mapping from facet name to servant.
        */
-      new (entries?: ReadonlyArray<[string, Ice.Object | null]>): FacetMap;
+      new (entries?: ReadonlyArray<[string, Ice.Value | null]>): FacetMap;
     };
   }
 }
@@ -2493,7 +2525,7 @@ declare module \\"./Ice.ns\\" {
       hashCode(): number;
     }
 
-    type ObjectDict = Ice.HashMap<Identity, Ice.Object | null>;
+    type ObjectDict = Ice.HashMap<Identity, Ice.Value | null>;
     const ObjectDict: {
       new (): ObjectDict;
     };
@@ -5000,7 +5032,7 @@ declare module \\"./Ice.ns\\" {
        * @see #remove
        * @see #find
        */
-      add(servant: Ice.Object | null, id: Identity): Ice.ObjectPrx | null;
+      add(servant: Ice.Value | null, id: Identity): Ice.ObjectPrx | null;
 
       /**
        * Like {@link #add}, but with a facet. Calling <tt>add(servant, id)</tt>
@@ -5023,7 +5055,7 @@ declare module \\"./Ice.ns\\" {
        * @see #findFacet
        */
       addFacet(
-        servant: Ice.Object | null,
+        servant: Ice.Value | null,
         id: Identity,
         facet: string
       ): Ice.ObjectPrx | null;
@@ -5045,7 +5077,7 @@ declare module \\"./Ice.ns\\" {
        * @see #remove
        * @see #find
        */
-      addWithUUID(servant: Ice.Object | null): Ice.ObjectPrx | null;
+      addWithUUID(servant: Ice.Value | null): Ice.ObjectPrx | null;
 
       /**
        * Like {@link #addWithUUID}, but with a facet. Calling
@@ -5067,7 +5099,7 @@ declare module \\"./Ice.ns\\" {
        * @see #findFacet
        */
       addFacetWithUUID(
-        servant: Ice.Object | null,
+        servant: Ice.Value | null,
         facet: string
       ): Ice.ObjectPrx | null;
 
@@ -5107,7 +5139,7 @@ declare module \\"./Ice.ns\\" {
        * @see #removeDefaultServant
        * @see #findDefaultServant
        */
-      addDefaultServant(servant: Ice.Object | null, category: string): void;
+      addDefaultServant(servant: Ice.Value | null, category: string): void;
 
       /**
        * Remove a servant (that is, the default facet) from the object
@@ -5125,7 +5157,7 @@ declare module \\"./Ice.ns\\" {
        * @see #add
        * @see #addWithUUID
        */
-      remove(id: Identity): Ice.Object | null;
+      remove(id: Identity): Ice.Value | null;
 
       /**
        * Like {@link #remove}, but with a facet. Calling <tt>remove(id)</tt>
@@ -5142,7 +5174,7 @@ declare module \\"./Ice.ns\\" {
        * @see #addFacet
        * @see #addFacetWithUUID
        */
-      removeFacet(id: Identity, facet: string): Ice.Object | null;
+      removeFacet(id: Identity, facet: string): Ice.Value | null;
 
       /**
        * Remove all facets with the given identity from the Active
@@ -5172,7 +5204,7 @@ declare module \\"./Ice.ns\\" {
        * @see #addDefaultServant
        * @see #findDefaultServant
        */
-      removeDefaultServant(category: string): Ice.Object | null;
+      removeDefaultServant(category: string): Ice.Value | null;
 
       /**
        * Look up a servant in this object adapter's Active Servant Map
@@ -5192,7 +5224,7 @@ declare module \\"./Ice.ns\\" {
        * @see #findFacet
        * @see #findByProxy
        */
-      find(id: Identity): Ice.Object | null;
+      find(id: Identity): Ice.Value | null;
 
       /**
        * Like {@link #find}, but with a facet. Calling <tt>find(id)</tt>
@@ -5213,7 +5245,7 @@ declare module \\"./Ice.ns\\" {
        * @see #find
        * @see #findByProxy
        */
-      findFacet(id: Identity, facet: string): Ice.Object | null;
+      findFacet(id: Identity, facet: string): Ice.Value | null;
 
       /**
        * Find all facets with the given identity in the Active Servant
@@ -5247,7 +5279,7 @@ declare module \\"./Ice.ns\\" {
        * @see #find
        * @see #findFacet
        */
-      findByProxy(proxy: Ice.ObjectPrx | null): Ice.Object | null;
+      findByProxy(proxy: Ice.ObjectPrx | null): Ice.Value | null;
 
       /**
        * Add a Servant Locator to this object adapter. Adding a servant
@@ -5340,7 +5372,7 @@ declare module \\"./Ice.ns\\" {
        * @see #addDefaultServant
        * @see #removeDefaultServant
        */
-      findDefaultServant(category: string): Ice.Object | null;
+      findDefaultServant(category: string): Ice.Value | null;
 
       /**
        * Create a proxy for the object with the given identity. If this
@@ -6504,7 +6536,7 @@ declare module \\"./Ice.ns\\" {
        * @see Current
        * @see #finished
        */
-      locate(curr: Current): [Ice.Object | null, object];
+      locate(curr: Current): [Ice.Value | null, object];
 
       /**
        * Called by the object adapter after a request has been
@@ -6535,7 +6567,7 @@ declare module \\"./Ice.ns\\" {
        * @see Current
        * @see #locate
        */
-      finished(curr: Current, servant: Ice.Object | null, cookie: object): void;
+      finished(curr: Current, servant: Ice.Value | null, cookie: object): void;
 
       /**
        * Called when the object adapter in which this servant locator is

@@ -53,4 +53,9 @@ describe('generate typings', () => {
     const sliceDir = 'fixtures';
     return testOutput(sliceDir, [`${sliceDir}/override.ice`]);
   });
+
+  test('Object fields must have Ice.Value type', () => {
+    const sliceDir = 'fixtures';
+    return testOutput(sliceDir, [`${sliceDir}/Value.ice`]);
+  });
 });
