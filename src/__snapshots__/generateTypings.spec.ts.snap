@@ -14123,6 +14123,45 @@ export { IceMX } from \\"../IceMX.ns\\";
 "
 `;
 
+exports[`generate typings dictionaries: Dictionaries 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./Test.ns\\" {
+  namespace Test {
+    type StringDict = Map<string, string>;
+    const StringDict: {
+      new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
+    };
+
+    class Struct implements Ice.Struct {
+      constructor();
+
+      clone(): this;
+      equals(other: this): boolean;
+      hashCode(): number;
+    }
+
+    type StructDict = Ice.HashMap<Struct, string>;
+    const StructDict: {
+      new (): Ice.HashMap<Struct, string>;
+    };
+
+    type _EnumName = \\"A\\";
+
+    class _Enum<Name extends _EnumName = _EnumName> extends Ice.EnumBase<Name> {
+      static A: _Enum<\\"A\\">;
+    }
+
+    type EnumDict = Map<_Enum, string>;
+    const EnumDict: {
+      new (entries?: ReadonlyArray<[_Enum, string]>): Map<_Enum, string>;
+    };
+  }
+}
+export { Test } from \\"./Test.ns\\";
+"
+`;
+
 exports[`generate typings generics: Generics 1`] = `
 "import { Ice } from \\"ice\\";
 

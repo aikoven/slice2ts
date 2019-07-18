@@ -274,7 +274,9 @@ class Generator {
 
     const base = declaration.extends
       ? this.generateComplexType(scope, declaration.extends, false, true)
-      : declaration.local ? null : 'Ice.Value';
+      : declaration.local
+      ? null
+      : 'Ice.Value';
 
     const fields = declaration.content.filter(
       child => child.type === 'field',
@@ -692,7 +694,9 @@ class Generator {
   ): string {
     const base = declaration.extends
       ? this.generateComplexType(scope, declaration.extends, false, true)
-      : declaration.local ? 'Ice.LocalException' : 'Ice.UserException';
+      : declaration.local
+      ? 'Ice.LocalException'
+      : 'Ice.UserException';
 
     return render`
       ${this.generateDocComment(declaration)}
@@ -805,11 +809,13 @@ class Generator {
 
     const typeName = escape(declaration.name);
 
-    const isPrimitiveKeyType = primitiveTypes.has(declaration.keyType);
+    const isPrimitiveOrEnumKeyType =
+      primitiveTypes.has(declaration.keyType) ||
+      getTypeByName(scope, declaration.keyType).declaration.type === 'enum';
 
-    const container = isPrimitiveKeyType ? 'Map' : 'Ice.HashMap';
+    const container = isPrimitiveOrEnumKeyType ? 'Map' : 'Ice.HashMap';
 
-    const constructorArg = isPrimitiveKeyType
+    const constructorArg = isPrimitiveOrEnumKeyType
       ? `entries?: ReadonlyArray<[${keyType}, ${valueType}]>`
       : '';
 
