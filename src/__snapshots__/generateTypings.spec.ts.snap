@@ -240,7 +240,7 @@ exports[`generate typings built-in slices: Glacier2/PermissionsVerifierF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Glacier2.ns\\" {
-  namespace Glacier2 {  }
+  namespace Glacier2 {}
 }
 export { Glacier2 } from \\"./Glacier2.ns\\";
 "
@@ -269,7 +269,7 @@ declare module \\"./Glacier2.ns\\" {
     class SessionNotExistException extends Ice.UserException {}
 
     /**
-     * The Glacier2 specialization of the <tt>Ice::Router</tt> interface.
+     * The Glacier2 specialization of the <code>Ice::Router</code> interface.
      */
     abstract class Router extends Ice.Object implements Ice.Router {
       /**
@@ -433,7 +433,7 @@ declare module \\"./Glacier2.ns\\" {
     }
 
     /**
-     * The Glacier2 specialization of the <tt>Ice::Router</tt> interface.
+     * The Glacier2 specialization of the <code>Ice::Router</code> interface.
      */
     class RouterPrx extends Ice.ObjectPrx implements Ice.RouterPrx {
       /**
@@ -599,7 +599,7 @@ exports[`generate typings built-in slices: Glacier2/RouterF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Glacier2.ns\\" {
-  namespace Glacier2 {  }
+  namespace Glacier2 {}
 }
 export { Glacier2 } from \\"./Glacier2.ns\\";
 "
@@ -1165,8 +1165,8 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * Convert a stringified proxy into a proxy. For example,
-       * <tt>MyCategory/MyObject:tcp -h some_host -p
-       * 10000</tt> creates a proxy that refers to the Ice object
+       * <code>MyCategory/MyObject:tcp -h some_host -p
+       * 10000</code> creates a proxy that refers to the Ice object
        * having an identity with a name \\"MyObject\\" and a category
        * \\"MyCategory\\", with the server running on host \\"some_host\\", port
        * 10000. If the stringified proxy does not parse correctly, the
@@ -1176,7 +1176,7 @@ declare module \\"./Ice.ns\\" {
        *
        * @param str The stringified proxy to convert into a proxy.
        *
-       * @return The proxy, or nil if <tt>str</tt> is an empty string.
+       * @return The proxy, or nil if <code>str</code> is an empty string.
        *
        * @see #proxyToString
        */
@@ -1188,7 +1188,7 @@ declare module \\"./Ice.ns\\" {
        * @param obj The proxy to convert into a stringified proxy.
        *
        * @return The stringified proxy, or an empty string if
-       * <tt>obj</tt> is nil.
+       * <code>obj</code> is nil.
        *
        * @see #stringToProxy
        */
@@ -1196,11 +1196,11 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * Convert a set of proxy properties into a proxy. The \\"base\\"
-       * name supplied in the <tt>property</tt> argument refers to a
+       * name supplied in the <code>property</code> argument refers to a
        * property containing a stringified proxy, such as
-       * <tt>MyProxy=id:tcp -h localhost -p 10000</tt>. Additional
+       * <code>MyProxy=id:tcp -h localhost -p 10000</code>. Additional
        * properties configure local settings for the proxy, such as
-       * <tt>MyProxy.PreferSecure=1</tt>. The \\"Properties\\"
+       * <code>MyProxy.PreferSecure=1</code>. The \\"Properties\\"
        * appendix in the Ice manual describes each of the supported
        * proxy properties.
        *
@@ -1249,7 +1249,7 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * Create a new object adapter. The endpoints for the object
-       * adapter are taken from the property <tt><em>name</em>.Endpoints</tt>.
+       * adapter are taken from the property <code><em>name</em>.Endpoints</code>.
        *
        * It is legal to create an object adapter with the empty string as
        * its name. Such an object adapter is accessible via bidirectional
@@ -1271,7 +1271,7 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * Create a new object adapter with endpoints. This operation sets
-       * the property <tt><em>name</em>.Endpoints</tt>, and then calls
+       * the property <code><em>name</em>.Endpoints</code>, and then calls
        * {@link #createObjectAdapter}. It is provided as a convenience
        * function.
        *
@@ -1430,7 +1430,7 @@ declare module \\"./Ice.ns\\" {
        * operation has no effect on existing proxies.
        *
        * You can also set a router for an individual proxy
-       * by calling the operation <tt>ice_router</tt> on the proxy.
+       * by calling the operation <code>ice_router</code> on the proxy.
        *
        * @param rtr The default router to use for this communicator.
        *
@@ -1458,7 +1458,7 @@ declare module \\"./Ice.ns\\" {
        * object adapters.
        *
        * You can also set a locator for an individual proxy by calling the
-       * operation <tt>ice_locator</tt> on the proxy, or for an object adapter
+       * operation <code>ice_locator</code> on the proxy, or for an object adapter
        * by calling {@link ObjectAdapter#setLocator} on the object adapter.
        *
        * @param loc The default locator to use for this communicator.
@@ -1520,21 +1520,20 @@ declare module \\"./Ice.ns\\" {
       ): Ice.ObjectPrx | null;
 
       /**
-       * *
-       * * Get a proxy to the main facet of the Admin object.
-       * *
-       * * getAdmin also creates the Admin object and creates and activates the Ice.Admin object
-       * * adapter to host this Admin object if Ice.Admin.Enpoints is set. The identity of the Admin
-       * * object created by getAdmin is {value of Ice.Admin.InstanceName}/admin, or {UUID}/admin
-       * * when Ice.Admin.InstanceName is not set.
-       * *
-       * * If Ice.Admin.DelayCreation is 0 or not set, getAdmin is called by the communicator
-       * * initialization, after initialization of all plugins.
+       * Get a proxy to the main facet of the Admin object.
        *
-       * * @return A proxy to the main (\\"\\") facet of the Admin object, or a null proxy if no
-       * * Admin object is configured.
-       * *
-       * * @see #createAdmin
+       * getAdmin also creates the Admin object and creates and activates the Ice.Admin object
+       * adapter to host this Admin object if Ice.Admin.Enpoints is set. The identity of the Admin
+       * object created by getAdmin is {value of Ice.Admin.InstanceName}/admin, or {UUID}/admin
+       * when Ice.Admin.InstanceName is not set.
+       *
+       * If Ice.Admin.DelayCreation is 0 or not set, getAdmin is called by the communicator
+       * initialization, after initialization of all plugins.
+       *
+       * @return A proxy to the main (\\"\\") facet of the Admin object, or a null proxy if no
+       * Admin object is configured.
+       *
+       * @see #createAdmin
        */
       getAdmin(): Ice.ObjectPrx | null;
 
@@ -1620,7 +1619,7 @@ exports[`generate typings built-in slices: Ice/CommunicatorF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -1660,7 +1659,7 @@ declare module \\"./Ice.ns\\" {
     }
 
     /**
-     * Base class providing access to the connection details. *
+     * Base class providing access to the connection details.
      */
     class ConnectionInfo {
       constructor(
@@ -2091,7 +2090,7 @@ exports[`generate typings built-in slices: Ice/ConnectionF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -2107,17 +2106,17 @@ import \\"../Ice/Version\\";
 declare module \\"./Ice.ns\\" {
   namespace Ice {
     /**
-     * A request context. <tt>Context</tt> is used to transmit metadata about a
+     * A request context. <code>Context</code> is used to transmit metadata about a
      * request from the server to the client, such as Quality-of-Service
-     * (QoS) parameters. Each operation on the client has a <tt>Context</tt> as
+     * (QoS) parameters. Each operation on the client has a <code>Context</code> as
      * its implicit final parameter.
      */
     type Context = Map<string, string>;
     const Context: {
       /**
-       * A request context. <tt>Context</tt> is used to transmit metadata about a
+       * A request context. <code>Context</code> is used to transmit metadata about a
        * request from the server to the client, such as Quality-of-Service
-       * (QoS) parameters. Each operation on the client has a <tt>Context</tt> as
+       * (QoS) parameters. Each operation on the client has a <code>Context</code> as
        * its implicit final parameter.
        */
       new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
@@ -2135,8 +2134,8 @@ declare module \\"./Ice.ns\\" {
 
     /**
      * Information about the current method invocation for servers. Each
-     * operation on the server has a <tt>Current</tt> as its implicit final
-     * parameter. <tt>Current</tt> is mostly used for Ice services. Most
+     * operation on the server has a <code>Current</code> as its implicit final
+     * parameter. <code>Current</code> is mostly used for Ice services. Most
      * applications ignore this parameter.
      */
     class Current implements Ice.Struct {
@@ -2554,24 +2553,24 @@ declare module \\"./Ice.ns\\" {
      * An interface to associate implict contexts with communicators.
      *
      * When you make a remote invocation without an explicit context parameter,
-     * Ice uses the per-proxy context (if any) combined with the <tt>ImplicitContext</tt>
+     * Ice uses the per-proxy context (if any) combined with the <code>ImplicitContext</code>
      * associated with the communicator.
      *
-     * Ice provides several implementations of <tt>ImplicitContext</tt>. The implementation
-     * used depends on the value of the <tt>Ice.ImplicitContext</tt> property.
+     * Ice provides several implementations of <code>ImplicitContext</code>. The implementation
+     * used depends on the value of the <code>Ice.ImplicitContext</code> property.
      * <dl>
-     * <dt><tt>None</tt> (default)</dt>
+     * <dt><code>None</code> (default)</dt>
      * <dd>No implicit context at all.</dd>
-     * <dt><tt>PerThread</tt></dt>
+     * <dt><code>PerThread</code></dt>
      * <dd>The implementation maintains a context per thread.</dd>
-     * <dt><tt>Shared</tt></dt>
+     * <dt><code>Shared</code></dt>
      * <dd>The implementation maintains a single context shared by all threads.</dd>
      * </dl>
      *
-     * <tt>ImplicitContext</tt> also provides a number of operations to create, update or retrieve
+     * <code>ImplicitContext</code> also provides a number of operations to create, update or retrieve
      * an entry in the underlying context without first retrieving a copy of the entire
-     * context. These operations correspond to a subset of the <tt>java.util.Map</tt> methods,
-     * with <tt>java.lang.Object</tt> replaced by <tt>string</tt> and null replaced by the empty-string.
+     * context. These operations correspond to a subset of the <code>java.util.Map</code> methods,
+     * with <code>java.lang.Object</code> replaced by <code>string</code> and null replaced by the empty-string.
      */
     interface ImplicitContext {
       /**
@@ -2638,7 +2637,7 @@ exports[`generate typings built-in slices: Ice/ImplicitContextF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -3229,7 +3228,9 @@ exports[`generate typings built-in slices: Ice/InstrumentationF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice { namespace Instrumentation {  } }
+  namespace Ice {
+    namespace Instrumentation {}
+  }
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -3287,9 +3288,9 @@ declare module \\"./Ice.ns\\" {
       constructor(kindOfObject?: string, id?: string);
 
       /**
-       * The kind of object that is registered already: \\"servant\\",
-       * \\"servant locator\\", \\"value factory\\", \\"plug-in\\",
-       * \\"object adapter\\", \\"object\\", or \\"user exception factory\\".
+       * The kind of object that could not be removed: \\"servant\\", \\"facet\\",
+       * \\"object\\", \\"default servant\\", \\"servant locator\\", \\"value factory\\", \\"plugin\\",
+       * \\"object adapter\\", \\"object adapter with router\\", \\"replica group\\".
        */
       kindOfObject: string;
 
@@ -3315,9 +3316,9 @@ declare module \\"./Ice.ns\\" {
       constructor(kindOfObject?: string, id?: string);
 
       /**
-       * The kind of object that could not be removed: \\"servant\\",
-       * \\"servant locator\\", \\"value factory\\", \\"plug-in\\",
-       * \\"object adapter\\", \\"object\\", or \\"user exception factory\\".
+       * The kind of object that could not be removed: \\"servant\\", \\"facet\\",
+       * \\"object\\", \\"default servant\\", \\"servant locator\\", \\"value factory\\", \\"plugin\\",
+       * \\"object adapter\\", \\"object adapter with router\\", \\"replica group\\".
        */
       kindOfObject: string;
 
@@ -3331,8 +3332,8 @@ declare module \\"./Ice.ns\\" {
      * The operation can only be invoked with a twoway request.
      *
      * This exception is raised if an attempt is made to invoke an
-     * operation with <tt>ice_oneway</tt>, <tt>ice_batchOneway</tt>, <tt>ice_datagram</tt>,
-     * or <tt>ice_batchDatagram</tt> and the operation has a return value,
+     * operation with <code>ice_oneway</code>, <code>ice_batchOneway</code>, <code>ice_datagram</code>,
+     * or <code>ice_batchDatagram</code> and the operation has a return value,
      * out-parameters, or an exception specification.
      */
     class TwowayOnlyException extends Ice.LocalException {
@@ -3348,10 +3349,10 @@ declare module \\"./Ice.ns\\" {
      * An attempt was made to clone a class that does not support
      * cloning.
      *
-     * This exception is raised if <tt>ice_clone</tt> is called on
+     * This exception is raised if <code>ice_clone</code> is called on
      * a class that is derived from an abstract Slice class (that is,
      * a class containing operations), and the derived class does not
-     * provide an implementation of the <tt>ice_clone</tt> operation (C++ only).
+     * provide an implementation of the <code>ice_clone</code> operation (C++ only).
      */
     class CloneNotImplementedException extends Ice.LocalException {}
 
@@ -3359,8 +3360,8 @@ declare module \\"./Ice.ns\\" {
      * This exception is raised if an operation call on a server raises an
      * unknown exception. For example, for C++, this exception is raised
      * if the server throws a C++ exception that is not directly or
-     * indirectly derived from <tt>Ice::LocalException</tt> or
-     * <tt>Ice::UserException</tt>.
+     * indirectly derived from <code>Ice::LocalException</code> or
+     * <code>Ice::UserException</code>.
      */
     class UnknownException extends Ice.LocalException {
       constructor(unknown?: string);
@@ -3379,7 +3380,7 @@ declare module \\"./Ice.ns\\" {
      * by the server as {@link UnknownLocalException}. The only exception to this
      * rule are all exceptions derived from {@link RequestFailedException},
      * which are transmitted by the Ice protocol even though they are
-     * declared <tt>local</tt>.
+     * declared <code>local</code>.
      */
     class UnknownLocalException extends UnknownException {}
 
@@ -3388,13 +3389,13 @@ declare module \\"./Ice.ns\\" {
      *
      * This exception is raised if an operation raises a
      * user exception that is not declared in the exception's
-     * <tt>throws</tt> clause. Such undeclared exceptions are
+     * <code>throws</code> clause. Such undeclared exceptions are
      * not transmitted from the server to the client by the Ice
      * protocol, but instead the client just gets an
      * {@link UnknownUserException}. This is necessary in order to not violate
      * the contract established by an operation's signature: Only local
      * exceptions and user exceptions declared in the
-     * <tt>throws</tt> clause can be raised.
+     * <code>throws</code> clause can be raised.
      */
     class UnknownUserException extends UnknownException {}
 
@@ -3549,7 +3550,7 @@ declare module \\"./Ice.ns\\" {
      * This exception is raised if a request failed. This exception, and
      * all exceptions derived from {@link RequestFailedException}, are
      * transmitted by the Ice protocol, even though they are declared
-     * <tt>local</tt>.
+     * <code>local</code>.
      */
     class RequestFailedException extends Ice.LocalException {
       constructor(id?: Identity, facet?: string, operation?: string);
@@ -3589,10 +3590,10 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * The error number describing the system exception. For C++ and
-       * Unix, this is equivalent to <tt>errno</tt>. For C++
+       * Unix, this is equivalent to <code>errno</code>. For C++
        * and Windows, this is the value returned by
-       * <tt>GetLastError()</tt> or
-       * <tt>WSAGetLastError()</tt>.
+       * <code>GetLastError()</code> or
+       * <code>WSAGetLastError()</code>.
        */
       error: number;
     }
@@ -3648,9 +3649,9 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * The error number describing the DNS problem. For C++ and Unix,
-       * this is equivalent to <tt>h_errno</tt>. For C++ and
+       * this is equivalent to <code>h_errno</code>. For C++ and
        * Windows, this is the value returned by
-       * <tt>WSAGetLastError()</tt>.
+       * <code>WSAGetLastError()</code>.
        */
       error: number;
 
@@ -3891,7 +3892,7 @@ declare module \\"./Ice.ns\\" {
     /**
      * This exception is raised when Ice receives a request or reply
      * message whose size exceeds the limit specified by the
-     * <tt>Ice.MessageSizeMax</tt> property.
+     * <code>Ice.MessageSizeMax</code> property.
      */
     class MemoryLimitException extends MarshalException {}
 
@@ -4297,7 +4298,7 @@ exports[`generate typings built-in slices: Ice/LocatorF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -4367,7 +4368,7 @@ exports[`generate typings built-in slices: Ice/LoggerF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -4805,8 +4806,7 @@ declare module \\"../IceMX.ns\\" {
 
     /**
      * Provides information on invocations that are specifically sent over
-     * Ice connections. Remote metrics are embedded within {@link
-     * InvocationMetrics}.
+     * Ice connections. Remote metrics are embedded within {@link InvocationMetrics}.
      */
     class RemoteMetrics extends ChildInvocationMetrics {}
 
@@ -5041,7 +5041,7 @@ declare module \\"./Ice.ns\\" {
       add(servant: Ice.Value | null, id: Identity): Ice.ObjectPrx | null;
 
       /**
-       * Like {@link #add}, but with a facet. Calling <tt>add(servant, id)</tt>
+       * Like {@link #add}, but with a facet. Calling <code>add(servant, id)</code>
        * is equivalent to calling {@link #addFacet} with an empty facet.
        *
        * @param servant The servant to add.
@@ -5070,7 +5070,7 @@ declare module \\"./Ice.ns\\" {
        * Add a servant to this object adapter's Active Servant Map,
        * using an automatically generated UUID as its identity. Note that
        * the generated UUID identity can be accessed using the proxy's
-       * <tt>ice_getIdentity</tt> operation.
+       * <code>ice_getIdentity</code> operation.
        *
        * @param servant The servant to add.
        *
@@ -5087,7 +5087,7 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * Like {@link #addWithUUID}, but with a facet. Calling
-       * <tt>addWithUUID(servant)</tt> is equivalent to calling
+       * <code>addWithUUID(servant)</code> is equivalent to calling
        * {@link #addFacetWithUUID} with an empty facet.
        *
        * @param servant The servant to add.
@@ -5166,7 +5166,7 @@ declare module \\"./Ice.ns\\" {
       remove(id: Identity): Ice.Value | null;
 
       /**
-       * Like {@link #remove}, but with a facet. Calling <tt>remove(id)</tt>
+       * Like {@link #remove}, but with a facet. Calling <code>remove(id)</code>
        * is equivalent to calling {@link #removeFacet} with an empty facet.
        *
        * @param id The identity of the Ice object that is implemented by
@@ -5233,7 +5233,7 @@ declare module \\"./Ice.ns\\" {
       find(id: Identity): Ice.Value | null;
 
       /**
-       * Like {@link #find}, but with a facet. Calling <tt>find(id)</tt>
+       * Like {@link #find}, but with a facet. Calling <code>find(id)</code>
        * is equivalent to calling {@link #findFacet} with an empty
        * facet.
        *
@@ -5502,7 +5502,7 @@ exports[`generate typings built-in slices: Ice/ObjectAdapterF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -5523,10 +5523,10 @@ declare module \\"./Ice.ns\\" {
        * Create a new object for a given object type. The type is the
        * absolute Slice type id, i.e., the id relative to the
        * unnamed top-level Slice module. For example, the absolute
-       * Slice type id for interfaces of type <tt>Bar</tt> in the module
-       * <tt>Foo</tt> is <tt>\\"::Foo::Bar\\"</tt>.
+       * Slice type id for interfaces of type <code>Bar</code> in the module
+       * <code>Foo</code> is <code>\\"::Foo::Bar\\"</code>.
        *
-       * <p class=\\"Note\\">The leading \\"<tt>::</tt>\\" is required.
+       * <p class=\\"Note\\">The leading \\"<code>::</code>\\" is required.
        *
        * @param type The object type.
        *
@@ -5585,7 +5585,7 @@ declare module \\"./Ice.ns\\" {
        * Initialize the configured plug-ins. The communicator automatically initializes
        * the plug-ins by default, but an application may need to interact directly with
        * a plug-in prior to initialization. In this case, the application must set
-       * <tt>Ice.InitPlugins=0</tt> and then invoke {@link #initializePlugins}
+       * <code>Ice.InitPlugins=0</code> and then invoke {@link #initializePlugins}
        * manually. The plug-ins are initialized in the order in which they are loaded.
        * If a plug-in raises an exception during initialization, the communicator
        * invokes destroy on the plug-ins that have already been initialized.
@@ -5640,7 +5640,7 @@ exports[`generate typings built-in slices: Ice/PluginF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -5724,7 +5724,7 @@ exports[`generate typings built-in slices: Ice/ProcessF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -5863,7 +5863,7 @@ declare module \\"./Ice.ns\\" {
        * Get a sequence of command-line options that is equivalent to
        * this property set. Each element of the returned sequence is
        * a command-line option of the form
-       * <tt>--<em>key</em>=<em>value</em></tt>.
+       * <code>--<em>key</em>=<em>value</em></code>.
        *
        * @return The command line options for this property set.
        */
@@ -5872,12 +5872,12 @@ declare module \\"./Ice.ns\\" {
       /**
        * Convert a sequence of command-line options into properties.
        * All options that begin with
-       * <tt>--<em>prefix</em>.</tt> are
+       * <code>--<em>prefix</em>.</code> are
        * converted into properties. If the prefix is empty, all options
-       * that begin with <tt>--</tt> are converted to properties.
+       * that begin with <code>--</code> are converted to properties.
        *
        * @param prefix The property prefix, or an empty string to
-       * convert all options starting with <tt>--</tt>.
+       * convert all options starting with <code>--</code>.
        *
        * @param options The command-line options.
        *
@@ -5889,8 +5889,8 @@ declare module \\"./Ice.ns\\" {
       /**
        * Convert a sequence of command-line options into properties.
        * All options that begin with one of the following prefixes
-       * are converted into properties: <tt>--Ice</tt>, <tt>--IceBox</tt>, <tt>--IceGrid</tt>,
-       * <tt>--IcePatch2</tt>, <tt>--IceSSL</tt>, <tt>--IceStorm</tt>, <tt>--Freeze</tt>, and <tt>--Glacier2</tt>.
+       * are converted into properties: <code>--Ice</code>, <code>--IceBox</code>, <code>--IceGrid</code>,
+       * <code>--IcePatch2</code>, <code>--IceSSL</code>, <code>--IceStorm</code>, <code>--Freeze</code>, and <code>--Glacier2</code>.
        *
        * @param options The command-line options.
        *
@@ -6040,7 +6040,7 @@ exports[`generate typings built-in slices: Ice/PropertiesF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -6346,7 +6346,7 @@ declare module \\"./Ice.ns\\" {
   namespace Ice {
     /**
      * The Ice router interface. Routers can be set either globally with
-     * {@link Communicator#setDefaultRouter}, or with <tt>ice_router</tt> on specific
+     * {@link Communicator#setDefaultRouter}, or with <code>ice_router</code> on specific
      * proxies.
      */
     abstract class Router extends Ice.Object {
@@ -6394,7 +6394,7 @@ declare module \\"./Ice.ns\\" {
 
     /**
      * The Ice router interface. Routers can be set either globally with
-     * {@link Communicator#setDefaultRouter}, or with <tt>ice_router</tt> on specific
+     * {@link Communicator#setDefaultRouter}, or with <code>ice_router</code> on specific
      * proxies.
      */
     class RouterPrx extends Ice.ObjectPrx {
@@ -6483,7 +6483,7 @@ exports[`generate typings built-in slices: Ice/RouterF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -6512,25 +6512,25 @@ declare module \\"./Ice.ns\\" {
        * the returned servant into its active servant map. This must be
        * done by the servant locator implementation, if this is desired.
        *
-       * <tt>locate</tt> can throw any user exception. If it does, that exception
+       * <code>locate</code> can throw any user exception. If it does, that exception
        * is marshaled back to the client. If the Slice definition for the
        * corresponding operation includes that user exception, the client
        * receives that user exception; otherwise, the client receives
        * {@link UnknownUserException}.
        *
-       * If <tt>locate</tt> throws any exception, the Ice run time does <em>not</em>
-       * call <tt>finished</tt>.
+       * If <code>locate</code> throws any exception, the Ice run time does <em>not</em>
+       * call <code>finished</code>.
        *
-       * <p class=\\"Note\\">If you call <tt>locate</tt> from your own code, you
-       * must also call <tt>finished</tt> when you have finished using the
-       * servant, provided that <tt>locate</tt> returned a non-null servant;
+       * <p class=\\"Note\\">If you call <code>locate</code> from your own code, you
+       * must also call <code>finished</code> when you have finished using the
+       * servant, provided that <code>locate</code> returned a non-null servant;
        * otherwise, you will get undefined behavior if you use
        * servant locators such as the Freeze Evictor.
        *
        * @param curr Information about the current operation for which
        * a servant is required.
        *
-       * @param cookie A \\"cookie\\" that will be passed to <tt>finished</tt>.
+       * @param cookie A \\"cookie\\" that will be passed to <code>finished</code>.
        *
        * @return The located servant, or null if no suitable servant has
        * been found.
@@ -6546,25 +6546,25 @@ declare module \\"./Ice.ns\\" {
 
       /**
        * Called by the object adapter after a request has been
-       * made. This operation is only called if <tt>locate</tt> was called
+       * made. This operation is only called if <code>locate</code> was called
        * prior to the request and returned a non-null servant. This
        * operation can be used for cleanup purposes after a request.
        *
-       * <tt>finished</tt> can throw any user exception. If it does, that exception
+       * <code>finished</code> can throw any user exception. If it does, that exception
        * is marshaled back to the client. If the Slice definition for the
        * corresponding operation includes that user exception, the client
        * receives that user exception; otherwise, the client receives
        * {@link UnknownUserException}.
        *
-       * If both the operation and <tt>finished</tt> throw an exception, the
-       * exception thrown by <tt>finished</tt> is marshaled back to the client.
+       * If both the operation and <code>finished</code> throw an exception, the
+       * exception thrown by <code>finished</code> is marshaled back to the client.
        *
        * @param curr Information about the current operation call for
-       * which a servant was located by <tt>locate</tt>.
+       * which a servant was located by <code>locate</code>.
        *
-       * @param servant The servant that was returned by <tt>locate</tt>.
+       * @param servant The servant that was returned by <code>locate</code>.
        *
-       * @param cookie The cookie that was returned by <tt>locate</tt>.
+       * @param cookie The cookie that was returned by <code>locate</code>.
        *
        * @throws UserException The implementation can raise a UserException
        * and the run time will marshal it as the result of the invocation.
@@ -6598,7 +6598,7 @@ exports[`generate typings built-in slices: Ice/ServantLocatorF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./Ice.ns\\" {
-  namespace Ice {  }
+  namespace Ice {}
 }
 export { Ice } from \\"./Ice.ns\\";
 "
@@ -6646,10 +6646,10 @@ declare module \\"./Ice.ns\\" {
        * Create a new value for a given value type. The type is the
        * absolute Slice type id, i.e., the id relative to the
        * unnamed top-level Slice module. For example, the absolute
-       * Slice type id for an interface <tt>Bar</tt> in the module
-       * <tt>Foo</tt> is <tt>\\"::Foo::Bar\\"</tt>.
+       * Slice type id for an interface <code>Bar</code> in the module
+       * <code>Foo</code> is <code>\\"::Foo::Bar\\"</code>.
        *
-       * Note that the leading \\"<tt>::</tt>\\" is required.
+       * Note that the leading \\"<code>::</code>\\" is required.
        *
        * @param type The value type.
        *
@@ -8011,7 +8011,7 @@ declare module \\"./IceGrid.ns\\" {
 
       /**
        * Add an object to the object registry. IceGrid will get the
-       * object type by calling <tt>ice_id</tt> on the given proxy. The object
+       * object type by calling <code>ice_id</code> on the given proxy. The object
        * must be reachable.
        *
        * @param obj The object to be added to the registry.
@@ -8122,7 +8122,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param expr The expression to match against the stringified
        * identities of registered objects. The expression may contain
-       * a trailing wildcard (<tt>*</tt>) character.
+       * a trailing wildcard (<code>*</code>) character.
        *
        * @return All the object infos with a stringified identity
        * matching the given expression.
@@ -8814,7 +8814,7 @@ declare module \\"./IceGrid.ns\\" {
 
       /**
        * Add an object to the object registry. IceGrid will get the
-       * object type by calling <tt>ice_id</tt> on the given proxy. The object
+       * object type by calling <code>ice_id</code> on the given proxy. The object
        * must be reachable.
        *
        * @param obj The object to be added to the registry.
@@ -8922,7 +8922,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param expr The expression to match against the stringified
        * identities of registered objects. The expression may contain
-       * a trailing wildcard (<tt>*</tt>) character.
+       * a trailing wildcard (<code>*</code>) character.
        *
        * @return All the object infos with a stringified identity
        * matching the given expression.
@@ -9290,7 +9290,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     abstract class RegistryObserver extends Ice.Object {
       /**
-       * The <tt>registryInit</tt> operation is called after registration of
+       * The <code>registryInit</code> operation is called after registration of
        * an observer to indicate the state of the registries.
        *
        * @param registries The current state of the registries.
@@ -9301,7 +9301,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>nodeUp</tt> operation is called to notify an observer that a node
+       * The <code>nodeUp</code> operation is called to notify an observer that a node
        * came up.
        *
        * @param node The node state.
@@ -9312,7 +9312,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>nodeDown</tt> operation is called to notify an observer that a node
+       * The <code>nodeDown</code> operation is called to notify an observer that a node
        * went down.
        *
        * @param name The node name.
@@ -9329,7 +9329,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     class RegistryObserverPrx extends Ice.ObjectPrx {
       /**
-       * The <tt>registryInit</tt> operation is called after registration of
+       * The <code>registryInit</code> operation is called after registration of
        * an observer to indicate the state of the registries.
        *
        * @param registries The current state of the registries.
@@ -9340,7 +9340,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>nodeUp</tt> operation is called to notify an observer that a node
+       * The <code>nodeUp</code> operation is called to notify an observer that a node
        * came up.
        *
        * @param node The node state.
@@ -9348,7 +9348,7 @@ declare module \\"./IceGrid.ns\\" {
       registryUp(node: RegistryInfo, ctx?: Ice.Context): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>nodeDown</tt> operation is called to notify an observer that a node
+       * The <code>nodeDown</code> operation is called to notify an observer that a node
        * went down.
        *
        * @param name The node name.
@@ -9368,7 +9368,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     abstract class NodeObserver extends Ice.Object {
       /**
-       * The <tt>nodeInit</tt> operation indicates the current state
+       * The <code>nodeInit</code> operation indicates the current state
        * of nodes. It is called after the registration of an observer.
        *
        * @param nodes The current state of the nodes.
@@ -9379,7 +9379,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>nodeUp</tt> operation is called to notify an observer that a node
+       * The <code>nodeUp</code> operation is called to notify an observer that a node
        * came up.
        *
        * @param node The node state.
@@ -9390,7 +9390,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>nodeDown</tt> operation is called to notify an observer that a node
+       * The <code>nodeDown</code> operation is called to notify an observer that a node
        * went down.
        *
        * @param name The node name.
@@ -9401,7 +9401,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>updateServer</tt> operation is called to notify an observer that
+       * The <code>updateServer</code> operation is called to notify an observer that
        * the state of a server changed.
        *
        * @param node The node hosting the server.
@@ -9415,7 +9415,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>updateAdapter</tt> operation is called to notify an observer that
+       * The <code>updateAdapter</code> operation is called to notify an observer that
        * the state of an adapter changed.
        *
        * @param node The node hosting the adapter.
@@ -9436,7 +9436,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     class NodeObserverPrx extends Ice.ObjectPrx {
       /**
-       * The <tt>nodeInit</tt> operation indicates the current state
+       * The <code>nodeInit</code> operation indicates the current state
        * of nodes. It is called after the registration of an observer.
        *
        * @param nodes The current state of the nodes.
@@ -9447,7 +9447,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>nodeUp</tt> operation is called to notify an observer that a node
+       * The <code>nodeUp</code> operation is called to notify an observer that a node
        * came up.
        *
        * @param node The node state.
@@ -9455,7 +9455,7 @@ declare module \\"./IceGrid.ns\\" {
       nodeUp(node: NodeDynamicInfo, ctx?: Ice.Context): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>nodeDown</tt> operation is called to notify an observer that a node
+       * The <code>nodeDown</code> operation is called to notify an observer that a node
        * went down.
        *
        * @param name The node name.
@@ -9463,7 +9463,7 @@ declare module \\"./IceGrid.ns\\" {
       nodeDown(name: string, ctx?: Ice.Context): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>updateServer</tt> operation is called to notify an observer that
+       * The <code>updateServer</code> operation is called to notify an observer that
        * the state of a server changed.
        *
        * @param node The node hosting the server.
@@ -9477,7 +9477,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>updateAdapter</tt> operation is called to notify an observer that
+       * The <code>updateAdapter</code> operation is called to notify an observer that
        * the state of an adapter changed.
        *
        * @param node The node hosting the adapter.
@@ -9498,7 +9498,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     abstract class ApplicationObserver extends Ice.Object {
       /**
-       * <tt>applicationInit</tt> is called after the registration
+       * <code>applicationInit</code> is called after the registration
        * of an observer to indicate the state of the registry.
        *
        * @param serial The current serial number of the registry
@@ -9515,7 +9515,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>applicationAdded</tt> operation is called to notify an observer
+       * The <code>applicationAdded</code> operation is called to notify an observer
        * that an application was added.
        *
        * @param serial The new serial number of the registry database.
@@ -9529,7 +9529,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>applicationRemoved</tt> operation is called to notify an observer
+       * The <code>applicationRemoved</code> operation is called to notify an observer
        * that an application was removed.
        *
        * @param serial The new serial number of the registry database.
@@ -9543,7 +9543,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>applicationUpdated</tt> operation is called to notify an observer
+       * The <code>applicationUpdated</code> operation is called to notify an observer
        * that an application was updated.
        *
        * @param serial The new serial number of the registry database.
@@ -9564,7 +9564,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     class ApplicationObserverPrx extends Ice.ObjectPrx {
       /**
-       * <tt>applicationInit</tt> is called after the registration
+       * <code>applicationInit</code> is called after the registration
        * of an observer to indicate the state of the registry.
        *
        * @param serial The current serial number of the registry
@@ -9581,7 +9581,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>applicationAdded</tt> operation is called to notify an observer
+       * The <code>applicationAdded</code> operation is called to notify an observer
        * that an application was added.
        *
        * @param serial The new serial number of the registry database.
@@ -9595,7 +9595,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>applicationRemoved</tt> operation is called to notify an observer
+       * The <code>applicationRemoved</code> operation is called to notify an observer
        * that an application was removed.
        *
        * @param serial The new serial number of the registry database.
@@ -9609,7 +9609,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>applicationUpdated</tt> operation is called to notify an observer
+       * The <code>applicationUpdated</code> operation is called to notify an observer
        * that an application was updated.
        *
        * @param serial The new serial number of the registry database.
@@ -9629,7 +9629,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     abstract class AdapterObserver extends Ice.Object {
       /**
-       * <tt>adapterInit</tt> is called after registration of
+       * <code>adapterInit</code> is called after registration of
        * an observer to indicate the state of the registry.
        *
        * @param adpts The adapters that were dynamically registered
@@ -9641,7 +9641,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>adapterAdded</tt> operation is called to notify an observer when
+       * The <code>adapterAdded</code> operation is called to notify an observer when
        * a dynamically-registered adapter was added.
        *
        * @param info The details of the new adapter.
@@ -9680,7 +9680,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     class AdapterObserverPrx extends Ice.ObjectPrx {
       /**
-       * <tt>adapterInit</tt> is called after registration of
+       * <code>adapterInit</code> is called after registration of
        * an observer to indicate the state of the registry.
        *
        * @param adpts The adapters that were dynamically registered
@@ -9692,7 +9692,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>adapterAdded</tt> operation is called to notify an observer when
+       * The <code>adapterAdded</code> operation is called to notify an observer when
        * a dynamically-registered adapter was added.
        *
        * @param info The details of the new adapter.
@@ -9724,7 +9724,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     abstract class ObjectObserver extends Ice.Object {
       /**
-       * <tt>objectInit</tt> is called after the registration of
+       * <code>objectInit</code> is called after the registration of
        * an observer to indicate the state of the registry.
        *
        * @param objects The objects registered with the {@link Admin}
@@ -9736,7 +9736,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * The <tt>objectAdded</tt> operation is called to notify an observer when an
+       * The <code>objectAdded</code> operation is called to notify an observer when an
        * object was added to the {@link Admin} interface.
        *
        * @param info The details of the added object.
@@ -9747,7 +9747,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * <tt>objectUpdated</tt> is called to notify an observer when
+       * <code>objectUpdated</code> is called to notify an observer when
        * an object registered with the {@link Admin} interface was updated.
        *
        * @param info The details of the updated object.
@@ -9758,7 +9758,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * <tt>objectRemoved</tt> is called to notify an observer when
+       * <code>objectRemoved</code> is called to notify an observer when
        * an object registered with the {@link Admin} interface was removed.
        *
        * @param id The identity of the removed object.
@@ -9774,7 +9774,7 @@ declare module \\"./IceGrid.ns\\" {
      */
     class ObjectObserverPrx extends Ice.ObjectPrx {
       /**
-       * <tt>objectInit</tt> is called after the registration of
+       * <code>objectInit</code> is called after the registration of
        * an observer to indicate the state of the registry.
        *
        * @param objects The objects registered with the {@link Admin}
@@ -9786,7 +9786,7 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * The <tt>objectAdded</tt> operation is called to notify an observer when an
+       * The <code>objectAdded</code> operation is called to notify an observer when an
        * object was added to the {@link Admin} interface.
        *
        * @param info The details of the added object.
@@ -9794,7 +9794,7 @@ declare module \\"./IceGrid.ns\\" {
       objectAdded(info: ObjectInfo, ctx?: Ice.Context): Ice.AsyncResult<void>;
 
       /**
-       * <tt>objectUpdated</tt> is called to notify an observer when
+       * <code>objectUpdated</code> is called to notify an observer when
        * an object registered with the {@link Admin} interface was updated.
        *
        * @param info The details of the updated object.
@@ -9802,7 +9802,7 @@ declare module \\"./IceGrid.ns\\" {
       objectUpdated(info: ObjectInfo, ctx?: Ice.Context): Ice.AsyncResult<void>;
 
       /**
-       * <tt>objectRemoved</tt> is called to notify an observer when
+       * <code>objectRemoved</code> is called to notify an observer when
        * an object registered with the {@link Admin} interface was removed.
        *
        * @param id The identity of the removed object.
@@ -9814,7 +9814,7 @@ declare module \\"./IceGrid.ns\\" {
      * Used by administrative clients to view,
      * update, and receive observer updates from the IceGrid
      * registry. Admin sessions are created either via the {@link Registry}
-     * object or via the registry admin <tt>SessionManager</tt> object.
+     * object or via the registry admin <code>SessionManager</code> object.
      *
      * @see Registry
      */
@@ -9951,7 +9951,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -9982,7 +9982,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10012,7 +10012,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10042,7 +10042,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10068,7 +10068,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10094,7 +10094,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10121,7 +10121,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10145,7 +10145,7 @@ declare module \\"./IceGrid.ns\\" {
      * Used by administrative clients to view,
      * update, and receive observer updates from the IceGrid
      * registry. Admin sessions are created either via the {@link Registry}
-     * object or via the registry admin <tt>SessionManager</tt> object.
+     * object or via the registry admin <code>SessionManager</code> object.
      *
      * @see Registry
      */
@@ -10278,7 +10278,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10309,7 +10309,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10339,7 +10339,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10369,7 +10369,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10395,7 +10395,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10421,7 +10421,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -10448,7 +10448,7 @@ declare module \\"./IceGrid.ns\\" {
        *
        * @param count Specifies where to start reading the file. If
        * negative, the file is read from the begining. If 0 or positive,
-       * the file is read from the last <tt>count</tt> lines.
+       * the file is read from the last <code>count</code> lines.
        *
        * @return An iterator to read the file.
        *
@@ -11803,7 +11803,7 @@ declare module \\"./IceGrid.ns\\" {
     }
 
     /**
-     * <tt>icegridadmin</tt> provides a {@link FileParser}
+     * <code>icegridadmin</code> provides a {@link FileParser}
      * object to transform XML files into {@link ApplicationDescriptor}
      * objects.
      */
@@ -11828,7 +11828,7 @@ declare module \\"./IceGrid.ns\\" {
     }
 
     /**
-     * <tt>icegridadmin</tt> provides a {@link FileParser}
+     * <code>icegridadmin</code> provides a {@link FileParser}
      * object to transform XML files into {@link ApplicationDescriptor}
      * objects.
      */
@@ -12661,7 +12661,7 @@ declare module \\"./IceGrid.ns\\" {
     /**
      * A session object is used by IceGrid clients to allocate and
      * release objects. Client sessions are created either via the
-     * {@link Registry} object or via the registry client <tt>SessionManager</tt>
+     * {@link Registry} object or via the registry client <code>SessionManager</code>
      * object.
      *
      * @see Registry
@@ -12723,8 +12723,8 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.OperationResult<Ice.ObjectPrx | null>;
 
       /**
-       * Release an object that was allocated using <tt>allocateObjectById</tt> or
-       * <tt>allocateObjectByType</tt>.
+       * Release an object that was allocated using <code>allocateObjectById</code> or
+       * <code>allocateObjectByType</code>.
        *
        * @param id The identity of the object to release.
        *
@@ -12742,8 +12742,8 @@ declare module \\"./IceGrid.ns\\" {
 
       /**
        * Set the allocation timeout. If no objects are available for an
-       * allocation request, a call to <tt>allocateObjectById</tt> or
-       * <tt>allocateObjectByType</tt> will block for the duration of this
+       * allocation request, a call to <code>allocateObjectById</code> or
+       * <code>allocateObjectByType</code> will block for the duration of this
        * timeout.
        *
        * @param timeout The timeout in milliseconds.
@@ -12757,7 +12757,7 @@ declare module \\"./IceGrid.ns\\" {
     /**
      * A session object is used by IceGrid clients to allocate and
      * release objects. Client sessions are created either via the
-     * {@link Registry} object or via the registry client <tt>SessionManager</tt>
+     * {@link Registry} object or via the registry client <code>SessionManager</code>
      * object.
      *
      * @see Registry
@@ -12819,8 +12819,8 @@ declare module \\"./IceGrid.ns\\" {
       ): Ice.AsyncResult<Ice.ObjectPrx | null>;
 
       /**
-       * Release an object that was allocated using <tt>allocateObjectById</tt> or
-       * <tt>allocateObjectByType</tt>.
+       * Release an object that was allocated using <code>allocateObjectById</code> or
+       * <code>allocateObjectByType</code>.
        *
        * @param id The identity of the object to release.
        *
@@ -12835,8 +12835,8 @@ declare module \\"./IceGrid.ns\\" {
 
       /**
        * Set the allocation timeout. If no objects are available for an
-       * allocation request, a call to <tt>allocateObjectById</tt> or
-       * <tt>allocateObjectByType</tt> will block for the duration of this
+       * allocation request, a call to <code>allocateObjectById</code> or
+       * <code>allocateObjectByType</code> will block for the duration of this
        * timeout.
        *
        * @param timeout The timeout in milliseconds.
@@ -12873,10 +12873,10 @@ declare module \\"./IceGrid.ns\\" {
        * used by IceGrid nodes to figure out the user account to use
        * to run servers.
        *
-       * @param user The value of the server descriptor's <tt>user</tt>
+       * @param user The value of the server descriptor's <code>user</code>
        * attribute. If this attribute is not defined, and the server's
-       * activation mode is <tt>session</tt>, the default value of
-       * <tt>user</tt> is the session identifier.
+       * activation mode is <code>session</code>, the default value of
+       * <code>user</code> is the session identifier.
        *
        * @return The user account name.
        *
@@ -12899,10 +12899,10 @@ declare module \\"./IceGrid.ns\\" {
        * used by IceGrid nodes to figure out the user account to use
        * to run servers.
        *
-       * @param user The value of the server descriptor's <tt>user</tt>
+       * @param user The value of the server descriptor's <code>user</code>
        * attribute. If this attribute is not defined, and the server's
-       * activation mode is <tt>session</tt>, the default value of
-       * <tt>user</tt> is the session identifier.
+       * activation mode is <code>session</code>, the default value of
+       * <code>user</code> is the session identifier.
        *
        * @return The user account name.
        *
@@ -13220,7 +13220,7 @@ declare module \\"./IcePatch2.ns\\" {
     type ByteSeqSeq = Array<Ice.ByteSeq>;
 
     /**
-     * A <tt>partition</tt> argument was not in the range 0-255.
+     * A <code>partition</code> argument was not in the range 0-255.
      */
     class PartitionOutOfRangeException extends Ice.UserException {}
 
@@ -13497,7 +13497,7 @@ exports[`generate typings built-in slices: IceSSL/ConnectionInfoF 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./IceSSL.ns\\" {
-  namespace IceSSL {  }
+  namespace IceSSL {}
 }
 export { IceSSL } from \\"./IceSSL.ns\\";
 "
@@ -13663,7 +13663,7 @@ declare module \\"./IceStorm.ns\\" {
       ): Ice.OperationResult<Ice.ObjectPrx | null>;
 
       /**
-       * Subscribe with the given <tt>qos</tt> to this topic.  A
+       * Subscribe with the given <code>qos</code> to this topic.  A
        * per-subscriber publisher object is returned.
        *
        * @param theQoS The quality of service parameters for this
@@ -13690,7 +13690,7 @@ declare module \\"./IceStorm.ns\\" {
       ): Ice.OperationResult<Ice.ObjectPrx | null>;
 
       /**
-       * Unsubscribe the given <tt>subscriber</tt>.
+       * Unsubscribe the given <code>subscriber</code>.
        *
        * @param subscriber The proxy of an existing subscriber.
        *
@@ -13703,7 +13703,7 @@ declare module \\"./IceStorm.ns\\" {
 
       /**
        * Create a link to the given topic. All events originating
-       * on this topic will also be sent to <tt>linkTo</tt>.
+       * on this topic will also be sent to <code>linkTo</code>.
        *
        * @param linkTo The topic to link to.
        *
@@ -13719,7 +13719,7 @@ declare module \\"./IceStorm.ns\\" {
       ): Ice.OperationResult<void>;
 
       /**
-       * Destroy the link from this topic to the given topic <tt>linkTo</tt>.
+       * Destroy the link from this topic to the given topic <code>linkTo</code>.
        *
        * @param linkTo The topic to destroy the link to.
        *
@@ -13794,7 +13794,7 @@ declare module \\"./IceStorm.ns\\" {
       ): Ice.AsyncResult<Ice.ObjectPrx | null>;
 
       /**
-       * Subscribe with the given <tt>qos</tt> to this topic.  A
+       * Subscribe with the given <code>qos</code> to this topic.  A
        * per-subscriber publisher object is returned.
        *
        * @param theQoS The quality of service parameters for this
@@ -13821,7 +13821,7 @@ declare module \\"./IceStorm.ns\\" {
       ): Ice.AsyncResult<Ice.ObjectPrx | null>;
 
       /**
-       * Unsubscribe the given <tt>subscriber</tt>.
+       * Unsubscribe the given <code>subscriber</code>.
        *
        * @param subscriber The proxy of an existing subscriber.
        *
@@ -13834,7 +13834,7 @@ declare module \\"./IceStorm.ns\\" {
 
       /**
        * Create a link to the given topic. All events originating
-       * on this topic will also be sent to <tt>linkTo</tt>.
+       * on this topic will also be sent to <code>linkTo</code>.
        *
        * @param linkTo The topic to link to.
        *
@@ -13850,7 +13850,7 @@ declare module \\"./IceStorm.ns\\" {
       ): Ice.AsyncResult<void>;
 
       /**
-       * Destroy the link from this topic to the given topic <tt>linkTo</tt>.
+       * Destroy the link from this topic to the given topic <code>linkTo</code>.
        *
        * @param linkTo The topic to destroy the link to.
        *
@@ -14235,7 +14235,9 @@ exports[`generate typings module shadowing: A 1`] = `
 "import { Ice } from \\"ice\\";
 
 declare module \\"./A.ns\\" {
-  namespace A { class SomeClass extends Ice.Value {} }
+  namespace A {
+    class SomeClass extends Ice.Value {}
+  }
 }
 export { A } from \\"./A.ns\\";
 "
@@ -14248,7 +14250,11 @@ import { A } from \\"A\\";
 import $A = A;
 
 declare module \\"./B.ns\\" {
-  namespace B { namespace A { class Child extends $A.SomeClass {} } }
+  namespace B {
+    namespace A {
+      class Child extends $A.SomeClass {}
+    }
+  }
 }
 export { B } from \\"./B.ns\\";
 "
@@ -14261,7 +14267,9 @@ import { A } from \\"A\\";
 import $A = A;
 
 declare module \\"./B.ns\\" {
-  namespace B { class Child extends $A.SomeClass {} }
+  namespace B {
+    class Child extends $A.SomeClass {}
+  }
 }
 export { B } from \\"./B.ns\\";
 "
