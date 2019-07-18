@@ -89,10 +89,10 @@ function compileSliceRaw(
   let source = '';
   let error = '';
 
-  child.stdout.on('data', data => {
+  child.stdout!.on('data', data => {
     source += data.toString();
   });
-  child.stderr.on('data', data => {
+  child.stderr!.on('data', data => {
     error += data.toString();
   });
 
