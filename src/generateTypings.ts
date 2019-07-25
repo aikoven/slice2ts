@@ -113,14 +113,31 @@ class Generator {
     `;
   }
 
-  private generateDocComment(what: {doc?: string}): string {
-    if (what.doc === undefined) {
+  private generateDocComment(what: {
+    doc?: string;
+    metadata?: string[];
+  }): string {
+    const deprecatePrefix = 'deprecate';
+    const deprecateMetadata =
+      what.metadata &&
+      what.metadata.find(meta => meta.startsWith(deprecatePrefix));
+
+    if (what.doc === undefined && deprecateMetadata === undefined) {
       return '';
     }
-    const prefixed = what.doc
-      .split('\n')
-      .map(line => ` * ${line}`)
-      .join('\n');
+    const lines = what.doc === undefined ? [] : what.doc.split('\n');
+
+    if (deprecateMetadata !== undefined) {
+      if (lines.length !== 0) {
+        lines.push('');
+      }
+      lines.push(
+        '@deprecated ' +
+          deprecateMetadata.substring(deprecatePrefix.length + 1),
+      );
+    }
+
+    const prefixed = lines.map(line => ` * ${line}`).join('\n');
     return `/**\n${prefixed}\n */`;
   }
 

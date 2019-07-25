@@ -1233,6 +1233,8 @@ declare module \\"./Ice.ns\\" {
        * @return The identity.
        *
        * @see #identityToString
+       *
+       * @deprecated stringToIdentity() is deprecated, use the static stringToIdentity() method instead.
        */
       stringToIdentity(str: string): Identity;
 
@@ -1361,6 +1363,8 @@ declare module \\"./Ice.ns\\" {
        * @see #findObjectFactory
        * @see ObjectFactory
        * @see ValueFactoryManager#add
+       *
+       * @deprecated addObjectFactory() is deprecated, use ValueFactoryManager::add() instead.
        */
       addObjectFactory(factory: ObjectFactory, id: string): void;
 
@@ -1376,6 +1380,8 @@ declare module \\"./Ice.ns\\" {
        * @see #addObjectFactory
        * @see ObjectFactory
        * @see ValueFactoryManager#find
+       *
+       * @deprecated findObjectFactory() is deprecated, use ValueFactoryManager::find() instead.
        */
       findObjectFactory(id: string): ObjectFactory;
 
@@ -3272,6 +3278,8 @@ declare module \\"./Ice.ns\\" {
     /**
      * This exception is raised if a feature is requested that is not
      * supported with collocation optimization.
+     *
+     * @deprecated This exception is no longer used by the Ice run time
      */
     class CollocationOptimizationException extends Ice.LocalException {}
 
@@ -5517,6 +5525,8 @@ declare module \\"./Ice.ns\\" {
      * A factory for objects. Object factories are used when receiving \\"objects by value\\".
      * An object factory must be implemented by the application writer and registered
      * with the communicator.
+     *
+     * @deprecated ObjectFactory has been deprecated, use ValueFactory instead.
      */
     interface ObjectFactory {
       /**
@@ -13259,6 +13269,8 @@ declare module \\"./IcePatch2.ns\\" {
        *
        * @throws PartitionOutOfRangeException If the partition number is out of range.
        * @throws FileSizeRangeException If a file is larger than 2.1GB.
+       *
+       * @deprecated getFileInfoSeq() is deprecated, use getLargeFileInfoSeq() instead.
        */
       abstract getFileInfoSeq(
         partition: number,
@@ -13321,6 +13333,8 @@ declare module \\"./IcePatch2.ns\\" {
        *
        * @throws FileAccessException If an error occurred while trying to read the file.
        * @throws FileSizeRangeException If a file is larger than 2.1GB.
+       *
+       * @deprecated getFileCompressed() is deprecated, use getLargeFileCompressed() instead.
        */
       abstract getFileCompressed(
         path: string,
@@ -13369,6 +13383,8 @@ declare module \\"./IcePatch2.ns\\" {
        *
        * @throws PartitionOutOfRangeException If the partition number is out of range.
        * @throws FileSizeRangeException If a file is larger than 2.1GB.
+       *
+       * @deprecated getFileInfoSeq() is deprecated, use getLargeFileInfoSeq() instead.
        */
       getFileInfoSeq(
         partition: number,
@@ -13427,6 +13443,8 @@ declare module \\"./IcePatch2.ns\\" {
        *
        * @throws FileAccessException If an error occurred while trying to read the file.
        * @throws FileSizeRangeException If a file is larger than 2.1GB.
+       *
+       * @deprecated getFileCompressed() is deprecated, use getLargeFileCompressed() instead.
        */
       getFileCompressed(
         path: string,
@@ -14120,6 +14138,50 @@ declare module \\"../IceMX.ns\\" {
   }
 }
 export { IceMX } from \\"../IceMX.ns\\";
+"
+`;
+
+exports[`generate typings deprecate: deprecate 1`] = `
+"import { Ice } from \\"ice\\";
+
+declare module \\"./Test.ns\\" {
+  namespace Test {
+    /**
+     * @deprecated
+     */
+    abstract class A extends Ice.Object {}
+
+    /**
+     * @deprecated
+     */
+    class APrx extends Ice.ObjectPrx {}
+
+    /**
+     * @deprecated a message
+     */
+    abstract class B extends Ice.Object {}
+
+    /**
+     * @deprecated a message
+     */
+    class BPrx extends Ice.ObjectPrx {}
+
+    /**
+     * docstring
+     *
+     * @deprecated
+     */
+    abstract class C extends Ice.Object {}
+
+    /**
+     * docstring
+     *
+     * @deprecated
+     */
+    class CPrx extends Ice.ObjectPrx {}
+  }
+}
+export { Test } from \\"./Test.ns\\";
 "
 `;
 

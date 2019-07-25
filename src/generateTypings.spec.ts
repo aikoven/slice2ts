@@ -68,4 +68,9 @@ describe('generate typings', () => {
     const sliceDir = 'fixtures';
     return testOutput(sliceDir, [`${sliceDir}/Dictionaries.ice`]);
   });
+
+  test('deprecate', () => {
+    const sliceDir = 'fixtures';
+    return testOutput(sliceDir, [`${sliceDir}/deprecate.ice`]);
+  });
 });
