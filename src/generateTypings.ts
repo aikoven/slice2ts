@@ -26,15 +26,19 @@ export async function generateTypings(
   iceImports: boolean,
   noNullableValues: boolean,
 ): Promise<string> {
-  return new Generator(
-    scope,
-    sliceName,
-    slices,
-    namespaceFilePaths,
-    ignore,
-    iceImports,
-    noNullableValues,
-  ).generate();
+  try {
+    return await new Generator(
+      scope,
+      sliceName,
+      slices,
+      namespaceFilePaths,
+      ignore,
+      iceImports,
+      noNullableValues,
+    ).generate();
+  } catch (e) {
+    throw new Error(`${sliceName}: ${e}`);
+  }
 }
 
 class Generator {
@@ -201,10 +205,10 @@ class Generator {
       isClass = member.declaration.type === 'class';
 
       if (external) {
-        typeName = `${member.module}::${member.declaration.name}`;
+        typeName = `${member.scope.module}::${member.declaration.name}`;
       }
 
-      tsType = typeName
+      tsType = (typeName.startsWith('::') ? typeName.slice(2) : typeName)
         .split('::')
         .map(escape)
         .join('.');
@@ -212,10 +216,10 @@ class Generator {
       // we need to alias a root namespace where this type belongs
       // in case when generated definition is put to a different namespace with
       // the same name or containing a child namespace with that name
-      const typeTopLevelModule = member.module.split('::')[0];
+      const typeTopLevelModule = member.scope.module.split('::')[1];
 
       if (
-        scope.module.includes(`::${typeTopLevelModule}`) ||
+        scope.module.indexOf(`::${typeTopLevelModule}`) > 0 ||
         scope.names.hasOwnProperty(typeTopLevelModule)
       ) {
         this.namespacesToAlias.add(typeTopLevelModule);
@@ -335,7 +339,7 @@ class Generator {
     const parameters: string[] = [];
 
     for (const chainMember of chain) {
-      const external = chainMember.module !== member.module;
+      const external = chainMember.scope.module !== member.scope.module;
 
       for (const child of chainMember.declaration.content) {
         if (child.type === 'field') {
@@ -409,7 +413,7 @@ class Generator {
     }> = [];
 
     for (const allMember of allInterfaces) {
-      const external = allMember.module !== member.module;
+      const external = allMember.scope.module !== member.scope.module;
       allOperations.push(
         ...allMember.declaration.content.map(operation => ({
           scope: allMember.scope,

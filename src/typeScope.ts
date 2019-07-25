@@ -25,29 +25,36 @@ export type TypeDeclaration =
 /** @internal */
 export interface ScopeMember<T extends TypeDeclaration> {
   scope: TypeScope;
-  module: string;
   declaration: T;
 }
 
 export interface QualifiedDeclaration<T extends TypeDeclaration> {
-  /**
-   * Fully-qualified ::-separated module name.
-   */
-  module: string;
+  type: 'declaration';
+  parentScope: TypeScope;
   declaration: T;
 }
 
 /** @internal */
 export interface TypeScope {
+  type: 'scope';
+  rootScope?: TypeScope;
+  parentScope?: TypeScope;
+  /**
+   * Fully-qualified module id starting with `::`
+   */
   module: string;
   names: {
-    [name: string]: TypeScope | QualifiedDeclaration<TypeDeclaration>;
+    [name: string]:
+      | TypeScope
+      | QualifiedDeclaration<TypeDeclaration>
+      | undefined;
   };
 }
 
 /** @internal */
 export function createTypeScope(slices: LoadedSlices): TypeScope {
   const rootScope: TypeScope = {
+    type: 'scope',
     module: '',
     names: {},
   };
@@ -65,7 +72,7 @@ export function createTypeScope(slices: LoadedSlices): TypeScope {
 
   for (const {moduleDeclaration, parentScope} of moduleScopes) {
     const {name} = moduleDeclaration;
-    const module = parentScope.module ? `${parentScope.module}::${name}` : name;
+    const module = `${parentScope.module}::${name}`;
 
     let scope: TypeScope;
 
@@ -73,18 +80,16 @@ export function createTypeScope(slices: LoadedSlices): TypeScope {
       | TypeScope
       | undefined;
 
-    if (existingModuleScope == null) {
+    if (existingModuleScope == null || existingModuleScope.module !== module) {
       scope = parentScope.names[name] = {
+        type: 'scope',
+        rootScope,
+        parentScope,
         module,
-        names: Object.create(parentScope.names),
+        names: {},
       };
-    } else if (existingModuleScope.module === module) {
-      scope = existingModuleScope;
     } else {
-      scope = parentScope.names[name] = {
-        module,
-        names: Object.create(existingModuleScope.names),
-      };
+      scope = existingModuleScope;
     }
 
     for (const child of moduleDeclaration.content) {
@@ -98,7 +103,8 @@ export function createTypeScope(slices: LoadedSlices): TypeScope {
         child.type !== 'interfaceForward'
       ) {
         scope.names[child.name] = {
-          module,
+          type: 'declaration',
+          parentScope: scope,
           declaration: child,
         };
       }
@@ -113,28 +119,58 @@ export function getTypeByName<T extends TypeDeclaration>(
   scope: TypeScope,
   typeName: string,
 ): ScopeMember<T> {
-  const parts = typeName.split('::');
-  const path = parts.slice(0, parts.length - 1);
-  const name = parts[parts.length - 1];
-
-  const typeScope = path.reduce(
-    (currentScope, name) => currentScope.names[name] as TypeScope,
-    scope,
-  );
-
-  if (typeScope == null) {
-    throw new Error(`Module not found: ${path.join('::')}`);
+  if (typeName.startsWith('::') && scope.rootScope != null) {
+    return getTypeByName<T>(scope.rootScope, typeName.slice(2));
   }
 
-  const qualDeclaration = typeScope.names[name] as QualifiedDeclaration<T>;
+  const path = typeName.split('::');
+
+  let qualDeclaration: QualifiedDeclaration<any> | undefined;
+
+  while (true) {
+    const child = getChildByPath(scope, path);
+
+    if (child != null && child.type === 'declaration') {
+      qualDeclaration = child;
+      break;
+    }
+
+    if (scope.parentScope == null) {
+      break;
+    }
+
+    scope = scope.parentScope;
+  }
 
   if (qualDeclaration == null) {
-    // console.log(flatten(scope));
-    // console.log(flatten(typeScope));
-    throw new Error(`Type not found: ${typeName}`);
+    throw new Error(
+      `Type ${typeName} not found relative to module ${scope.module}`,
+    );
   }
 
-  return {scope: typeScope, ...qualDeclaration};
+  return {
+    scope: qualDeclaration.parentScope,
+    declaration: qualDeclaration.declaration,
+  };
+}
+
+function getChildByPath(
+  scope: TypeScope,
+  path: string[],
+): TypeScope | QualifiedDeclaration<TypeDeclaration> | undefined {
+  let current:
+    | TypeScope
+    | QualifiedDeclaration<TypeDeclaration>
+    | undefined = scope;
+
+  for (const name of path) {
+    if (current == null || current.type !== 'scope') {
+      return undefined;
+    }
+    current = current.names[name];
+  }
+
+  return current;
 }
 
 /** @internal */

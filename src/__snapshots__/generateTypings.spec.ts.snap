@@ -14275,6 +14275,8 @@ exports[`generate typings module shadowing: A 1`] = `
 
 declare module \\"./A.ns\\" {
   namespace A {
+    class RootClass extends Ice.Value {}
+
     class SomeClass extends Ice.Value {}
   }
 }
@@ -14291,7 +14293,13 @@ import $A = A;
 declare module \\"./B.ns\\" {
   namespace B {
     namespace A {
-      class Child extends $A.SomeClass {}
+      class SomeClass extends Ice.Value {}
+
+      class Child extends A.SomeClass {}
+
+      class AbsoluteChild extends $A.SomeClass {}
+
+      class RootChild extends $A.RootClass {}
     }
   }
 }
@@ -14303,11 +14311,9 @@ exports[`generate typings module shadowing: B2 1`] = `
 "import { Ice } from \\"ice\\";
 import { A } from \\"A\\";
 
-import $A = A;
-
 declare module \\"./B.ns\\" {
   namespace B {
-    class Child extends $A.SomeClass {}
+    class Child extends A.SomeClass {}
   }
 }
 export { B } from \\"./B.ns\\";
