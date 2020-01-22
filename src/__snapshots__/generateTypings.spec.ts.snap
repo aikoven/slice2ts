@@ -611,6 +611,12 @@ import \\"../Ice/BuiltinSequences\\";
 
 declare module \\"./Glacier2.ns\\" {
   namespace Glacier2 {
+    /**
+     * Information taken from an SSL connection used for permissions
+     * verification.
+     *
+     * @see PermissionsVerifier
+     */
     class SSLInfo implements Ice.Struct {
       constructor(
         remoteHost?: string,
@@ -1738,13 +1744,28 @@ declare module \\"./Ice.ns\\" {
       | \\"CloseOnInvocationAndIdle\\"
       | \\"CloseOnIdleForceful\\";
 
+    /**
+     * Specifies the close semantics for Active Connection Management.
+     */
     class ACMClose<
       Name extends ACMCloseName = ACMCloseName
     > extends Ice.EnumBase<Name> {
       static CloseOff: ACMClose<\\"CloseOff\\">;
+
       static CloseOnIdle: ACMClose<\\"CloseOnIdle\\">;
+
+      /**
+       * Forcefully closes a connection that has been idle for the configured timeout period,
+       * but only if the connection has pending invocations.
+       */
       static CloseOnInvocation: ACMClose<\\"CloseOnInvocation\\">;
+
       static CloseOnInvocationAndIdle: ACMClose<\\"CloseOnInvocationAndIdle\\">;
+
+      /**
+       * Forcefully closes a connection that has been idle for the configured timeout period,
+       * regardless of whether the connection has pending invocations or dispatch.
+       */
       static CloseOnIdleForceful: ACMClose<\\"CloseOnIdleForceful\\">;
     }
 
@@ -1754,6 +1775,9 @@ declare module \\"./Ice.ns\\" {
       | \\"HeartbeatOnIdle\\"
       | \\"HeartbeatAlways\\";
 
+    /**
+     * Specifies the heartbeat semantics for Active Connection Management.
+     */
     class ACMHeartbeat<
       Name extends ACMHeartbeatName = ACMHeartbeatName
     > extends Ice.EnumBase<Name> {
@@ -1763,6 +1787,9 @@ declare module \\"./Ice.ns\\" {
       static HeartbeatAlways: ACMHeartbeat<\\"HeartbeatAlways\\">;
     }
 
+    /**
+     * A collection of Active Connection Management configuration settings.
+     */
     class ACM implements Ice.Struct {
       constructor(timeout?: number, close?: ACMClose, heartbeat?: ACMHeartbeat);
 
@@ -2133,8 +2160,42 @@ declare module \\"./Ice.ns\\" {
     class OperationMode<
       Name extends OperationModeName = OperationModeName
     > extends Ice.EnumBase<Name> {
+      /**
+       * Ordinary operations have <code>Normal</code> mode.  These operations
+       * modify object state; invoking such an operation twice in a row
+       * has different semantics than invoking it once. The Ice run time
+       * guarantees that it will not violate at-most-once semantics for
+       * <code>Normal</code> operations.
+       */
       static Normal: OperationMode<\\"Normal\\">;
+
+      /**
+       * Operations that use the Slice <code>nonmutating</code> keyword must not
+       * modify object state. For C++, nonmutating operations generate
+       * <code>const</code> member functions in the skeleton. In addition, the Ice
+       * run time will attempt to transparently recover from certain
+       * run-time errors by re-issuing a failed request and propagate
+       * the failure to the application only if the second attempt
+       * fails.
+       *
+       * <p class=\\"Deprecated\\"><code>Nonmutating</code> is deprecated; Use the
+       * <code>idempotent</code> keyword instead. For C++, to retain the mapping
+       * of <code>nonmutating</code> operations to C++ <code>const</code>
+       * member functions, use the <code>\\\\[\\"cpp:const\\"]</code> metadata
+       * directive.
+       */
       static Nonmutating: OperationMode<\\"Nonmutating\\">;
+
+      /**
+       * Operations that use the Slice <code>idempotent</code> keyword can modify
+       * object state, but invoking an operation twice in a row must
+       * result in the same object state as invoking it once.  For
+       * example, <code>x = 1</code> is an idempotent statement,
+       * whereas <code>x += 1</code> is not. For idempotent
+       * operations, the Ice run-time uses the same retry behavior
+       * as for nonmutating operations in case of a potentially
+       * recoverable error.
+       */
       static Idempotent: OperationMode<\\"Idempotent\\">;
     }
 
@@ -2286,6 +2347,10 @@ declare module \\"./Ice.ns\\" {
        */
       timeout: number;
 
+      /**
+       * Specifies whether or not compression should be used if
+       * available when using this endpoint.
+       */
       compress: boolean;
 
       /**
@@ -2354,6 +2419,9 @@ declare module \\"./Ice.ns\\" {
        */
       port: number;
 
+      /**
+       * The source IP address.
+       */
       sourceAddress: string;
     }
 
@@ -2469,7 +2537,15 @@ declare module \\"./Ice.ns\\" {
     class EndpointSelectionType<
       Name extends EndpointSelectionTypeName = EndpointSelectionTypeName
     > extends Ice.EnumBase<Name> {
+      /**
+       * <code>Random</code> causes the endpoints to be arranged in a random order.
+       */
       static Random: EndpointSelectionType<\\"Random\\">;
+
+      /**
+       * <code>Ordered</code> forces the Ice run time to use the endpoints in the
+       * order they appeared in the proxy.
+       */
       static Ordered: EndpointSelectionType<\\"Ordered\\">;
     }
   }
@@ -4364,6 +4440,12 @@ declare module \\"./Ice.ns\\" {
        */
       getPrefix(): string;
 
+      /**
+       * Returns a clone of the logger with a new prefix.
+       *
+       * @param prefix The new prefix for the logger.
+       * @return A logger instance.
+       */
       cloneWithPrefix(prefix: string): Logger;
     }
   }
@@ -11526,6 +11608,9 @@ declare module \\"./IceGrid.ns\\" {
     class ServerNotExistException extends Ice.UserException {
       constructor(id?: string);
 
+      /**
+       * The identifier of the server.
+       */
       id: string;
     }
 
@@ -13582,8 +13667,18 @@ declare module \\"./IceStorm.ns\\" {
      */
     type LinkInfoSeq = Array<LinkInfo>;
 
+    /**
+     * This dictionary represents quality of service parameters.
+     *
+     * @see Topic#subscribeAndGetPublisher
+     */
     type QoS = Map<string, string>;
     const QoS: {
+      /**
+       * This dictionary represents quality of service parameters.
+       *
+       * @see Topic#subscribeAndGetPublisher
+       */
       new (entries?: ReadonlyArray<[string, string]>): Map<string, string>;
     };
 
@@ -13594,6 +13689,9 @@ declare module \\"./IceStorm.ns\\" {
     class LinkExists extends Ice.UserException {
       constructor(name?: string);
 
+      /**
+       * The name of the linked topic.
+       */
       name: string;
     }
 
@@ -13604,6 +13702,9 @@ declare module \\"./IceStorm.ns\\" {
     class NoSuchLink extends Ice.UserException {
       constructor(name?: string);
 
+      /**
+       * The name of the link that does not exist.
+       */
       name: string;
     }
 
@@ -13917,6 +14018,9 @@ declare module \\"./IceStorm.ns\\" {
     class TopicExists extends Ice.UserException {
       constructor(name?: string);
 
+      /**
+       * The name of the topic that already exists.
+       */
       name: string;
     }
 
@@ -13927,6 +14031,9 @@ declare module \\"./IceStorm.ns\\" {
     class NoSuchTopic extends Ice.UserException {
       constructor(name?: string);
 
+      /**
+       * The name of the topic that does not exist.
+       */
       name: string;
     }
 
