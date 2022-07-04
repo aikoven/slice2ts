@@ -23,7 +23,7 @@
     "assert-never": "^1.2.0",
     "babel-core": "^6.26.3",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
-    "commander": "^2.20.0",
+    "commander": "^9.3.0",
     "commondir": "^1.0.1",
     "escape-string-regexp": "^2.0.0",
     "glob": "^7.1.4",
