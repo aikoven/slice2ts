@@ -80,6 +80,8 @@ export async function slice2ts(options: Slice2TsOptions) {
   const namespaceFilePaths = getNamespaceFilePaths(topLevelModules);
   const typeScope = createTypeScope(slices);
 
+  const { jsModules = 'cjs' } = options;
+
   for (const module of Object.keys(namespaceFilePaths)) {
     await writeFile(
       path.join(options.outDir, namespaceFilePaths[module]),
@@ -92,11 +94,17 @@ export async function slice2ts(options: Slice2TsOptions) {
         topLevelModules[module]
           .map(sliceName => unixify(sliceName))
           .map(
-            (sliceName, index) =>
-              index === 0
-                ? `exports.${module} = require('./${sliceName}').${module};`
-                : `require('./${sliceName}');`,
-          )
+            jsModules === 'esm' ? (
+              (sliceName, index) =>
+                index === 0
+                  ? `export {${module}} from './${sliceName}';`
+                  : `import './${sliceName}';`
+              ) : (
+              (sliceName, index) =>
+                index === 0
+                  ? `exports.${module} = require('./${sliceName}').${module};`
+                  : `require('./${sliceName}');`
+            ))
           .join('\n'),
       );
 
