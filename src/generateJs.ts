@@ -14,6 +14,7 @@ export async function generateJs(
   sliceName: string,
   slices: LoadedSlices,
   absRootDirs: string[],
+  modules: 'cjs' | 'esm'
 ): Promise<string> {
   let compiled = await compileSliceWithEs6(
     sliceName,
@@ -26,15 +27,17 @@ export async function generateJs(
     generateImports(sliceName, slices) + compiled.replace(importRegex, '');
 
   // transform imports to require
-  compiled = babel.transform(compiled, {
-    babelrc: false,
-    plugins: [
-      [
-        require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
-        {noInterop: true},
+  if (modules === 'cjs') {
+    compiled = babel.transform(compiled, {
+      babelrc: false,
+      plugins: [
+        [
+          require.resolve('babel-plugin-transform-es2015-modules-commonjs'),
+          {noInterop: true},
+        ],
       ],
-    ],
-  }).code!;
+    }).code!;
+  }
 
   return compiled;
 }

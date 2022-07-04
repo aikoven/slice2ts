@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import * as commander from 'commander';
+import {Command, Option} from 'commander';
 import {slice2ts} from './index';
 const packageJson = require('../package.json');
 
@@ -12,7 +12,7 @@ function repeatable(value: string, values: string[]) {
   return values;
 }
 
-const program = commander
+const program = new Command()
   .version(packageJson.version)
   .usage('[options] <file ...>')
   .option('--root-dir <dir>', rootDirsDesc, repeatable, [])
@@ -24,6 +24,7 @@ const program = commander
   )
   .option('-o, --out-dir <dir>', 'Directory where to put generated files.')
   .option('--no-js', 'If true, only the typings are generated.')
+  .addOption(new Option('--js-modules <type>', 'Set the type of generated js modules.').choices(['cjs', 'esm']).default('cjs'))
   .option(
     '--ice-imports',
     'If true, Ice modules are imported from particular files instead of "ice".',
@@ -45,16 +46,19 @@ const program = commander
   )
   .parse(process.argv);
 
+const options = program.opts();
+
 slice2ts({
   files: program.args,
-  exclude: program.exclude,
-  rootDirs: program.rootDir,
-  outDir: program.outDir,
-  noJs: !program.js,
-  ignore: program.ignore,
-  index: program.index,
-  iceImports: program.iceImports,
-  noNullableValues: !program.nullableValues,
+  exclude: options.exclude,
+  rootDirs: options.rootDir,
+  outDir: options.outDir,
+  noJs: !options.js,
+  jsModules: options.jsModules,
+  ignore: options.ignore,
+  index: options.index,
+  iceImports: options.iceImports,
+  noNullableValues: !options.nullableValues,
 }).catch(error => {
   console.log(error);
   process.exit(1);

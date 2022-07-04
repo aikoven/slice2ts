@@ -40,6 +40,14 @@ export interface Slice2TsOptions {
    * If true, only typings are generated.
    */
   noJs?: boolean;
+  
+  /**
+   * The type of generated js modules.
+   * Allowed values are 'cjs' or 'esm'.
+   * @default 'cjs'
+   */
+  jsModules?: 'cjs' | 'esm';
+
   /**
    * If true, Ice modules are imported from particular files instead of "ice".
    */
@@ -113,7 +121,7 @@ export async function slice2ts(options: Slice2TsOptions) {
     if (!options.noJs) {
       await writeFile(
         `${basename}.js`,
-        await generateJs(name, slices, absRootDirs),
+        await generateJs(name, slices, absRootDirs, options.jsModules || 'cjs'),
       );
     }
 
