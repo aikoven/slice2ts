@@ -55,13 +55,16 @@ async function compileSliceWithEs6(
   slice: LoadedSlice,
   absRootDirs: string[],
 ): Promise<string> {
-  const tempSlicePath = path.join(os.tmpdir(), `${uuid.v4()}.ice`);
+  const uniqueName = uuid.v4();
+  const tempSlicePath = path.join(os.tmpdir(), `${uniqueName}.ice`);
 
   await cps(cb => fs.writeFile(tempSlicePath, es6Meta + slice.contents, cb));
 
   try {
     const source = await compileSliceRaw(tempSlicePath, absRootDirs);
-    return source.replace(path.basename(tempSlicePath), `${sliceName}.ice`);
+    return source
+      .replace(path.basename(tempSlicePath), `${sliceName}.ice`)
+      .replace(uniqueName, sliceName);
   } catch (e) {
     if (typeof e === 'string') {
       throw e.replace(
